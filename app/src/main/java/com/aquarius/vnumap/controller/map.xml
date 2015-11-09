@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<map>
+        <building>
+            <id>1</id>
+            <name>Giảng đường G2</name>
+            <rooms>
+                <room>103</room>
+                <room>105</room>
+                <room>Trợ giảng</room>
+                <room>Vệ sinh nam</room>
+            </rooms>
+            <topleft>
+                <x>21.038218</x>
+                <y>105.783153</y>
+            </topleft>
+            <bottomright>
+                <x>21.037982</x>
+                <y>105.783609</y>
+            </bottomright>
+        </building>
+</map>
+
