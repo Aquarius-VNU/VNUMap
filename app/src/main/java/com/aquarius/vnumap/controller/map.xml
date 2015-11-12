@@ -1,397 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
 <map>
-        <building>
-            <id>01</id>
-            <name>Giảng đường G2</name>
-            <rooms>
-                <room>103</room>
-                <room>105</room>
-                <room>Trợ giảng</room>
-                <room>Vệ sinh nam</room>
-            </rooms>
-            <location>
-                <x>21.038777</x>
-                <y>105.783318</y>
-            </location>
-        </building>
+    <building>
+        <id>01</id>
+        <name>Giảng đường G2</name>
+        <x>21.038777</x>
+        <y>105.783318</y>
+    </building>
 
     <building>
         <id>02</id>
         <name>Vườn nhãn G2</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03777</x>
-            <y>105.78336</y>
-        </location>
+        <x>21.03777</x>
+        <y>105.78336</y>
     </building>
 
     <building>
         <id>03</id>
         <name>Trung tâm đào tạo và giáo dục quốc tế - Trường đại học kinh tế</name>
-        <rooms>
+        <x>21.03785</x>
+        <y>105.78297</y>
 
-        </rooms>
-        <location>
-            <x>21.03785</x>
-            <y>105.78297</y>
-        </location>
     </building>
 
     <building>
         <id>04</id>
         <name>Giảng đường B2</name>
-        <rooms>
+        <x>21.03764</x>
+        <y>105.78220</y>
 
-        </rooms>
-        <location>
-            <x>21.03764</x>
-            <y>105.78220</y>
-        </location>
     </building>
 
     <building>
         <id>05</id>
         <name>Trung tâm văn hóa ULIS - Jonathan KS.Choi</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03740</x>
-            <y>105.78203</y>
-        </location>
+        <x>21.03740</x>
+        <y>105.78203</y>
     </building>
 
     <building>
         <id>06</id>
         <name>VNU Store</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03709</x>
-            <y>105.78211</y>
-        </location>
+        <x>21.03709</x>
+        <y>105.78211</y>
     </building>
 
     <building>
         <id>07</id>
         <name>Hội trường Nguyễn Văn Đạo</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03735</x>
-            <y>105.78155</y>
-        </location>
+        <x>21.03735</x>
+        <y>105.78155</y>
     </building>
 
     <building>
         <id>08</id>
         <name>Tòa nhà điều hành</name>
-        <rooms>
+        <x>21.03764</x>
+        <y>105.78185</y>
 
-        </rooms>
-        <location>
-            <x>21.03764</x>
-            <y>105.78185</y>
-        </location>
     </building>
 
     <building>
         <id>09</id>
         <name>Trà đá G3</name>
-        <rooms>
+        <x>21.03788</x>
+        <y>105.78219</y>
 
-        </rooms>
-        <location>
-            <x>21.03788</x>
-            <y>105.78219</y>
-        </location>
     </building>
 
     <building>
         <id>10</id>
         <name>Nhà xe số 1</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03778</x>
-            <y>105.78229</y>
-        </location>
+        <x>21.03778</x>
+        <y>105.78229</y>
     </building>
 
     <building>
         <id>11</id>
         <name>Khoa luật</name>
-        <rooms>
+        <x>21.03797</x>
+        <y>105.78230</y>
 
-        </rooms>
-        <location>
-            <x>21.03797</x>
-            <y>105.78230</y>
-        </location>
     </building>
 
     <building>
         <id>12</id>
         <name>Giảng đường G3</name>
-        <rooms>
+        <x>21.03823</x>
+        <y>105.78232</y>
 
-        </rooms>
-        <location>
-            <x>21.03823</x>
-            <y>105.78232</y>
-        </location>
     </building>
 
     <building>
         <id>13</id>
         <name>Tòa nhà E2</name>
-        <rooms>
+        <x>21.03832</x>
+        <y>105.78248</y>
 
-        </rooms>
-        <location>
-            <x>21.03832</x>
-            <y>105.78248</y>
-        </location>
     </building>
 
     <building>
         <id>14</id>
         <name>Trường đại học công nghệ - E3</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03810</x>
-            <y>105.78282</y>
-        </location>
+        <x>21.03810</x>
+        <y>105.78282</y>
     </building>
 
     <building>
         <id>15</id>
         <name>Trường đại học kinh tế - E4</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03813</x>
-            <y>105.78268</y>
-        </location>
+        <x>21.03813</x>
+        <y>105.78268</y>
     </building>
 
     <building>
         <id>16</id>
         <name>Trung tâm thông tin thư viện - C1T</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03836</x>
-            <y>105.78335</y>
-        </location>
+        <x>21.03836</x>
+        <y>105.78335</y>
     </building>
 
     <building>
         <id>17</id>
         <name>Viện khoa học công nghệ và quan hệ quốc tế - Trường đại học sư phạm</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03859</x>
-            <y>105.78313</y>
-        </location>
+        <x>21.03859</x>
+        <y>105.78313</y>
     </building>
 
     <building>
         <id>18</id>
         <name>ATM BIDV</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03862</x>
-            <y>105.78253</y>
-        </location>
+        <x>21.03862</x>
+        <y>105.78253</y>
     </building>
 
     <building>
         <id>19</id>
         <name>Giảng đường 2 - GĐ2</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.04073</x>
-            <y>105.78279</y>
-        </location>
+        <x>21.04073</x>
+        <y>105.78279</y>
     </building>
 
     <building>
         <id>20</id>
         <name>Kí túc xá Ngoại ngữ</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.04052</x>
-            <y>105.78267</y>
-        </location>
+        <x>21.04052</x>
+        <y>105.78267</y>
     </building>
 
     <building>
         <id>21</id>
         <name>Trường THPT chuyên ngoại ngữ</name>
-        <rooms>
-        </rooms>
-        <location>
-            <x>21.04030</x>
-            <y>105.78273</y>
-        </location>
+        <x>21.04030</x>
+        <y>105.78273</y>
     </building>
 
     <building>
         <id>22</id>
         <name>Tòa nhà A4</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03997</x>
-            <y>105.78271</y>
-        </location>
+        <x>21.03997</x>
+        <y>105.78271</y>
     </building>
 
     <building>
         <id>23</id>
         <name>Tòa nhà A1</name>
-        <rooms>
-
-        </rooms>
-        <location>
-            <x>21.03951</x>
-            <y>105.78293</y>
-        </location>
+        <x>21.03951</x>
+        <y>105.78293</y>
     </building>
 
     <building>
         <id>24</id>
         <name>Tòa nhà A2</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03950</x>
-            <y>105.78303</y>
-        </location>
+        <x>21.03950</x>
+        <y>105.78303</y>
     </building>
 
     <building>
         <id>25</id>
         <name>Khu liên hợp thể thao - Trường đại học ngoại ngữ</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03971</x>
-            <y>105.78198</y>
-        </location>
+        <x>21.03971</x>
+        <y>105.78198</y>
     </building>
 
     <building>
         <id>26</id>
         <name>Nhà C1 - Khoa Pháp</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03921</x>
-            <y>105.78197</y>
-        </location>
+        <x>21.03921</x>
+        <y>105.78197</y>
     </building>
 
     <building>
         <id>27</id>
         <name>Nhà C5 - Khoa Pháp</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03912</x>
-            <y>105.78228</y>
-        </location>
+        <x>21.03912</x>
+        <y>105.78228</y>
     </building>
 
     <building>
         <id>28</id>
         <name>Nhà C3 - Khoa Pháp</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03901</x>
-            <y>105.78220</y>
-        </location>
+        <x>21.03901</x>
+        <y>105.78220</y>
     </building>
 
     <building>
         <id>29</id>
         <name>Nhà C4 - Khoa Pháp</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03866</x>
-            <y>105.78235</y>
-        </location>
+        <x>21.03866</x>
+        <y>105.78235</y>
     </building>
 
     <building>
         <id>30</id>
         <name>Nhà C2 - Khoa Pháp</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03868</x>
-            <y>105.78179</y>
-        </location>
+        <x>21.03868</x>
+        <y>105.78179</y>
     </building>
 
     <building>
         <id>31</id>
         <name>Khoa Pháp</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03910</x>
-            <y>105.78258</y>
-        </location>
+        <x>21.03910</x>
+        <y>105.78258</y>
     </building>
 
     <building>
         <id>32</id>
         <name>Tòa nhà B3</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03832</x>
-            <y>105.78157</y>
-        </location>
+        <x>21.03832</x>
+        <y>105.78157</y>
     </building>
 
     <building>
         <id>33</id>
         <name>Trường đại học giáo dục</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03855</x>
-            <y>105.78154</y>
-        </location>
+        <x>21.03855</x>
+        <y>105.78154</y>
     </building>
 
     <building>
         <id>34</id>
         <name>Khoa Quốc tế</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03839</x>
-            <y>105.78136</y>
-        </location>
+        <x>21.03839</x>
+        <y>105.78136</y>
     </building>
 
     <building>
         <id>35</id>
         <name>Khoa Quản trị kinh doanh - HSB</name>
-        <rooms></rooms>
-        <location>
-            <x>21.03808</x>
-            <y>105.78159</y>
-        </location>
+        <x>21.03808</x>
+        <y>105.78159</y>
     </building>
 </map>
 
