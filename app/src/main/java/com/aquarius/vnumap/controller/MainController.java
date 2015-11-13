@@ -13,7 +13,7 @@ public class MainController {
     private static XmlParse parse = new XmlParse();
 //==================================================================================================
 //how to use getListBuilding
-//add map.xml to res/raw - if raw is not exist, you must create it in res folder
+//map is move to res/raw
 //let's put 2 code line below to your activity
 //InputStream inputStream =  getResources().openRawResource(R.raw.map);
 //List<Building> buildings = MainController.getListBuilding(inputStream);
