@@ -1,9 +1,11 @@
 package com.aquarius.vnumap.controller;
 
+import android.support.annotation.Nullable;
 import android.util.Xml;
 
 import com.aquarius.vnumap.model.Building;
 import com.aquarius.vnumap.model.Point;
+import com.aquarius.vnumap.model.Room;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -71,32 +73,6 @@ public class XmlParse {
         return new Point(x, y);
     }
 
-//  read tag room
-    public String readRoom(XmlPullParser parser) throws XmlPullParserException, IOException{
-        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "room");
-        String room = parser.getText();
-        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "room");
-        return room;
-    }
-
-//  read tag rooms
-    public List<String> readRooms(XmlPullParser parser) throws  XmlPullParserException, IOException{
-        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "rooms");
-        List<String> rooms = null;
-        while(parser.next() != XmlPullParser.END_TAG){
-            if(parser.getEventType() != XmlPullParser.START_TAG){
-                continue;
-            }
-            String name = parser.getName();
-            if(name.equals("room")){
-                rooms.add(readRoom(parser));
-            }else{
-                skip(parser);
-            }
-        }
-        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "rooms");
-        return rooms;
-    }
 
     public Building readBuilding(XmlPullParser parser) throws  XmlPullParserException, IOException{
         parser.require(XmlPullParser.START_TAG,NAME_SPACE, "building");
@@ -159,19 +135,78 @@ public class XmlParse {
         }
     }
 
-    public List<Building> parse(InputStream inputStream, int choice) throws XmlPullParserException, IOException{
+    public List<Building> parseMap(InputStream inputStream) throws XmlPullParserException, IOException{
         try {
             XmlPullParser xmlPullParser = Xml.newPullParser();
             // don't use namespace
             xmlPullParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             xmlPullParser.setInput(inputStream, null);
             xmlPullParser.nextTag();
-            if(choice == PARSE_MAP_CHOICE){
-                return readMap(xmlPullParser);
-            }
+            return readMap(xmlPullParser);
         }finally {
             inputStream.close();
         }
-        return null;
+    }
+//==================================================================================================
+//  read tag room
+    public Room readRoom(XmlPullParser parser) throws XmlPullParserException, IOException{
+        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "room");
+        String name = parser.getAttributeValue(NAME_SPACE, "name");
+        int floor = Integer.valueOf(parser.getAttributeValue(NAME_SPACE, "floor"));
+        String info = readText(parser);
+        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "room");
+    return new Room(name, floor, info);
+}
+
+    //  read tag rooms
+    public Room.Rooms readRooms(XmlPullParser parser) throws  XmlPullParserException, IOException{
+        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "rooms");
+        List<Room> rooms = new ArrayList<>();
+        int id = Integer.valueOf(parser.getAttributeValue(NAME_SPACE, "id"));
+        while(parser.next() != XmlPullParser.END_TAG){
+            if(parser.getEventType() != XmlPullParser.START_TAG){
+                continue;
+            }
+            String name = parser.getName();
+            if(name.equals("room")){
+                    rooms.add(readRoom(parser));
+            }else{
+                skip(parser);
+            }
+        }
+        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "rooms");
+        return new Room.Rooms(id, rooms);
+    }
+
+    public List<Room.Rooms> readDirection(XmlPullParser parser) throws XmlPullParserException, IOException{
+        List<Room.Rooms> rooms = new ArrayList<>();
+        int id = 0;
+        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "direction");
+        while(parser.next() != XmlPullParser.END_TAG){
+            if(parser.getEventType() != XmlPullParser.START_TAG){
+                continue;
+            }
+            String name = parser.getName();
+            if(name.equals("rooms")){
+                rooms.add(readRooms(parser));
+
+            }else{
+                skip(parser);
+            }
+        }
+        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "direction");
+        return rooms;
+    }
+
+    public List<Room.Rooms> parseDirection(InputStream inputStream) throws XmlPullParserException, IOException{
+        try{
+            XmlPullParser xmlPullParser = Xml.newPullParser();
+            xmlPullParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            xmlPullParser.setInput(inputStream, null);
+            xmlPullParser.nextTag();
+            return readDirection(xmlPullParser);
+        }finally {
+            inputStream.close();
+        }
     }
 }
