@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.controller.MainController;
+import com.aquarius.vnumap.model.Building;
 import com.aquarius.vnumap.model.Room;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,9 +35,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        List<Room.Rooms> list = MainController.getRooms(getResources().openRawResource(R.raw.direction));
+        List<Building> list = MainController.getListBuilding(getResources().openRawResource(R.raw.map), getResources().openRawResource(R.raw.direction));
         EditText editText = (EditText)findViewById(R.id.edtSearch);
-        editText.setText(list.size());
+        editText.setText(list.get(0).getRooms().get(0).getInfo());
     }
 
     @Override

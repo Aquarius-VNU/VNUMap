@@ -32,7 +32,9 @@
             android:hint="Tìm kiếm trên VNU Maps"
             android:textSize="16dp"
             android:padding="8dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+
+            />
 
         <ImageButton
             android:id="@+id/btnSearch"

@@ -78,7 +78,6 @@ public class XmlParse {
         parser.require(XmlPullParser.START_TAG,NAME_SPACE, "building");
         int id = 0;
         String name = null;
-        List<String> rooms = null;
         double x = 0.0;
         double y = 0.0;
         while(parser.next() != XmlPullParser.END_TAG){
@@ -90,8 +89,6 @@ public class XmlParse {
                 id = readId(parser);
             }else if(nameParse.equals("name")){
                 name = readName(parser);
-            }else if(nameParse.equals("rooms")){
-//                rooms = readRooms(parser);
             }else if(nameParse.equals("x")){
                 x = readX(parser);
             }else if(nameParse.equals("y")){
@@ -102,7 +99,7 @@ public class XmlParse {
             }
         }
         parser.require(XmlPullParser.END_TAG, NAME_SPACE, "building");
-        return new Building(id, name, rooms, new Point(x, y));
+        return new Building(id, name, null, new Point(x, y));
     }
 
     public List<Building> readMap(XmlPullParser xmlPullParser) throws  XmlPullParserException, IOException{
