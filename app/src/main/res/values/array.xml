@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Floors">
+        <item>Tầng 1</item>
+        <item>Tầng 2</item>
+        <item>Tầng 3</item>
+        <item>Tầng 4</item>
+        <item>Tầng 5</item>
+    </string-array>
+</resources>
