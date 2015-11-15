@@ -39,7 +39,6 @@ public class BuildingActivity extends AppCompatActivity {
                 //back to map
                 Intent intent = new Intent(BuildingActivity.this, MapsActivity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -54,9 +53,9 @@ public class BuildingActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager v){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new BuildingFragment(), "Others");
-        adapter.addFragment(new BuildingFragment(), "Populars");
-        adapter.addFragment(new BuildingFragment(), "My UET");
+        adapter.addFragment(new BuildingListFragment(), "Others");
+        adapter.addFragment(new BuildingListFragment(), "Populars");
+        adapter.addFragment(new BuildingListFragment(), "My UET");
         v.setAdapter(adapter);
     }
     //Custom adapter to add fragment for each tab
