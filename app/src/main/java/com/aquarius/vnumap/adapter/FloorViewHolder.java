@@ -11,7 +11,7 @@ import com.aquarius.vnumap.R;
 /**
  * Created by Nguyen Thi Cam Van on 11/14/2015.
  */
-public class FloorViewHolder extends RecyclerView.ViewHolder {
+public class FloorViewHolder extends RecyclerView.ViewHolder{
     private Context context;
     public TextView tvFloor;
     public ImageView imgFloor;
