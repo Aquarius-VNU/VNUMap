@@ -1,7 +1,9 @@
 package com.aquarius.vnumap.ui;
 
+import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -62,20 +64,33 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+//      define to get location information
+        LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
 
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria,false);
-        Location location = locationManager.getLastKnownLocation(provider);
-        LatLng latLng = new LatLng(21.010162, 105.786706);
+            }
 
-        if(location != null){
-            latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        }
-        // Add a marker in Sydney and move the camera
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        };
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        mMap.addMarker(new MarkerOptions().position(latLng).title("You're here"));
+        /*mMap.addMarker(new MarkerOptions().position(latLng).title("You're here"));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -84,7 +99,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .bearing(90)                // Sets the orientation of the camera to east
                 .tilt(45)                   // Sets the tilt of the camera to  degrees
                 .build();                   // Creates a CameraPosition from the builder
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
     }
 
 }
