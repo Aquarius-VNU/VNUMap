@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <map>
-        <building>
-            <id>01</id>
-            <name>Giảng đường G2</name>
-             <x>21.038777</x>
-              <y>105.783318</y>
-        </building>
+    <building>
+        <id>01</id>
+        <name>Giảng đường G2</name>
+        <image>1</image>
+        <x>21.038777</x>
+        <y>105.783318</y>
+    </building>
 
     <building>
         <id>02</id>

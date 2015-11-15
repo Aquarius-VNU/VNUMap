@@ -8,14 +8,16 @@ import java.util.List;
 public class Building {
     private int id;
     private String name;
-    private List<String> rooms;
+    private List<Room> rooms;
     private Point location;
+    private int image;
 
-    public Building(int id, String name, List<String> rooms, Point location){
+    public Building(int id, String name, List<Room> rooms, Point location){
         this.id = id;
         this.name = name;
         this.rooms = rooms;
         this.location = location;
+        this.image = 0;
     }
 
     public int getId(){
@@ -30,8 +32,12 @@ public class Building {
         return location;
     }
 
-    public List<String> getRooms(){
+    public List<Room> getRooms(){
         return rooms;
+    }
+
+    public int getImage(){
+        return image;
     }
 
     public void setId(int id){
@@ -46,7 +52,11 @@ public class Building {
         this.location = location;
     }
 
-    public void setRooms(List<String> rooms){
+    public void setRooms(List<Room> rooms){
         this.rooms = rooms;
+    }
+
+    public void setImage(int image){
+        this.image = image;
     }
 }

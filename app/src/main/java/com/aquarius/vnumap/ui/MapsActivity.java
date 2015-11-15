@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.aquarius.vnumap.R;
+import com.aquarius.vnumap.controller.MainController;
+import com.aquarius.vnumap.model.Building;
+import com.aquarius.vnumap.model.Room;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,6 +20,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -28,6 +34,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        List<Building> list = MainController.getListBuilding(getResources().openRawResource(R.raw.map), getResources().openRawResource(R.raw.direction));
+        EditText editText = (EditText)findViewById(R.id.edtSearch);
+        editText.setText(list.get(0).getRooms().get(0).getInfo());
     }
 
     @Override
