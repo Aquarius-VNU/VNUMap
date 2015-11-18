@@ -70,6 +70,12 @@ public class XmlParse {
         return Integer.valueOf(priority);
     }
 
+    public int readType(XmlPullParser parser) throws XmlPullParserException, IOException{
+        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "type");
+        String type = readText(parser);
+        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "type");
+        return Integer.valueOf(type);
+    }
 
     public Building readBuilding(XmlPullParser parser) throws  XmlPullParserException, IOException{
         parser.require(XmlPullParser.START_TAG,NAME_SPACE, "building");
@@ -78,6 +84,7 @@ public class XmlParse {
         double x = 0.0;
         double y = 0.0;
         int priority = 0;
+        int type = 0;
 
         while(parser.next() != XmlPullParser.END_TAG){
             if(parser.getEventType() != XmlPullParser.START_TAG){
@@ -94,13 +101,15 @@ public class XmlParse {
                 y = readY(parser);
             }else if(nameParse.equals("priority")){
                 priority = readPriority(parser);
+            }else if(nameParse.equals("type")){
+                type = readType(parser);
             }
             else{
                 skip(parser);
             }
         }
         parser.require(XmlPullParser.END_TAG, NAME_SPACE, "building");
-        return new Building(id, name, null, new Point(x, y), priority);
+        return new Building(id, name, null, new Point(x, y), priority, type);
     }
 
     public List<Building> readMap(XmlPullParser xmlPullParser) throws  XmlPullParserException, IOException{

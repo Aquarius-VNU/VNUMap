@@ -13,17 +13,20 @@ public class Building {
     private int image;
     private int priority;
     private String description;
+    private int type;
+
     public Building(){
 
     }
 
-    public Building(int id, String name, List<Room> rooms, Point location, int priority) {
+    public Building(int id, String name, List<Room> rooms, Point location, int priority, int type) {
         this.id = id;
         this.name = name;
         this.rooms = rooms;
         this.location = location;
         this.image = 0;
         this.priority = priority;
+        this.type = type;
     }
 
     public int getId() {
@@ -54,6 +57,10 @@ public class Building {
         return description;
     }
 
+    public int getType() {
+        return type;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -80,5 +87,9 @@ public class Building {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }
