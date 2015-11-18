@@ -63,14 +63,11 @@ public class XmlParse {
         return Double.valueOf(y);
     }
 
-//  read location
-    public Point readLocation(XmlPullParser parser) throws XmlPullParserException, IOException{
-        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "location");
-        double x = readX(parser);
-        double y = readY(parser);
-
-        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "location");
-        return new Point(x, y);
+    public int readPriority(XmlPullParser parser) throws XmlPullParserException, IOException{
+        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "priority");
+        String priority = readText(parser);
+        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "priority");
+        return Integer.valueOf(priority);
     }
 
 
@@ -80,6 +77,8 @@ public class XmlParse {
         String name = null;
         double x = 0.0;
         double y = 0.0;
+        int priority = 0;
+
         while(parser.next() != XmlPullParser.END_TAG){
             if(parser.getEventType() != XmlPullParser.START_TAG){
                 continue;
@@ -93,13 +92,15 @@ public class XmlParse {
                 x = readX(parser);
             }else if(nameParse.equals("y")){
                 y = readY(parser);
+            }else if(nameParse.equals("priority")){
+                priority = readPriority(parser);
             }
             else{
                 skip(parser);
             }
         }
         parser.require(XmlPullParser.END_TAG, NAME_SPACE, "building");
-        return new Building(id, name, null, new Point(x, y));
+        return new Building(id, name, null, new Point(x, y), priority);
     }
 
     public List<Building> readMap(XmlPullParser xmlPullParser) throws  XmlPullParserException, IOException{

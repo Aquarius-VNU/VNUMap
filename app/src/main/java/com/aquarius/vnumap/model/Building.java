@@ -11,52 +11,62 @@ public class Building {
     private List<Room> rooms;
     private Point location;
     private int image;
+    private int priority;
 
-    public Building(int id, String name, List<Room> rooms, Point location){
+    public Building(int id, String name, List<Room> rooms, Point location, int priority) {
         this.id = id;
         this.name = name;
         this.rooms = rooms;
         this.location = location;
         this.image = 0;
+        this.priority = priority;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public Point getLocation(){
+    public Point getLocation() {
         return location;
     }
 
-    public List<Room> getRooms(){
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public int getImage(){
+    public int getImage() {
         return image;
     }
 
-    public void setId(int id){
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setLocation(Point location){
+    public void setLocation(Point location) {
         this.location = location;
     }
 
-    public void setRooms(List<Room> rooms){
+    public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
 
-    public void setImage(int image){
+    public void setImage(int image) {
         this.image = image;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }
