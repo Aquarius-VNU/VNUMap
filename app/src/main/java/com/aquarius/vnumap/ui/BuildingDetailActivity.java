@@ -29,6 +29,7 @@ public class BuildingDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_detail);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout)
@@ -71,13 +72,13 @@ public class BuildingDetailActivity extends AppCompatActivity {
 
     public void createFloorList(){
         listFloors = new ArrayList<Floors>();
-        listFloors.add(new Floors("Tầng 1", R.drawable.ic_01));
-        listFloors.add(new Floors("Tầng 2", R.drawable.ic_02));
-        listFloors.add(new Floors("Tầng 3", R.drawable.ic_03));
-        listFloors.add(new Floors("Tầng 4", R.drawable.ic_04));
-        listFloors.add(new Floors("Tầng 5", R.drawable.ic_05));
-        listFloors.add(new Floors("Tầng 6", R.drawable.ic_06));
-        listFloors.add(new Floors("Tầng 7", R.drawable.ic_07));
+        listFloors.add(new Floors("Tầng 1", R.drawable.launch_ic));
+        listFloors.add(new Floors("Tầng 2", R.drawable.launch_ic));
+        listFloors.add(new Floors("Tầng 3", R.drawable.launch_ic));
+        listFloors.add(new Floors("Tầng 4", R.drawable.launch_ic));
+        listFloors.add(new Floors("Tầng 5", R.drawable.launch_ic));
+        listFloors.add(new Floors("Tầng 6", R.drawable.launch_ic));
+        listFloors.add(new Floors("Tầng 7", R.drawable.launch_ic));
 
     }
 }
