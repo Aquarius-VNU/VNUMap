@@ -99,7 +99,7 @@ public class XmlParse {
             }
         }
         parser.require(XmlPullParser.END_TAG, NAME_SPACE, "building");
-        return new Building(id, name, null, new Point(x, y));
+        return new Building(id, name, null, null, new Point(x, y));
     }
 
     public List<Building> readMap(XmlPullParser xmlPullParser) throws  XmlPullParserException, IOException{
