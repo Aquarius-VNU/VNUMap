@@ -2,20 +2,15 @@ package com.aquarius.vnumap.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.model.Floors;
-import com.aquarius.vnumap.ui.BuildingDetailActivity;
-import com.aquarius.vnumap.ui.OnItemClickListener;
 
 import java.util.ArrayList;
 
@@ -78,6 +73,10 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
             clickListener.onItemClick(view, getPosition());
         }
 
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
     }
 }
 

@@ -12,6 +12,10 @@ public class Building {
     private Point location;
     private int image;
     private int priority;
+    private String description;
+    public Building(){
+
+    }
 
     public Building(int id, String name, List<Room> rooms, Point location, int priority) {
         this.id = id;
@@ -46,6 +50,10 @@ public class Building {
         return priority;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -68,5 +76,9 @@ public class Building {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
