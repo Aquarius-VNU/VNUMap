@@ -11,65 +11,85 @@ public class Building {
     private List<Room> rooms;
     private Point location;
     private int image;
+    private int priority;
     private String description;
+    private int type;
 
     public Building(){
 
     }
-    public Building(int id, String name, String description, List<Room> rooms, Point location){
+
+    public Building(int id, String name, List<Room> rooms, Point location, int priority, int type) {
         this.id = id;
         this.name = name;
         this.rooms = rooms;
         this.location = location;
         this.image = 0;
-        this.description = description;
+        this.priority = priority;
+        this.type = type;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public Point getLocation(){
+    public Point getLocation() {
         return location;
     }
 
-    public List<Room> getRooms(){
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public int getImage(){
+    public int getImage() {
         return image;
     }
 
-    public void setId(int id){
-        this.id = id;
+    public int getPriority() {
+        return priority;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public void setLocation(Point location){
-        this.location = location;
-    }
-
-    public void setRooms(List<Room> rooms){
-        this.rooms = rooms;
-    }
-
-    public void setImage(int image){
-        this.image = image;
-    }
-
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String des){
-        this.description = des;
+    public int getType() {
+        return type;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLocation(Point location) {
+        this.location = location;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

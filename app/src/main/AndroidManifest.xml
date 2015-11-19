@@ -41,7 +41,7 @@
         </activity>
         <activity
             android:name=".ui.BuildingActivity"
-            android:label="@string/title_activity_building">
+            android:label="@string/title_activity_building" >
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

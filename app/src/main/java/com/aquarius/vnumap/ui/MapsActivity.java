@@ -1,17 +1,24 @@
 package com.aquarius.vnumap.ui;
 
+import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.aquarius.vnumap.R;
+import com.aquarius.vnumap.adapter.ArrayBuildings;
+import com.aquarius.vnumap.adapter.LocationServices;
 import com.aquarius.vnumap.controller.MainController;
 import com.aquarius.vnumap.model.Building;
 import com.aquarius.vnumap.model.Room;
@@ -21,13 +28,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
-
+    private  static final double LATITUDE_CAMERA = 21.03844442;
+    private static final double LONGGITUDE_CAMERA = 105.78237534;
+    private  static final float ZOOM_CAMERA = 17.0f;
     private GoogleMap mMap;
+    private Location location = null;
+    private List<Marker> markerList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +49,40 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        FloatingActionButton fab_location = (FloatingActionButton)findViewById(R.id.fab_location);
+        fab_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                location = LocationServices.getInstance(MapsActivity.this.getBaseContext()).getLocation();
+                if(location != null) {
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("FUCK"));
+//                  delete all marker
+                    if(markerList.size() > 0){
+                        for(int i = 0 ; i < markerList.size() ; i++){
+                            markerList.get(i).setVisible(false);
+                        }
+                        markerList.clear();
+                    }
+//                  show buldings near location now
+                    List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(5, location);
+                    if(buildings != null) {
+                        for (int i = 0; i < buildings.size(); i++) {
+                            LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
+                            markerList.add(marker);
+                        }
+                    }
+
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                    builder.setTitle("VNUMap");
+                    builder.setMessage("Vui lòng kết nối Internet hoặc GPS");
+                    builder.setPositiveButton("Đồng ý", null);
+                    builder.show();
+                }
+            }
+        });
 
         List<Building> list = MainController.getListBuilding(getResources().openRawResource(R.raw.map), getResources().openRawResource(R.raw.direction));
         EditText editText = (EditText)findViewById(R.id.edtSearch);
@@ -87,19 +134,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        /*mMap.addMarker(new MarkerOptions().position(latLng).title("You're here"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
 
+//      add Marker
+        ArrayBuildings arrayBuildings = ArrayBuildings.getInstance(this);
+        List<Building> buildings = arrayBuildings.getBuildings(10);
+        if(buildings != null) {
+            for (int i = 0; i < buildings.size(); i++) {
+                LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
+                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
+                markerList.add(marker);
+            }
+        }
+
+//      setting camera
+        LatLng posCamera = new LatLng(LATITUDE_CAMERA, LONGGITUDE_CAMERA);
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)      // Sets the center of the map to location user
-                .zoom(16)                   // Sets the zoom
-                .bearing(90)                // Sets the orientation of the camera to east
-                .tilt(45)                   // Sets the tilt of the camera to  degrees
-                .build();                   // Creates a CameraPosition from the builder
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));*/
+                .target(posCamera)
+                .zoom(ZOOM_CAMERA)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
     }
 
 }
