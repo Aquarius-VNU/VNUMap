@@ -2,20 +2,17 @@ package com.aquarius.vnumap.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
+
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.model.Floors;
-import com.aquarius.vnumap.ui.BuildingDetailActivity;
-import com.aquarius.vnumap.ui.OnItemClickListener;
 
 import java.util.ArrayList;
 
@@ -25,6 +22,7 @@ import java.util.ArrayList;
 public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdapter.FloorViewHolder>{
     private Context context;
     private ArrayList<Floors> listFloors;
+    private int expandedPosition = -1;
     public RecyclerFloorAdapter(Context context, ArrayList<Floors> listFloors){
         this.context = context;
         this.listFloors = listFloors;
@@ -34,19 +32,34 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
     public FloorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.custom_list_floors_layout, parent, false);
-        FloorViewHolder viewHolder = new FloorViewHolder(context, view);
+        FloorViewHolder viewHolder = new FloorViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final FloorViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final FloorViewHolder holder, int position) {
         Floors floor = listFloors.get(position);
-        viewHolder.tvFloor.setText(floor.getName());
-        //viewHolder.imgFloor.setImageResource(floor.getIdImage());
-        viewHolder.setClickListener(new OnItemClickListener() {
+        holder.tvFloor.setText(floor.getName());
+
+        if (position == expandedPosition) {
+            holder.gridLayout.setVisibility(View.VISIBLE);
+        } else {
+            holder.gridLayout.setVisibility(View.GONE);
+        }
+        holder.setClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(context, "#" + position + " - " + listFloors.get(position).getName(), Toast.LENGTH_SHORT).show();
+
+                // Check for an expanded view, collapse if you find one
+                if (expandedPosition >= 0) {
+                    int prev = expandedPosition;
+                    notifyItemChanged(prev);
+                }
+                // Set the current position to "expanded"
+                expandedPosition = position;
+                notifyItemChanged(expandedPosition);
+
+                Toast.makeText(context, "#" + (position+1) + " - " + listFloors.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -58,15 +71,14 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
     }
 
     public static class FloorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private Context context;
         public TextView tvFloor;
         public ImageView imgFloor;
+        private GridLayout gridLayout;
         private OnItemClickListener clickListener;
-        FloorViewHolder(Context context, View itemView){
+        FloorViewHolder(View itemView){
             super(itemView);
-            this.context = context;
             tvFloor = (TextView) itemView.findViewById(R.id.floor_name);
-            //imgFloor = (ImageView) itemView.findViewById(R.id.imgFloor);
+            gridLayout = (GridLayout) itemView.findViewById(R.id.gridExpandArea);
             itemView.setOnClickListener(this);
         }
 
@@ -77,7 +89,10 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
         public void onClick(View view) {
             clickListener.onItemClick(view, getPosition());
         }
+    }
 
+    public interface OnItemClickListener{
+        public void onItemClick(View view, int position);
     }
 }
 
