@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.aquarius.vnumap.R;
@@ -23,8 +22,7 @@ public class BuildingDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerFloorAdapter adapter;
     private ArrayList<Floors> listFloors;
-    CollapsingToolbarLayout collapsingToolbar;
-    int mutedColor = R.attr.colorPrimary;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,33 +50,18 @@ public class BuildingDetailActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
     }
 
     public void createFloorList(){
         listFloors = new ArrayList<Floors>();
-        listFloors.add(new Floors("Tầng 1", R.drawable.launch_ic));
-        listFloors.add(new Floors("Tầng 2", R.drawable.launch_ic));
-        listFloors.add(new Floors("Tầng 3", R.drawable.launch_ic));
-        listFloors.add(new Floors("Tầng 4", R.drawable.launch_ic));
-        listFloors.add(new Floors("Tầng 5", R.drawable.launch_ic));
-        listFloors.add(new Floors("Tầng 6", R.drawable.launch_ic));
-        listFloors.add(new Floors("Tầng 7", R.drawable.launch_ic));
+        listFloors.add(new Floors("Tầng 1"));
+        listFloors.add(new Floors("Tầng 2"));
+        listFloors.add(new Floors("Tầng 3"));
+        listFloors.add(new Floors("Tầng 4"));
+        listFloors.add(new Floors("Tầng 5"));
+        listFloors.add(new Floors("Tầng 6"));
+        listFloors.add(new Floors("Tầng 7"));
 
     }
+
 }

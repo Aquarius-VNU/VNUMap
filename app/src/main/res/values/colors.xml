@@ -4,7 +4,9 @@
     <color name="blue">#1aa4dd</color>
     <color name="accent_material_light">#1aa4dd</color>
     <color name="primary_material_light">#1aa4dd</color>
-    <color name="primary_dark_material_light">#3989e5</color>
+    <color name="primary_dark_material_light">#0288d1</color>
     <color name="primary_500">#3F51B5</color>
     <color name="black_trans80">#14000000</color>
+    <color name="statusBarColor">#0288d1</color>
+    <color name="black">#0288d1</color>
 </resources>

@@ -2,29 +2,30 @@ package com.aquarius.vnumap.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.model.Floors;
-import com.aquarius.vnumap.ui.BuildingDetailActivity;
-import com.aquarius.vnumap.ui.OnItemClickListener;
+import com.aquarius.vnumap.model.Room;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by Nguyen Thi Cam Van on 11/14/2015.
  */
+
 public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdapter.FloorViewHolder>{
     private Context context;
     private ArrayList<Floors> listFloors;
+    private int expandedPosition = -1;
     public RecyclerFloorAdapter(Context context, ArrayList<Floors> listFloors){
         this.context = context;
         this.listFloors = listFloors;
@@ -34,7 +35,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
     public FloorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.custom_list_floors_layout, parent, false);
-        FloorViewHolder viewHolder = new FloorViewHolder(context, view);
+        FloorViewHolder viewHolder = new FloorViewHolder(view);
         return viewHolder;
     }
 
@@ -42,11 +43,25 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
     public void onBindViewHolder(final FloorViewHolder viewHolder, int position) {
         Floors floor = listFloors.get(position);
         viewHolder.tvFloor.setText(floor.getName());
-        //viewHolder.imgFloor.setImageResource(floor.getIdImage());
+        if(position == expandedPosition){
+            viewHolder.gridLayout.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            viewHolder.gridLayout.setVisibility(View.GONE);
+        }
         viewHolder.setClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(context, "#" + position + " - " + listFloors.get(position).getName(), Toast.LENGTH_SHORT).show();
+                if (expandedPosition >= 0) {
+                    int prev = expandedPosition;
+                    notifyItemChanged(prev);
+                }
+                // Set the current position to "expanded"
+                expandedPosition = position;
+                notifyItemChanged(expandedPosition);
+
+                Toast.makeText(context, "#" + (position+1) + " - " + listFloors.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -58,15 +73,16 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
     }
 
     public static class FloorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private Context context;
         public TextView tvFloor;
-        public ImageView imgFloor;
+        public GridLayout gridLayout;
         private OnItemClickListener clickListener;
-        FloorViewHolder(Context context, View itemView){
+        private ImageView imageView;
+        FloorViewHolder( View itemView){
             super(itemView);
-            this.context = context;
+
             tvFloor = (TextView) itemView.findViewById(R.id.floor_name);
-            //imgFloor = (ImageView) itemView.findViewById(R.id.imgFloor);
+            gridLayout = (GridLayout) itemView.findViewById(R.id.gridExpandArea);
+            imageView = (ImageView) itemView.findViewById(R.id.img_expand_toggle);
             itemView.setOnClickListener(this);
         }
 
@@ -78,6 +94,10 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
             clickListener.onItemClick(view, getPosition());
         }
 
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
     }
 }
 

@@ -3,6 +3,7 @@ package com.aquarius.vnumap.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,8 +71,8 @@ public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapte
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Building nature = mItems.get(i);
-        viewHolder.tvNature.setText(nature.getName());
-        viewHolder.tvDesNature.setText(nature.getDescription());
+        viewHolder.tvBuilding.setText(nature.getName());
+        viewHolder.tvDesBuilding.setText(nature.getDescription());
         viewHolder.imgThumbnail.setImageResource(nature.getImage());
     }
 
@@ -83,14 +84,14 @@ public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapte
     class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView imgThumbnail;
-        public TextView tvNature;
-        public TextView tvDesNature;
+        public TextView tvBuilding;
+        public TextView tvDesBuilding;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgThumbnail = (ImageView)itemView.findViewById(R.id.img_thumbnail);
-            tvNature = (TextView)itemView.findViewById(R.id.tv_nature);
-            tvDesNature = (TextView)itemView.findViewById(R.id.tv_des_nature);
+            tvBuilding = (TextView)itemView.findViewById(R.id.tv_building);
+            tvDesBuilding = (TextView)itemView.findViewById(R.id.tv_des_building);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
