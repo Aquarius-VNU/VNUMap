@@ -26,9 +26,7 @@ public class LocationServices implements LocationListener {
     private static boolean isNetworkOrGPS = false;
 
     public static LocationServices getInstance(Context context) {
-        if(ourInstance == null){
-            ourInstance = new LocationServices(context);
-        }
+        ourInstance = new LocationServices(context);
         return ourInstance;
     }
 

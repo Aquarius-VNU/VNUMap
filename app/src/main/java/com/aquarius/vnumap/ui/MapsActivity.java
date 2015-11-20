@@ -3,13 +3,18 @@ package com.aquarius.vnumap.ui;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Message;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,13 +39,25 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.logging.LogRecord;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+//  camera when location = null
     private  static final double LATITUDE_CAMERA = 21.03844442;
     private static final double LONGGITUDE_CAMERA = 105.78237534;
     private  static final float ZOOM_CAMERA = 17.0f;
+    private static final LatLng LEFT_BOTTOM_CONNER = new LatLng(21.036921, 105.781066);
+    private static final LatLng RIGHT_TOP_CONNER = new LatLng(21.040987, 105.785605);
     private GoogleMap mMap;
+//  variable contain location from GPS or NETWORK
     private Location location = null;
+//  marker of location
+    private Marker markerLocation = null;
+//  list all marker on the map
     private List<Marker> markerList = new ArrayList<>();
+//  use to manage thread
+    private Handler handler = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,31 +67,66 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+
+        handler = new Handler();
+//      update location 1s/1 turn
+        updateLocation();
+
         FloatingActionButton fab_location = (FloatingActionButton)findViewById(R.id.fab_location);
         fab_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                location = LocationServices.getInstance(MapsActivity.this.getBaseContext()).getLocation();
-                if(location != null) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("FUCK"));
-//                  delete all marker
-                    if(markerList.size() > 0){
-                        for(int i = 0 ; i < markerList.size() ; i++){
-                            markerList.get(i).setVisible(false);
-                        }
-                        markerList.clear();
-                    }
-//                  show buldings near location now
-                    List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(5, location);
-                    if(buildings != null) {
-                        for (int i = 0; i < buildings.size(); i++) {
-                            LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
-                            markerList.add(marker);
-                        }
-                    }
+//                21.040987, 105.785605
+//                21.036921, 105.781066
 
-                }else{
+//                  delete all marker
+                if (location != null) {
+//                  if location in VNU
+                    if(LEFT_BOTTOM_CONNER.latitude <= location.getLatitude() && location.getLatitude() <= RIGHT_TOP_CONNER.latitude
+                            && LEFT_BOTTOM_CONNER.longitude <= location.getLongitude() && location.getLongitude() <= RIGHT_TOP_CONNER.longitude) {
+                        if (markerList.size() > 0) {
+                            for (int i = 0; i < markerList.size(); i++) {
+                                markerList.get(i).setVisible(false);
+                            }
+                            markerList.clear();
+                        }
+//                      show buldings near location now
+                        List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(5, location);
+                        if (buildings != null) {
+                            for (int i = 0; i < buildings.size(); i++) {
+                                LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
+                                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
+                                markerList.add(marker);
+                            }
+                        }
+
+//                      move camera to location
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(new LatLng(location.getLatitude(), location.getLongitude()))
+                                .zoom(ZOOM_CAMERA)
+                                .build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                    }else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                        builder.setTitle("VNUMap");
+                        builder.setMessage("Bạn đang ở ngoài khuôn viên ĐHQG Hà Nội. Tìm chỉ đường tới đây ?");
+                        builder.setPositiveButton("Đồng ý", null);
+                        builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //move camera to location
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(new LatLng(location.getLatitude(), location.getLongitude()))
+                                        .zoom(ZOOM_CAMERA)
+                                        .build();
+                                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                            }
+                        });
+                        builder.show();
+                    }
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
                     builder.setTitle("VNUMap");
                     builder.setMessage("Vui lòng kết nối Internet hoặc GPS");
@@ -156,5 +208,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
     }
-
+    public void updateLocation(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    SystemClock.sleep(1000);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            location = LocationServices.getInstance(MapsActivity.this).getLocation();
+                            if (location != null) {
+                                Log.d("HANDLE", String.valueOf(location.getLatitude()));
+                                if(markerLocation != null){
+                                    markerLocation.setVisible(false);
+                                }
+                                markerLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("FUCK"));
+                            } else {
+                                Log.d("HANDLE", "null");
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        thread.start();
+    }
 }

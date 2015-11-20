@@ -74,6 +74,9 @@ public class XmlParse {
         parser.require(XmlPullParser.START_TAG, NAME_SPACE, "type");
         String type = readText(parser);
         parser.require(XmlPullParser.END_TAG, NAME_SPACE, "type");
+        if (type.equals("")){
+            return 0;
+        }
         return Integer.valueOf(type);
     }
 
