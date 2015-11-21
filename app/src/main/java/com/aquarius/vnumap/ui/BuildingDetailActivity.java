@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.adapter.RecyclerFloorAdapter;
@@ -23,6 +24,7 @@ public class BuildingDetailActivity extends AppCompatActivity {
     private RecyclerFloorAdapter adapter;
     private ArrayList<Floors> listFloors;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,11 @@ public class BuildingDetailActivity extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout)
                 findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
+
+        ImageView thumbImage = (ImageView) findViewById(R.id.header);
+        Bundle extras = this.getIntent().getExtras();
+        int image = extras.getInt("image");
+        thumbImage.setImageResource(image);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_direction);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +56,6 @@ public class BuildingDetailActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
     public void createFloorList(){
@@ -61,7 +67,6 @@ public class BuildingDetailActivity extends AppCompatActivity {
         listFloors.add(new Floors("Tầng 5"));
         listFloors.add(new Floors("Tầng 6"));
         listFloors.add(new Floors("Tầng 7"));
-
     }
 
 }

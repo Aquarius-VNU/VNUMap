@@ -20,9 +20,10 @@ import java.util.ArrayList;
  * Created by Nguyen Thi Cam Van on 11/14/2015.
  */
 public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdapter.FloorViewHolder>{
-    private Context context;
+    public Context context;
     private ArrayList<Floors> listFloors;
     private int expandedPosition = -1;
+
     public RecyclerFloorAdapter(Context context, ArrayList<Floors> listFloors){
         this.context = context;
         this.listFloors = listFloors;
@@ -72,8 +73,8 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
 
     public static class FloorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView tvFloor;
-        public ImageView imgFloor;
         private GridLayout gridLayout;
+        public ImageView thumbImage;
         private OnItemClickListener clickListener;
         FloorViewHolder(View itemView){
             super(itemView);

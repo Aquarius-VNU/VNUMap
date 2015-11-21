@@ -2,8 +2,8 @@ package com.aquarius.vnumap.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +23,7 @@ import java.util.List;
 public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapter.ViewHolder> {
 
     List<Building> mItems;
+    Bundle bundle = new Bundle();
     private Context context;
 
     public BuildingCardAdapter(Context context) {
@@ -70,10 +71,13 @@ public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        Building nature = mItems.get(i);
-        viewHolder.tvBuilding.setText(nature.getName());
-        viewHolder.tvDesBuilding.setText(nature.getDescription());
-        viewHolder.imgThumbnail.setImageResource(nature.getImage());
+        Building floor = mItems.get(i);
+        viewHolder.tvBuilding.setText(floor.getName());
+        viewHolder.tvDesBuilding.setText(floor.getDescription());
+        viewHolder.imgThumbnail.setImageResource(floor.getImage());
+        int image = floor.getImage();
+        bundle = new Bundle();
+        bundle.putInt("image", image);
     }
 
     @Override
@@ -87,7 +91,7 @@ public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapte
         public TextView tvBuilding;
         public TextView tvDesBuilding;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             imgThumbnail = (ImageView)itemView.findViewById(R.id.img_thumbnail);
             tvBuilding = (TextView)itemView.findViewById(R.id.tv_building);
@@ -95,7 +99,9 @@ public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity(new Intent(context, BuildingDetailActivity.class));
+                    Intent i = new Intent (context, BuildingDetailActivity.class);
+                    i.putExtras(bundle);
+                    context.startActivity(i);
                 }
             });
         }
