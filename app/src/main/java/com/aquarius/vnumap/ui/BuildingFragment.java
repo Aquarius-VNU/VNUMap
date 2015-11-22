@@ -6,12 +6,19 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.adapter.BuildingCardAdapter;
+import com.aquarius.vnumap.controller.MainController;
+import com.aquarius.vnumap.model.Building;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by DangDo on 11/22/2015.
@@ -46,10 +53,31 @@ public class BuildingFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        BuildingCardAdapter adapter = new BuildingCardAdapter(activity);
+        List<Building> buildings = getListBuiding();
+
+        BuildingCardAdapter adapter = new BuildingCardAdapter(activity, buildings);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return view;
+    }
+
+    private List<Building> getListBuiding(){
+        InputStream inputStreamMap =  getResources().openRawResource(R.raw.map);
+        InputStream inputStreamDirection =  getResources().openRawResource(R.raw.direction);
+        List<Building> buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
+
+        Bundle args = this.getArguments();
+        int tab = args.getInt("tab", 2);
+
+        if(tab != 2){
+            for(int i = 0; i < buildings.size(); i++)
+                if(buildings.get(i).getType() != tab) {
+                    buildings.remove(i);
+                    i--;
+                }
+        }
+
+        return buildings;
     }
 }

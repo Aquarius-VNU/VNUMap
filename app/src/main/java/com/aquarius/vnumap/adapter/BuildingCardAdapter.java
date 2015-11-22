@@ -26,39 +26,41 @@ public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapte
     Bundle bundle = new Bundle();
     private Context context;
 
-    public BuildingCardAdapter(Context context) {
+    public BuildingCardAdapter(Context context, List<Building> buildingList) {
         super();
         this.context = context;
-        mItems = new ArrayList<Building>();
-        Building building = new Building();
-        building.setName("Khoa ......");
-        building.setDescription("This is description");
-        building.setImage(R.drawable.baltoro_glacier);
-        mItems.add(building);
+        mItems = buildingList;
 
-        building = new Building();
-        building.setName("Khoa ........");
-        building.setDescription("This is description");
-        building.setImage(R.drawable.great_barrier_reef);
-        mItems.add(building);
-
-        building = new Building();
-        building.setName("Khoa .........");
-        building.setDescription("This is description");
-        building.setImage(R.drawable.aurora_borealis);
-        mItems.add(building);
-
-        building = new Building();
-        building.setName("Khoa ........");
-        building.setDescription("This is description");
-        building.setImage(R.drawable.grand_canyon);
-        mItems.add(building);
-
-        building = new Building();
-        building.setName("Khoa ........");
-        building.setDescription("This is description");
-        building.setImage(R.drawable.oto);
-        mItems.add(building);
+//        mItems = new ArrayList<Building>();
+//        Building building = new Building();
+//        building.setName("Khoa ......");
+//        building.setDescription("This is description");
+//        building.setImage(R.drawable.baltoro_glacier);
+//        mItems.add(building);
+//
+//        building = new Building();
+//        building.setName("Khoa ........");
+//        building.setDescription("This is description");
+//        building.setImage(R.drawable.great_barrier_reef);
+//        mItems.add(building);
+//
+//        building = new Building();
+//        building.setName("Khoa .........");
+//        building.setDescription("This is description");
+//        building.setImage(R.drawable.aurora_borealis);
+//        mItems.add(building);
+//
+//        building = new Building();
+//        building.setName("Khoa ........");
+//        building.setDescription("This is description");
+//        building.setImage(R.drawable.grand_canyon);
+//        mItems.add(building);
+//
+//        building = new Building();
+//        building.setName("Khoa ........");
+//        building.setDescription("This is description");
+//        building.setImage(R.drawable.oto);
+//        mItems.add(building);
     }
 
     @Override
