@@ -7,7 +7,7 @@
         <x>21.038777</x>
         <y>105.783318</y>
         <priority>1</priority>
-        <type></type>
+        <type>3</type>
     </building>
 
     <building>
@@ -16,7 +16,7 @@
         <x>21.03777</x>
         <y>105.78336</y>
         <priority>3</priority>
-        <type></type>
+        <type>1</type>
     </building>
 
     <building>
@@ -25,7 +25,7 @@
          <x>21.03785</x>
          <y>105.78297</y>
         <priority>4</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -34,7 +34,7 @@
         <x>21.03764</x>
         <y>105.78220</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -43,7 +43,7 @@
         <x>21.03740</x>
         <y>105.78203</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -52,7 +52,7 @@
         <x>21.03709</x>
         <y>105.78211</y>
         <priority>4</priority>
-        <type></type>
+        <type>1</type>
     </building>
 
     <building>
@@ -61,7 +61,7 @@
         <x>21.03735</x>
         <y>105.78155</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -70,7 +70,7 @@
         <x>21.03764</x>
         <y>105.78185</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -79,7 +79,7 @@
         <x>21.03788</x>
         <y>105.78219</y>
         <priority>4</priority>
-        <type></type>
+        <type>1</type>
     </building>
 
     <building>
@@ -88,7 +88,7 @@
         <x>21.03778</x>
         <y>105.78229</y>
         <priority>4</priority>
-        <type></type>
+        <type>1</type>
     </building>
 
     <building>
@@ -97,7 +97,7 @@
         <x>21.03797</x>
         <y>105.78230</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -106,7 +106,7 @@
         <x>21.03823</x>
         <y>105.78232</y>
         <priority>1</priority>
-        <type></type>
+        <type>3</type>
     </building>
 
     <building>
@@ -115,7 +115,7 @@
         <x>21.03832</x>
         <y>105.78248</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -124,7 +124,7 @@
         <x>21.03810</x>
         <y>105.78282</y>
         <priority>1</priority>
-        <type></type>
+        <type>3</type>
     </building>
 
     <building>
@@ -133,7 +133,7 @@
         <x>21.03813</x>
         <y>105.78268</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -142,7 +142,7 @@
         <x>21.03836</x>
         <y>105.78335</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -151,7 +151,7 @@
         <x>21.03859</x>
         <y>105.78313</y>
         <priority>3</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -160,7 +160,7 @@
         <x>21.03862</x>
         <y>105.78253</y>
         <priority>4</priority>
-        <type></type>
+        <type>1</type>
     </building>
 
     <building>
@@ -169,7 +169,7 @@
         <x>21.04073</x>
         <y>105.78279</y>
         <priority>1</priority>
-        <type></type>
+        <type>3</type>
     </building>
 
     <building>
@@ -178,7 +178,7 @@
         <x>21.04052</x>
         <y>105.78267</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -187,7 +187,7 @@
         <x>21.04030</x>
         <y>105.78273</y>
         <priority>3</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -196,7 +196,7 @@
         <x>21.03997</x>
         <y>105.78271</y>
         <priority>3</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -205,7 +205,7 @@
         <x>21.03951</x>
         <y>105.78293</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -214,7 +214,7 @@
         <x>21.03950</x>
         <y>105.78303</y>
         <priority>3</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -223,7 +223,7 @@
         <x>21.03971</x>
         <y>105.78198</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -232,7 +232,7 @@
         <x>21.03921</x>
         <y>105.78197</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -241,7 +241,7 @@
         <x>21.03912</x>
         <y>105.78228</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -250,7 +250,7 @@
         <x>21.03901</x>
         <y>105.78220</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -259,7 +259,7 @@
         <x>21.03866</x>
         <y>105.78235</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -268,7 +268,7 @@
         <x>21.03868</x>
         <y>105.78179</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -277,7 +277,7 @@
         <x>21.03910</x>
         <y>105.78258</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -286,7 +286,7 @@
         <x>21.03832</x>
         <y>105.78157</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -295,7 +295,7 @@
         <x>21.03855</x>
         <y>105.78154</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -304,7 +304,7 @@
         <x>21.03839</x>
         <y>105.78136</y>
         <priority>1</priority>
-        <type></type>
+        <type>2</type>
     </building>
 
     <building>
@@ -313,7 +313,7 @@
         <x>21.03808</x>
         <y>105.78159</y>
         <priority>2</priority>
-        <type></type>
+        <type>2</type>
     </building>
 </map>
 

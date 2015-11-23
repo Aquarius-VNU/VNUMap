@@ -1,5 +1,7 @@
 package com.aquarius.vnumap.model;
 
+import com.aquarius.vnumap.R;
+
 import java.util.List;
 
 /**
