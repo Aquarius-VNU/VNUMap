@@ -26,7 +26,8 @@ public class MainController {
 * id(int) - name(String) - rooms(List<Room>) - location(Point)
 * To get data, you must use :
 * getId() - getName()    - getRooms()          - getLocation()
-* Object Room include name, floor, info with method get and set
+* Object Room include name, floor, info and type with method get and set
+* Inside type is type of room such as study room, toilet, lab...
 * If a building hasn't any rooms, getRooms() return null
 ==================================================================================================*/
     public static List<Building> getListBuilding(InputStream inputStreamMap, InputStream inputStreamDirection){

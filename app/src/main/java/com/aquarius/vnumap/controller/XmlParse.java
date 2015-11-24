@@ -163,9 +163,10 @@ public class XmlParse {
         parser.require(XmlPullParser.START_TAG, NAME_SPACE, "room");
         String name = parser.getAttributeValue(NAME_SPACE, "name");
         int floor = Integer.valueOf(parser.getAttributeValue(NAME_SPACE, "floor"));
+        int type = Integer.valueOf(parser.getAttributeValue(NAME_SPACE, "type"));
         String info = readText(parser);
         parser.require(XmlPullParser.END_TAG, NAME_SPACE, "room");
-    return new Room(name, floor, info);
+    return new Room(name, floor, info, type);
 }
 
     //  read tag rooms
