@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+* id is id of buildings in map.xml
+* Each room element, type is type of room that you define such as 1:Study room, 2:WC, 3:Lab...
+* With data you define must declare constant
+-->
 <direction>
     <rooms id="1">
-        <room name="103" floor="1">
+        <room name="103" floor="1" type="1">
             Từ cửa chính bạn rẽ trái, đi qua dãy bàn tự học của sinh viên
             Phòng 103 nằm ở góc trong cùng
         </room>
-        <room name="105" floor="1">
+        <room name="105" floor="1" type="1">
             Từ cửa chính bạn nhìn sang bên phải, phòng 105 ngay trong tầm mắt bạn
         </room>
     </rooms>

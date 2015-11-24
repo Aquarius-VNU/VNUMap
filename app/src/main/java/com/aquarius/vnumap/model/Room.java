@@ -9,11 +9,13 @@ public class Room {
     private String name;
     private int floor;
     private String info;
+    private int type;
 
-    public Room(String name, int floor, String info){
+    public Room(String name, int floor, String info, int type){
         this.name = name;
         this.floor = floor;
         this.info = info;
+        this.type = type;
     }
 
     public String getName(){
@@ -28,6 +30,10 @@ public class Room {
         return this.info;
     }
 
+    public int getType() {
+        return type;
+    }
+
     public void setName(String name){
         this.name = name;
     }
@@ -39,7 +45,12 @@ public class Room {
     public void setInfo(String info){
         this.info = info;
     }
-//==================================================================================================
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    //==================================================================================================
     public static class Rooms{
         List<Room> rooms;
         int id;
