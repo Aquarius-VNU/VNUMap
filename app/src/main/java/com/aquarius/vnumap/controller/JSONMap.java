@@ -1,27 +1,34 @@
 package com.aquarius.vnumap.controller;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.BufferedReader;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Trac Quang Thinh on 21-Nov-15.
  */
 public class JSONMap {
-    private static final String key = "AIzaSyD5h-bZGHNZGkvth-BnS0PP7SdyubThj8s";
+    private static final String key = "AIzaSyBVtAuyOypVf1uhy4U-DO5UYnBZKDYh2IE";
 
     public JSONMap() {
     }
 
     //  provide url to get json
-    public String makeURL(double originLat, double originLong, double desLat, double desLong){
+    public static String makeURL(double originLat, double originLong, double desLat, double desLong){
         StringBuilder url = new StringBuilder();
-        url.append("http://maps.googleapis.com/maps/api/directions/json");
+        url.append("https://maps.googleapis.com/maps/api/directions/json");
 //      start
         url.append("?origin=");
         url.append(Double.toString(originLat));
@@ -39,39 +46,47 @@ public class JSONMap {
     }
 
     public String getJSONFromURL(String urlString){
-        InputStream inputStream = null;
-        HttpURLConnection httpURLConnection = null;
-//      connect and get json file from google
-        try{
-            URL url = new URL(urlString);
-            httpURLConnection = (HttpURLConnection)url.openConnection();
-            inputStream = httpURLConnection.getInputStream();
-
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }finally {
-            if(httpURLConnection != null){
-                httpURLConnection.disconnect();
-            }
-        }
 //      read file downloaded and convert to string
-        StringBuilder stringBuilder = new StringBuilder();
+        String result = null;
         try{
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"), 8);
-
-            String line;
-            while((line = bufferedReader.readLine()) != null){
-                stringBuilder.append(line + "\n");
-            }
-            inputStream.close();
-        }catch(UnsupportedEncodingException e){
-
+            result = new Scanner(new URL(urlString).openConnection().getInputStream()).useDelimiter("/z").next();
         }catch (IOException e){
-
+            e.printStackTrace();
         }
-        return stringBuilder.toString();
+        return result;
     }
+//  copyright : zeeshan0026 - stackoverflow
+    public static List<LatLng> decodePoly(String encoded) {
 
+        List<LatLng> poly = new ArrayList<>();
+        int index = 0, len = encoded.length();
+        int lat = 0, lng = 0;
+
+        while (index < len) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+
+            LatLng p = new LatLng( (((double) lat / 1E5)),
+                    (((double) lng / 1E5) ));
+            poly.add(p);
+        }
+
+        return poly;
+    }
 }

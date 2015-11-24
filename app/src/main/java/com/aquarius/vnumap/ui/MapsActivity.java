@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Handler;
@@ -24,6 +27,7 @@ import android.widget.ImageButton;
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.adapter.ArrayBuildings;
 import com.aquarius.vnumap.adapter.LocationServices;
+import com.aquarius.vnumap.controller.JSONMap;
 import com.aquarius.vnumap.controller.MainController;
 import com.aquarius.vnumap.model.Building;
 import com.aquarius.vnumap.model.Room;
@@ -35,6 +39,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +57,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private  static final float ZOOM_CAMERA = 17.0f;
     private static final LatLng LEFT_BOTTOM_CONNER = new LatLng(21.036921, 105.781066);
     private static final LatLng RIGHT_TOP_CONNER = new LatLng(21.040987, 105.785605);
+    private static final LatLng LOCATION_VNU = new LatLng(21.036787, 105.782040);
     private GoogleMap mMap;
 //  variable contain location from GPS or NETWORK
     private Location location = null;
@@ -112,7 +122,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
                         builder.setTitle("VNUMap");
                         builder.setMessage("Bạn đang ở ngoài khuôn viên ĐHQG Hà Nội. Tìm chỉ đường tới đây ?");
-                        builder.setPositiveButton("Đồng ý", null);
+                        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String url = JSONMap.makeURL(location.getLatitude(), location.getLongitude(), LOCATION_VNU.latitude, LOCATION_VNU.longitude);
+                                DownloadAndDrawPath downloadAndDrawPath = new DownloadAndDrawPath(url);
+                                downloadAndDrawPath.execute();
+                            }
+                        });
                         builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -234,4 +251,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         thread.start();
     }
+//  draw path on map
+    private void drawPath(String path){
+        try {
+            JSONObject jsonObject = new JSONObject(path);
+            Log.d("MAPDRAW", jsonObject.toString());
+            JSONArray jsonArray = jsonObject.getJSONArray("routes");
+            JSONObject routes = jsonArray.getJSONObject(0);
+            JSONObject overview_polyline = routes.getJSONObject("overview_polyline");
+            String polyline = overview_polyline.getString("points");
+            List<LatLng> latLngs = JSONMap.decodePoly(polyline);
+            mMap.addPolyline(new PolylineOptions().addAll(latLngs).width(13).color(Color.parseColor("#05b1fb")).geodesic(true));
+        }catch(JSONException e){
+            e.printStackTrace();
+
+        }
+    }
+
+    private class DownloadAndDrawPath extends AsyncTask<Void, Void, String>{
+        private String url = null;
+        DownloadAndDrawPath(String url){
+            this.url = url;
+        }
+        protected String doInBackground(Void... paramas){
+            JSONMap jsonMap = new JSONMap();
+            String result = jsonMap.getJSONFromURL(url);
+            Log.d("MAPDRAW", result);
+            return result;
+        }
+        protected  void onPostExecute(String result){
+            if(result != null) {
+                drawPath(result);
+            }
+        }
+    }
+
+
+
 }
