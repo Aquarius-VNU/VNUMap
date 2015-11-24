@@ -1,20 +1,26 @@
 package com.aquarius.vnumap.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.model.Floors;
+import com.aquarius.vnumap.model.Room;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nguyen Thi Cam Van on 11/14/2015.
@@ -43,9 +49,11 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
         holder.tvFloor.setText(floor.getName());
 
         if (position == expandedPosition) {
-            holder.gridLayout.setVisibility(View.VISIBLE);
+            holder.linearLayout.setVisibility(View.VISIBLE);
+            holder.image_expand_toggle.setImageResource(R.drawable.circle_minus);
         } else {
-            holder.gridLayout.setVisibility(View.GONE);
+            holder.linearLayout.setVisibility(View.GONE);
+            holder.image_expand_toggle.setImageResource(R.drawable.circle_plus);
         }
         holder.setClickListener(new OnItemClickListener() {
             @Override
@@ -73,13 +81,27 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
 
     public static class FloorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView tvFloor;
-        private GridLayout gridLayout;
-        public ImageView thumbImage;
+        private LinearLayout linearLayout;
+        public ImageView image_expand_toggle;
+        private GridView gridView;
+        private List<Room> roomList;
         private OnItemClickListener clickListener;
         FloorViewHolder(View itemView){
             super(itemView);
             tvFloor = (TextView) itemView.findViewById(R.id.floor_name);
-            gridLayout = (GridLayout) itemView.findViewById(R.id.gridExpandArea);
+
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.expanded_linear_layout);
+            roomList = new ArrayList<Room>();
+            roomList.add(new Room("Phong1", 1, null));
+            roomList.add(new Room("Phong1", 1, null));
+            roomList.add(new Room("Phong1", 1, null));
+            roomList.add(new Room("Phong1", 1, null));
+
+            GridRoomAdapter adapter = new GridRoomAdapter(itemView.getContext(), roomList);
+            gridView = (GridView) itemView.findViewById(R.id.gridExpandArea);
+            gridView.setAdapter(adapter);
+
+            image_expand_toggle = (ImageView) itemView.findViewById(R.id.img_expand_toggle);
             itemView.setOnClickListener(this);
         }
 
