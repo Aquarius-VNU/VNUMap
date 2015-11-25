@@ -5,69 +5,163 @@
     android:orientation="vertical"
     tools:context="com.aquarius.vnumap.ui.MapsActivity">
 
-    <fragment
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        tools:layout="@layout/activity_maps"
-        android:id="@+id/map"/>
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="70dp">
 
-    <LinearLayout
-        android:layout_alignTop="@+id/map"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="36dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        <RelativeLayout
+            android:id="@+id/sliding_layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edtSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@drawable/noborder"
-            android:hint="Tìm kiếm trên VNU Maps"
-            android:textSize="16dp"
-            android:padding="8dp"
-            android:singleLine="true"
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/activity_maps" />
 
-            />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/sliding_layout_main"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/round"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btnSearch"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="5dp"
-            android:background="@android:color/transparent"
-            android:src="@android:drawable/ic_menu_search" />
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@drawable/noborder"
+                    android:hint="Tìm kiếm trên VNU Maps"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textSize="16dp"
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignBottom="@+id/map"
-        android:layout_alignRight="@+id/map">
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:src="@android:drawable/ic_menu_mylocation" />
+                    />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_building"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="50dp"
-            android:src="@android:drawable/ic_dialog_map" />
-    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/btnSearch"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:padding="5dp"
+                    android:src="@android:drawable/ic_menu_search" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/map"
+                android:layout_alignRight="@+id/map"
+                android:orientation="vertical">
 
+                <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/fab_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_mylocation"
+                    app:borderWidth="0dp" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_building"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_building"
+
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/sliding_panel_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/sliding_panel_margin_left"
+                    android:layout_marginTop="@dimen/sliding_panel_margin_top"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/sliding_panel_txtViewName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hello"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sliding_panel_font_name_size" />
+
+                    <TextView
+                        android:id="@+id/sliding_panel_txtViewUniversity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hello"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/sliding_panel_font_university_size" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="@dimen/sliding_panel_height"
+                    android:layout_height="@dimen/sliding_panel_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/sliding_panel_margin_right_direction"
+                    android:background="@android:color/transparent"
+                    android:src="@android:drawable/ic_menu_directions" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/sliding_panel_margin_left"
+                    android:layout_marginTop="@dimen/sliding_panel_margin_top"
+                    android:text="Số điện thoại :"
+                    android:textSize="@dimen/sliding_panel_font_info_size"
+                    android:textColor="@android:color/secondary_text_light"/>
+                <ImageButton
+                    android:layout_width="@dimen/sliding_panel_height"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/sliding_panel_margin_right_direction"
+                    android:layout_marginTop="@dimen/sliding_panel_margin_top"
+                    android:src="@android:drawable/stat_sys_phone_call"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/sliding_panel_margin_left"
+                android:layout_marginTop="@dimen/sliding_panel_margin_top"
+                android:text="info"
+                android:textColor="@android:color/secondary_text_light"
+                android:textSize="@dimen/sliding_panel_font_info_size"
+                />
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 </RelativeLayout>

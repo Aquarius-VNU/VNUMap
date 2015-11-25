@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Outline;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,8 +24,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.adapter.ArrayBuildings;
@@ -40,6 +46,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +75,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //  use to manage thread
     private Handler handler = null;
 
+    SlidingUpPanelLayout slidingUpPanelLayout = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +102,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                  delete all marker
                 if (location != null) {
 //                  if location in VNU
-                    if(LEFT_BOTTOM_CONNER.latitude <= location.getLatitude() && location.getLatitude() <= RIGHT_TOP_CONNER.latitude
+                    if (LEFT_BOTTOM_CONNER.latitude <= location.getLatitude() && location.getLatitude() <= RIGHT_TOP_CONNER.latitude
                             && LEFT_BOTTOM_CONNER.longitude <= location.getLongitude() && location.getLongitude() <= RIGHT_TOP_CONNER.longitude) {
                         if (markerList.size() > 0) {
                             for (int i = 0; i < markerList.size(); i++) {
@@ -118,7 +127,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 .build();
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                    }else{
+                    } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
                         builder.setTitle("VNUMap");
                         builder.setMessage("Bạn đang ở ngoài khuôn viên ĐHQG Hà Nội. Tìm chỉ đường tới đây ?");
@@ -152,10 +161,66 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
+        fab_location.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
 
-        List<Building> list = MainController.getListBuilding(getResources().openRawResource(R.raw.map), getResources().openRawResource(R.raw.direction));
-        EditText editText = (EditText)findViewById(R.id.edtSearch);
-        editText.setText(list.get(0).getRooms().get(0).getInfo());
+        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_building);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapsActivity.this, BuildingActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+
+        slidingUpPanelLayout  = (SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
+        slidingUpPanelLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        slidingUpPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View view, float v) {
+                TextView textView = (TextView)findViewById(R.id.sliding_panel_txtViewName);
+                textView.setText(String.valueOf(v));
+                RelativeLayout header = (RelativeLayout)findViewById(R.id.sliding_panel_header);
+                TextView name = (TextView)findViewById(R.id.sliding_panel_txtViewName);
+                TextView university = (TextView)findViewById(R.id.sliding_panel_txtViewUniversity);
+                if(v > 0) {
+                    header.setBackgroundColor(getResources().getColor(R.color.blue));
+                    name.setTextColor(getResources().getColor(R.color.white));
+                    university.setTextColor(getResources().getColor(R.color.white));
+                }else{
+                    header.setBackgroundColor(Color.WHITE);
+                    name.setTextColor(Color.BLACK);
+                    university.setTextColor(getResources().getColor(R.color.button_material_dark));
+                }
+            }
+
+            @Override
+            public void onPanelCollapsed(View view) {
+
+            }
+
+            @Override
+            public void onPanelExpanded(View view) {
+
+            }
+
+            @Override
+            public void onPanelAnchored(View view) {
+
+            }
+
+            @Override
+            public void onPanelHidden(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -180,6 +245,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+//                slidingUpPanelLayout.set
+            }
+        });
 //      define to get location information
         LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {

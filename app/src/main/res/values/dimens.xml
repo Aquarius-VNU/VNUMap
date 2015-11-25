@@ -10,4 +10,12 @@
     <dimen name="fab_size">56dp</dimen>
     <dimen name="fab_size_small">40dp</dimen>
     <dimen name="fab_icon_size">24dp</dimen>
+
+    <dimen name="sliding_panel_height">70dp</dimen>
+    <dimen name="sliding_panel_font_name_size">20sp</dimen>
+    <dimen name="sliding_panel_font_university_size">13sp</dimen>
+    <dimen name="sliding_panel_margin_left">15dp</dimen>
+    <dimen name="sliding_panel_margin_top">15dp</dimen>
+    <dimen name="sliding_panel_margin_right_direction">16dp</dimen>
+    <dimen name="sliding_panel_font_info_size">15sp</dimen>
 </resources>
