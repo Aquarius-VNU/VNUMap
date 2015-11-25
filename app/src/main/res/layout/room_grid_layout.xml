@@ -1,173 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<GridLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:rowCount="4"
-    android:columnCount="4"
-    android:layout_width="fill_parent"
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:padding="6dp"
-    android:orientation="horizontal">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <ImageButton
-            android:id="@+id/btn1"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:scaleType="center"
-            android:src="@drawable/btn_door"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tv_room1"
-            android:layout_height="wrap_content"
-            android:text="Room 1"
-            android:layout_gravity="center_horizontal"
-            android:textSize="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <ImageButton
-            android:id="@+id/btn2"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:scaleType="center"
-            android:src="@drawable/btn_door"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tv_room2"
-            android:layout_height="wrap_content"
-            android:text="Room 2"
-            android:layout_gravity="center_horizontal"
-            android:textSize="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <ImageButton
-            android:id="@+id/btn3"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:scaleType="center"
-            android:src="@drawable/btn_door"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tv_room3"
-            android:layout_height="wrap_content"
-            android:text="Room 3"
-            android:layout_gravity="center_horizontal"
-            android:textSize="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <ImageButton
-            android:id="@+id/btn4"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:scaleType="center"
-            android:src="@drawable/btn_door"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tv_room4"
-            android:layout_height="wrap_content"
-            android:text="Room 4"
-            android:layout_gravity="center_horizontal"
-            android:textSize="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <ImageButton
-            android:id="@+id/btn5"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:scaleType="center"
-            android:src="@drawable/btn_door"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tv_room5"
-            android:layout_height="wrap_content"
-            android:text="Room 5"
-            android:layout_gravity="center_horizontal"
-            android:textSize="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <ImageButton
-            android:id="@+id/btn6"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:scaleType="center"
-            android:src="@drawable/btn_door"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tv_room6"
-            android:layout_height="wrap_content"
-            android:text="Room 6"
-            android:layout_gravity="center_horizontal"
-            android:textSize="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <ImageButton
-            android:id="@+id/btn7"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:scaleType="center"
-            android:src="@drawable/btn_door"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tv_room7"
-            android:layout_height="wrap_content"
-            android:text="Room 7"
-            android:layout_gravity="center_horizontal"
-            android:textSize="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-        <ImageButton
-            android:id="@+id/btn8"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:scaleType="center"
-            android:src="@drawable/btn_door"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tv_room8"
-            android:layout_height="wrap_content"
-            android:text="Room 8"
-            android:layout_gravity="center_horizontal"
-            android:textSize="12dp"/>
-    </LinearLayout>
-
-
-</GridLayout>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/expanded_linear_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".GridRoomFragment">
+    <GridView
+        android:id="@+id/gridExpandArea"
+        android:numColumns="auto_fit"
+        android:columnWidth="80dp"
+        android:stretchMode="columnWidth"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="12dp"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="8dp"
+        android:gravity="center"
+        android:padding="6dp"
+        android:orientation="horizontal">
+    </GridView>
+</LinearLayout>
