@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+* university : 1 - Thuoc QG, 2 - UET, 3 - ULIS, 4 - LAW, 5 - Medical,
+                6 - IS, 7 - Edu, 8 - UEB, 9 - HUE,
+
+-->
 <map>
     <building>
         <id>01</id>
@@ -8,24 +13,27 @@
         <y>105.783318</y>
         <priority>1</priority>
         <type>3</type>
+        <university>2</university>
     </building>
 
     <building>
         <id>02</id>
-        <name>Vườn nhãn G2</name>
+        <name>Vườn nhãn</name>
         <x>21.03777</x>
         <y>105.78336</y>
         <priority>3</priority>
         <type>1</type>
+        <university>9</university>
     </building>
 
     <building>
         <id>03</id>
-        <name>Trung tâm đào tạo và giáo dục quốc tế - Trường đại học kinh tế</name>
+        <name>Trung tâm đào tạo và giáo dục quốc tế</name>
          <x>21.03785</x>
          <y>105.78297</y>
         <priority>4</priority>
         <type>2</type>
+        <university>8</university>
     </building>
 
     <building>
@@ -35,15 +43,17 @@
         <y>105.78220</y>
         <priority>1</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
         <id>05</id>
-        <name>Trung tâm văn hóa ULIS - Jonathan KS.Choi</name>
+        <name>Trung tâm văn hóa Jonathan KS.Choi</name>
         <x>21.03740</x>
         <y>105.78203</y>
         <priority>2</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
@@ -53,6 +63,7 @@
         <y>105.78211</y>
         <priority>4</priority>
         <type>1</type>
+        <university>1</university>
     </building>
 
     <building>
@@ -62,6 +73,7 @@
         <y>105.78155</y>
         <priority>2</priority>
         <type>2</type>
+        <university>1</university>
     </building>
 
     <building>
@@ -71,6 +83,7 @@
         <y>105.78185</y>
         <priority>1</priority>
         <type>2</type>
+        <university>1</university>
     </building>
 
     <building>
@@ -80,6 +93,7 @@
         <y>105.78219</y>
         <priority>4</priority>
         <type>1</type>
+        <university>1</university>
     </building>
 
     <building>
@@ -89,15 +103,17 @@
         <y>105.78229</y>
         <priority>4</priority>
         <type>1</type>
+        <university>1</university>
     </building>
 
     <building>
         <id>11</id>
-        <name>Khoa luật</name>
+        <name>Khoa Luật</name>
         <x>21.03797</x>
         <y>105.78230</y>
         <priority>1</priority>
         <type>2</type>
+        <university>4</university>
     </building>
 
     <building>
@@ -107,6 +123,7 @@
         <y>105.78232</y>
         <priority>1</priority>
         <type>3</type>
+        <university>4</university>
     </building>
 
     <building>
@@ -116,42 +133,47 @@
         <y>105.78248</y>
         <priority>2</priority>
         <type>2</type>
+        <university>8</university>
     </building>
 
     <building>
         <id>14</id>
-        <name>Trường đại học công nghệ - E3</name>
+        <name>Tòa nhà E3</name>
         <x>21.03810</x>
         <y>105.78282</y>
         <priority>1</priority>
         <type>3</type>
+        <university>2</university>
     </building>
 
     <building>
         <id>15</id>
-        <name>Trường đại học kinh tế - E4</name>
+        <name>E4</name>
         <x>21.03813</x>
         <y>105.78268</y>
         <priority>1</priority>
         <type>2</type>
+        <university>8</university>
     </building>
 
     <building>
         <id>16</id>
-        <name>Trung tâm thông tin thư viện - C1T</name>
+        <name>Thư viện C1T</name>
         <x>21.03836</x>
         <y>105.78335</y>
         <priority>2</priority>
         <type>2</type>
+        <university>1</university>
     </building>
 
     <building>
         <id>17</id>
-        <name>Viện khoa học công nghệ và quan hệ quốc tế - Trường đại học sư phạm</name>
+        <name>Viện khoa học công nghệ và quan hệ quốc tế</name>
         <x>21.03859</x>
         <y>105.78313</y>
         <priority>3</priority>
         <type>2</type>
+        <university>9</university>
     </building>
 
     <building>
@@ -161,33 +183,37 @@
         <y>105.78253</y>
         <priority>4</priority>
         <type>1</type>
+        <university>1</university>
     </building>
 
     <building>
         <id>19</id>
-        <name>Giảng đường 2 - GĐ2</name>
+        <name>Giảng đường GĐ2</name>
         <x>21.04073</x>
         <y>105.78279</y>
         <priority>1</priority>
         <type>3</type>
+        <university>2</university>
     </building>
 
     <building>
         <id>20</id>
-        <name>Kí túc xá Ngoại ngữ</name>
+        <name>Kí túc xá Ngoại Ngữ</name>
         <x>21.04052</x>
         <y>105.78267</y>
         <priority>1</priority>
         <type>2</type>
+        <university>1</university>
     </building>
 
     <building>
         <id>21</id>
-        <name>Trường THPT chuyên ngoại ngữ</name>
+        <name>Trường THPT chuyên Ngoại Ngữ</name>
         <x>21.04030</x>
         <y>105.78273</y>
         <priority>3</priority>
         <type>2</type>
+        <university>4</university>
     </building>
 
     <building>
@@ -197,6 +223,7 @@
         <y>105.78271</y>
         <priority>3</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
@@ -206,6 +233,7 @@
         <y>105.78293</y>
         <priority>2</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
@@ -215,60 +243,67 @@
         <y>105.78303</y>
         <priority>3</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
         <id>25</id>
-        <name>Khu liên hợp thể thao - Trường đại học ngoại ngữ</name>
+        <name>Khu liên hợp thể thao</name>
         <x>21.03971</x>
         <y>105.78198</y>
         <priority>1</priority>
         <type>2</type>
+        <university>1</university>
     </building>
 
     <building>
         <id>26</id>
-        <name>Nhà C1 - Khoa Pháp</name>
+        <name>Nhà C1</name>
         <x>21.03921</x>
         <y>105.78197</y>
         <priority>2</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
         <id>27</id>
-        <name>Nhà C5 - Khoa Pháp</name>
+        <name>Nhà C5</name>
         <x>21.03912</x>
         <y>105.78228</y>
         <priority>2</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
         <id>28</id>
-        <name>Nhà C3 - Khoa Pháp</name>
+        <name>Nhà C3</name>
         <x>21.03901</x>
         <y>105.78220</y>
         <priority>2</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
         <id>29</id>
-        <name>Nhà C4 - Khoa Pháp</name>
+        <name>Nhà C4</name>
         <x>21.03866</x>
         <y>105.78235</y>
         <priority>2</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
         <id>30</id>
-        <name>Nhà C2 - Khoa Pháp</name>
+        <name>Nhà C2</name>
         <x>21.03868</x>
         <y>105.78179</y>
         <priority>2</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
@@ -278,6 +313,7 @@
         <y>105.78258</y>
         <priority>1</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
@@ -287,24 +323,27 @@
         <y>105.78157</y>
         <priority>2</priority>
         <type>2</type>
+        <university>3</university>
     </building>
 
     <building>
         <id>33</id>
-        <name>Trường đại học giáo dục</name>
+        <name>Trường đại học Giáo Dục</name>
         <x>21.03855</x>
         <y>105.78154</y>
         <priority>1</priority>
         <type>2</type>
+        <university>7</university>
     </building>
 
     <building>
         <id>34</id>
-        <name>Khoa Quốc tế</name>
+        <name>Tòa nhà G8</name>
         <x>21.03839</x>
         <y>105.78136</y>
         <priority>1</priority>
         <type>2</type>
+        <university>6</university>
     </building>
 
     <building>
@@ -314,6 +353,7 @@
         <y>105.78159</y>
         <priority>2</priority>
         <type>2</type>
+        <university>6</university>
     </building>
 </map>
 
