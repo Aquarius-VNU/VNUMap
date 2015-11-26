@@ -18,10 +18,11 @@ import java.util.List;
  * Created by Trac Quang Thinh on 17-Nov-15.
  */
 /*
-* Class is a stack include building object
+* Class is a array include building object
 * It will sort building that depends priority attribute
 * Class include method Search
 * After search, result will include MAXSIZE - 1 and 1 elements of search result
+* get by location, id
 * */
 public class ArrayBuildings {
     private static ArrayBuildings ourInstance = null;
@@ -82,5 +83,14 @@ public class ArrayBuildings {
             }
         }
         return buildings;
+    }
+
+    public Building getBuildingById(int id){
+        for(int i = 0 ; i < buildingArray.size() ; i++){
+            if(buildingArray.get(i).getId() == id){
+                return buildingArray.get(i);
+            }
+        }
+        return null;
     }
 }

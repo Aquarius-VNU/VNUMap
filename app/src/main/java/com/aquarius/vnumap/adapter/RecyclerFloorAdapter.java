@@ -92,10 +92,10 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.expanded_linear_layout);
             roomList = new ArrayList<Room>();
+            /*roomList.add(new Room("Phong1", 1, null));
             roomList.add(new Room("Phong1", 1, null));
             roomList.add(new Room("Phong1", 1, null));
-            roomList.add(new Room("Phong1", 1, null));
-            roomList.add(new Room("Phong1", 1, null));
+            roomList.add(new Room("Phong1", 1, null));*/
 
             GridRoomAdapter adapter = new GridRoomAdapter(itemView.getContext(), roomList);
             gridView = (GridView) itemView.findViewById(R.id.gridExpandArea);

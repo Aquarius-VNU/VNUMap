@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.adapter.ArrayBuildings;
 import com.aquarius.vnumap.adapter.LocationServices;
+import com.aquarius.vnumap.adapter.MapMarker;
 import com.aquarius.vnumap.controller.JSONMap;
 import com.aquarius.vnumap.controller.MainController;
 import com.aquarius.vnumap.model.Building;
@@ -65,13 +66,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final LatLng LEFT_BOTTOM_CONNER = new LatLng(21.036921, 105.781066);
     private static final LatLng RIGHT_TOP_CONNER = new LatLng(21.040987, 105.785605);
     private static final LatLng LOCATION_VNU = new LatLng(21.036787, 105.782040);
+    private static final String[] UNIVERSITY_STRINGS={"Đại học Quốc Gia Hà Nội", "Đại học Công Nghệ - ĐHQG Hà Nội",
+            "Đại học Ngoại Ngữ - ĐHQG Hà Nội", "Khoa Luật - ĐHQG Hà Nội", "Khoa Y Dược - ĐHQG Hà Nội",
+            "Khoa Quốc Tế - ĐHQG Hà Nội", "Đại học Giáo Dục - ĐHQG Hà Nội", "Đại học Kinh Tế - ĐHQG Hà Nội", "Đại học Sư Phạm Hà Nội"};
     private GoogleMap mMap;
 //  variable contain location from GPS or NETWORK
     private Location location = null;
 //  marker of location
     private Marker markerLocation = null;
 //  list all marker on the map
-    private List<Marker> markerList = new ArrayList<>();
+    private List<MapMarker> markerList = new ArrayList<>();
 //  use to manage thread
     private Handler handler = null;
 
@@ -106,19 +110,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             && LEFT_BOTTOM_CONNER.longitude <= location.getLongitude() && location.getLongitude() <= RIGHT_TOP_CONNER.longitude) {
                         if (markerList.size() > 0) {
                             for (int i = 0; i < markerList.size(); i++) {
-                                markerList.get(i).setVisible(false);
+                                markerList.get(i).getMarker().setVisible(false);
                             }
                             markerList.clear();
                         }
 //                      show buldings near location now
                         List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(5, location);
-                        if (buildings != null) {
-                            for (int i = 0; i < buildings.size(); i++) {
-                                LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
-                                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
-                                markerList.add(marker);
-                            }
-                        }
+                        addMarker(buildings);
 
 //                      move camera to location
                         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -176,17 +174,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         slidingUpPanelLayout  = (SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
-        slidingUpPanelLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
         slidingUpPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View view, float v) {
                 TextView textView = (TextView)findViewById(R.id.sliding_panel_txtViewName);
-                textView.setText(String.valueOf(v));
                 RelativeLayout header = (RelativeLayout)findViewById(R.id.sliding_panel_header);
                 TextView name = (TextView)findViewById(R.id.sliding_panel_txtViewName);
                 TextView university = (TextView)findViewById(R.id.sliding_panel_txtViewUniversity);
@@ -249,44 +241,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onMapClick(LatLng latLng) {
 
-//                slidingUpPanelLayout.set
+                slidingUpPanelLayout.setPanelHeight(0);
             }
         });
-//      define to get location information
-        LocationManager locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
 
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-
-            }
-        };
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
 //      add Marker
         ArrayBuildings arrayBuildings = ArrayBuildings.getInstance(this);
         List<Building> buildings = arrayBuildings.getBuildings(10);
-        if(buildings != null) {
-            for (int i = 0; i < buildings.size(); i++) {
-                LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
-                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
-                markerList.add(marker);
-            }
-        }
+        addMarker(buildings);
 
 //      setting camera
         LatLng posCamera = new LatLng(LATITUDE_CAMERA, LONGGITUDE_CAMERA);
@@ -296,7 +260,47 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                for(int i = 0 ; i < markerList.size() ; i++){
+                    if(marker.equals(markerList.get(i).getMarker())){
+                        Building building = ArrayBuildings.getInstance(MapsActivity.this).getBuildingById(markerList.get(i).getId());
+                        if(building != null){
+                            TextView name = (TextView)findViewById(R.id.sliding_panel_txtViewName);
+                            name.setText(String.valueOf(building.getName()));
+                            TextView university = (TextView)findViewById(R.id.sliding_panel_txtViewUniversity);
+                            if(building.getUniversity() > 0){
+                                if(building.getUniversity() <= UNIVERSITY_STRINGS.length){
+                                    university.setText(String.valueOf(UNIVERSITY_STRINGS[building.getUniversity() - 1]));
+                                }else{
+                                    university.setText(String.valueOf(UNIVERSITY_STRINGS[0]));
+                                }
+                            }else{
+                                university.setText(String.valueOf(UNIVERSITY_STRINGS[0]));
+                            }
+                        }
+                        slidingUpPanelLayout.setPanelHeight(140);
+                        break;
+                    }
+                }
+                return true;
+
+            }
+        });
     }
+
+//  add Marker and set method on click to show sliding panel
+    public void addMarker(List<Building> buildings){
+        if(buildings != null) {
+            for (int i = 0; i < buildings.size(); i++) {
+                LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
+                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
+                markerList.add(new MapMarker(buildings.get(i).getId(), marker));
+            }
+        }
+    }
+
     public void updateLocation(){
         Thread thread = new Thread(new Runnable() {
             @Override
