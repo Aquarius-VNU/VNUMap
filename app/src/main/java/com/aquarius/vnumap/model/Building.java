@@ -1,5 +1,7 @@
 package com.aquarius.vnumap.model;
 
+import android.content.res.Resources;
+
 import com.aquarius.vnumap.R;
 
 import java.util.List;
@@ -7,6 +9,9 @@ import java.util.List;
 /**
  * Created by Trac Quang Thinh on 09-Nov-15.
  */
+
+
+
 public class Building {
     private int id;
     private String name;
@@ -18,12 +23,27 @@ public class Building {
     private int type;
     private int university;
 
+    private final static Integer[] imageId = {
+            0, R.drawable.image01, 0, 0, R.drawable.image04,
+            R.drawable.image05, 0, R.drawable.image07, 0, 0,
+            0, R.drawable.image11, 0, 0, R.drawable.image14,
+            R.drawable.image15, 0, 0, 0, R.drawable.image19,
+            R.drawable.image20, 0, R.drawable.image22, R.drawable.image23, R.drawable.image24,
+            R.drawable.image25, R.drawable.image26, R.drawable.image27, R.drawable.image28, R.drawable.image29,
+            0, 0, R.drawable.image32, 0, 0,
+            R.drawable.image35
+    };
+
+    public Building(){
+
+    }
+
     public Building(int id, String name, List<Room> rooms, Point location, int priority, int type, int university) {
         this.id = id;
         this.name = name;
         this.rooms = rooms;
         this.location = location;
-        this.image = 0;
+        this.image = imageId[id];
         this.priority = priority;
         this.type = type;
         this.university = university;
