@@ -4,15 +4,24 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/expanded_linear_layout"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".GridRoomFragment">
+    <TextView
+        android:id="@+id/titleFloor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Tầng"
+        android:textSize="22sp"
+        android:textColor="@color/blue"/>
     <GridView
         android:id="@+id/gridExpandArea"
         android:numColumns="auto_fit"
         android:columnWidth="80dp"
         android:stretchMode="columnWidth"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="8dp"

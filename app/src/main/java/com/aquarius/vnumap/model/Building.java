@@ -18,10 +18,6 @@ public class Building {
     private int type;
     private int university;
 
-    public Building(){
-
-    }
-
     public Building(int id, String name, List<Room> rooms, Point location, int priority, int type, int university) {
         this.id = id;
         this.name = name;
