@@ -1,9 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.aquarius.vnumap.ui.MapsActivity">
+    tools:context="com.aquarius.vnumap.ui.MapsActivity"
+    android:animateLayoutChanges="true">
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sliding_layout"
@@ -30,7 +32,7 @@
                 android:layout_height="@dimen/search_box_height"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/round"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -38,7 +40,7 @@
                     android:layout_width="@dimen/search_box_height"
                     android:layout_height="@dimen/search_box_height"
                     android:layout_marginLeft="@dimen/search_box_margin_left"
-                    android:src="@android:drawable/ic_menu_sort_by_size"
+                    android:src="@drawable/ic_menu"
                     android:background="@android:color/white"/>
                 <EditText
                     android:id="@+id/edtSearch"
@@ -133,7 +135,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/sliding_panel_margin_right_direction"
                     android:background="@android:color/transparent"
-                    android:src="@android:drawable/ic_menu_directions" />
+                    android:src="@drawable/ic_directions" />
 
             </RelativeLayout>
             <RelativeLayout
@@ -153,8 +155,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/sliding_panel_margin_right_direction"
-                    android:layout_marginTop="@dimen/sliding_panel_margin_top"
-                    android:src="@android:drawable/stat_sys_phone_call"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_phone"
                     />
             </RelativeLayout>
             <TextView

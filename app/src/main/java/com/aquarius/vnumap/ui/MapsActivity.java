@@ -1,5 +1,8 @@
 package com.aquarius.vnumap.ui;
 
+import android.animation.Animator;
+import android.animation.LayoutTransition;
+import android.animation.TimeInterpolator;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
@@ -21,9 +24,11 @@ import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,6 +47,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -57,6 +63,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.logging.LogRecord;
+import java.util.zip.Inflater;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 //  camera when location = null
@@ -79,12 +86,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //  use to manage thread
     private Handler handler = null;
 
+    private ViewGroup mContainer;
+
     SlidingUpPanelLayout slidingUpPanelLayout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -213,6 +223,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
+
+        mContainer = (ViewGroup)findViewById(R.id.map_container);
+        LayoutTransition transition =new LayoutTransition();
+
+        transition.setAnimator(LayoutTransition.APPEARING,null);
+        mContainer.setLayoutTransition(transition);
+        EditText edtSearch = (EditText)findViewById(R.id.edtSearch);
+        edtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(MapsActivity.this).inflate(R.layout.list_item_search, mContainer, false);
+                mContainer.addView(viewGroup);
+            }
+        });
     }
 
     @Override
@@ -316,7 +340,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 if(markerLocation != null){
                                     markerLocation.setVisible(false);
                                 }
-                                markerLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("FUCK"));
+                                markerLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location)).title("FUCK"));
                             } else {
                                 Log.d("HANDLE", "null");
                             }

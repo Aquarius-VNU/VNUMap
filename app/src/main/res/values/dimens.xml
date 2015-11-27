@@ -19,7 +19,7 @@
     <dimen name="sliding_panel_margin_right_direction">16dp</dimen>
     <dimen name="sliding_panel_font_info_size">15sp</dimen>
 
-    <dimen name="search_box_height">40dp</dimen>
+    <dimen name="search_box_height">55dp</dimen>
     <dimen name="search_box_margin_left">5dp</dimen>
     <dimen name="search_box_margin_right">5dp</dimen>
 </resources>
