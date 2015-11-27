@@ -1,5 +1,6 @@
 package com.aquarius.vnumap.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,6 +67,10 @@ public class Room {
 
         public List<Room> getRooms(){
             return this.rooms;
+        }
+
+        public int getSize(){
+            return rooms.size();
         }
     }
 }

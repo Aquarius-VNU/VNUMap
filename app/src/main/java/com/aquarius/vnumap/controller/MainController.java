@@ -50,7 +50,7 @@ public class MainController {
         return list;
     }
     //provide list of rooms
-    private static List<Room.Rooms> getRooms(InputStream inputStream){
+    public static List<Room.Rooms> getRooms(InputStream inputStream){
         List<Room.Rooms> list = null;
         try{
             if(inputStream != null){

@@ -16,9 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aquarius.vnumap.R;
+import com.aquarius.vnumap.controller.MainController;
+import com.aquarius.vnumap.model.Building;
 import com.aquarius.vnumap.model.Floors;
 import com.aquarius.vnumap.model.Room;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +50,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
     public void onBindViewHolder(final FloorViewHolder holder, int position) {
         Floors floor = listFloors.get(position);
         holder.tvFloor.setText(floor.getName());
+        holder.titleFloor.setText(floor.getName());
 
         if (position == expandedPosition) {
             holder.linearLayout.setVisibility(View.VISIBLE);
@@ -81,6 +85,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
 
     public static class FloorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView tvFloor;
+        public TextView titleFloor;
         private LinearLayout linearLayout;
         public ImageView image_expand_toggle;
         private GridView gridView;
@@ -91,14 +96,17 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
             tvFloor = (TextView) itemView.findViewById(R.id.floor_name);
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.expanded_linear_layout);
+
+            InputStream inputStreamDirection =  itemView.getContext()
+                    .getResources().openRawResource(R.raw.direction);
+            List<Room.Rooms> rooms = MainController.getRooms(inputStreamDirection);
+
             roomList = new ArrayList<Room>();
-            /*roomList.add(new Room("Phong1", 1, null));
-            roomList.add(new Room("Phong1", 1, null));
-            roomList.add(new Room("Phong1", 1, null));
-            roomList.add(new Room("Phong1", 1, null));*/
+            roomList = rooms.get(0).getRooms();
 
             GridRoomAdapter adapter = new GridRoomAdapter(itemView.getContext(), roomList);
             gridView = (GridView) itemView.findViewById(R.id.gridExpandArea);
+            titleFloor = (TextView) itemView.findViewById(R.id.titleFloor);
             gridView.setAdapter(adapter);
 
             image_expand_toggle = (ImageView) itemView.findViewById(R.id.img_expand_toggle);

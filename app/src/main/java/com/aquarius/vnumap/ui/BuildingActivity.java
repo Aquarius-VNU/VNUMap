@@ -1,6 +1,7 @@
 package com.aquarius.vnumap.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,6 +38,14 @@ public class BuildingActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BuildingActivity.this, MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         setupViewPager(viewPager);

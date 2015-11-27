@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by Nguyen Thi Cam Van on 11/24/2015.
  */
-public class GridRoomAdapter extends BaseAdapter {
+public class GridRoomAdapter extends BaseAdapter implements AdapterView.OnItemClickListener{
     private Context context;
     private List<Room> roomList;
     public GridRoomAdapter(Context context, List<Room> roomList){
@@ -50,6 +51,7 @@ public class GridRoomAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.ivIcon);
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+            viewHolder.header = (ImageView) convertView.findViewById(R.id.header);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -63,7 +65,13 @@ public class GridRoomAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        ImageView ivIcon;
-        TextView tvTitle;
+        public ImageView ivIcon;
+        public TextView tvTitle;
+        public ImageView header;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }

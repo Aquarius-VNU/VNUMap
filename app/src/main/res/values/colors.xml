@@ -8,5 +8,5 @@
     <color name="primary_500">#3F51B5</color>
     <color name="black_trans80">#14000000</color>
     <color name="statusBarColor">#0288d1</color>
-    <color name="black">#0288d1</color>
+    <color name="black">#000</color>
 </resources>
