@@ -14,9 +14,14 @@ import android.widget.ImageView;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.adapter.RecyclerFloorAdapter;
+import com.aquarius.vnumap.controller.MainController;
+import com.aquarius.vnumap.model.Building;
 import com.aquarius.vnumap.model.Floors;
+import com.aquarius.vnumap.model.Room;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BuildingDetailActivity extends AppCompatActivity {
 
@@ -37,9 +42,14 @@ public class BuildingDetailActivity extends AppCompatActivity {
         toolBarLayout.setTitle(getTitle());
 
         ImageView thumbImage = (ImageView) findViewById(R.id.header);
+        InputStream inputStreamMap =  getResources().openRawResource(R.raw.map);
+        InputStream inputStreamDirection =  getResources().openRawResource(R.raw.direction);
+        List<Building> buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
+
         Bundle extras = this.getIntent().getExtras();
-        int image = extras.getInt("image");
-        thumbImage.setImageResource(image);
+        int i = extras.getInt("image");
+        Building building = buildings.get(i);
+        thumbImage.setImageResource(building.getImage());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_direction);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +60,8 @@ public class BuildingDetailActivity extends AppCompatActivity {
             }
         });
 
-        createFloorList();
+        listFloors = new ArrayList<>();
+
         adapter = new RecyclerFloorAdapter(this, listFloors);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
@@ -58,15 +69,5 @@ public class BuildingDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void createFloorList(){
-        listFloors = new ArrayList<Floors>();
-        listFloors.add(new Floors("Tầng 1"));
-        listFloors.add(new Floors("Tầng 2"));
-        listFloors.add(new Floors("Tầng 3"));
-        listFloors.add(new Floors("Tầng 4"));
-        listFloors.add(new Floors("Tầng 5"));
-        listFloors.add(new Floors("Tầng 6"));
-        listFloors.add(new Floors("Tầng 7"));
-    }
 
 }
