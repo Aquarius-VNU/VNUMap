@@ -114,7 +114,7 @@ public class BuildingFragment extends Fragment {
         public void onBindViewHolder(ViewHolder viewHolder, int i) {
             Building floor = mItems.get(i);
             viewHolder.tvBuilding.setText(floor.getName());
-            viewHolder.tvDesBuilding.setText(floor.getDescription());
+//            viewHolder.tvDesBuilding.setText(floor.getDescription());
 //            viewHolder.imgThumbnail.setImageResource(floor.getImage());
             loadBitmap(floor.getImage(), viewHolder.imgThumbnail);
             int image = floor.getImage();
@@ -131,13 +131,13 @@ public class BuildingFragment extends Fragment {
 
             public ImageView imgThumbnail;
             public TextView tvBuilding;
-            public TextView tvDesBuilding;
+//            public TextView tvDesBuilding;
 
             public ViewHolder(final View itemView) {
                 super(itemView);
                 imgThumbnail = (ImageView)itemView.findViewById(R.id.img_thumbnail);
                 tvBuilding = (TextView)itemView.findViewById(R.id.tv_building);
-                tvDesBuilding = (TextView)itemView.findViewById(R.id.tv_des_building);
+//                tvDesBuilding = (TextView)itemView.findViewById(R.id.tv_des_building);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
