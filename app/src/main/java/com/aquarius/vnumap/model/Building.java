@@ -23,7 +23,7 @@ public class Building {
     private int type;
     private int university;
 
-    private final static Integer[] imageId = {
+    private static final Integer[] imageId = {
             0, R.drawable.image01, 0, 0, R.drawable.image04,
             R.drawable.image05, 0, R.drawable.image07, 0, 0,
             0, R.drawable.image11, 0, 0, R.drawable.image14,
