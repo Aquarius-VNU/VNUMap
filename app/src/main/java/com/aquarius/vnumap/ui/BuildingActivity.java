@@ -24,6 +24,8 @@ public class BuildingActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private final static Integer[] tabs = {
+            R.drawable.ic_other, R.drawable.ic_popular, R.drawable.ic_my_school };
 
 
     @Override
@@ -45,9 +47,9 @@ public class BuildingActivity extends AppCompatActivity {
         viewPager = (ViewPager)findViewById(R.id.view_pager);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(BuildingActivity.this, getSupportFragmentManager());
-        adapter.addFragment(BuildingFragment.newInstance(1), "One");
-        adapter.addFragment(BuildingFragment.newInstance(2), "Two");
-        adapter.addFragment(BuildingFragment.newInstance(3), "Three");
+        adapter.addFragment(BuildingFragment.newInstance(1), " Others");
+        adapter.addFragment(BuildingFragment.newInstance(2), " Popular");
+        adapter.addFragment(BuildingFragment.newInstance(3), " My UET");
         viewPager.setAdapter(adapter);
 
         viewPager.setCurrentItem(1);
@@ -56,11 +58,11 @@ public class BuildingActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         for (int i = 0; i < tabLayout.getTabCount(); i++){
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            tab.setCustomView(adapter.getTabView(i));
+//            TabLayout.Tab tab = tabLayout.getTabAt(i);
+//            tab.setCustomView(adapter.getTabView(i));
+            tabLayout.getTabAt(i).setIcon(tabs[i]);
         }
     }
-
 
 
     class ViewPagerAdapter extends FragmentPagerAdapter{
@@ -94,16 +96,14 @@ public class BuildingActivity extends AppCompatActivity {
         }
 
 
-        public View getTabView(int position){
-            View tab = LayoutInflater.from(context).inflate(R.layout.custom_tab,null);
-
-            TextView tabName = (TextView) tab.findViewById(R.id.tab_name);
-            tabName.setText(getPageTitle(position));
-
-            ImageView tabImage = (ImageView) tab.findViewById(R.id.tab_image);
-            tabImage.setImageResource(R.drawable.ic_popular);
-            return tab;
-        }
+//        public View getTabView(int position){
+//            View tab = LayoutInflater.from(context).inflate(R.layout.custom_tab,null);
+//
+//            TextView tabName = (TextView) tab.findViewById(R.id.tab_name);
+//            tabName.setText(getPageTitle(position));
+//            tabName.setCompoundDrawablesWithIntrinsicBounds(0, tabs[position], 0, 0);
+//            return tab;
+//        }
     }
 
 
