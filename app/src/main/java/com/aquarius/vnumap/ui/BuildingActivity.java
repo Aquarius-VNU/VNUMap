@@ -9,17 +9,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewParent;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aquarius.vnumap.R;
-import com.aquarius.vnumap.adapter.BuildingCardAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +24,8 @@ public class BuildingActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private final static Integer[] tabs = {
+            R.drawable.ic_other, R.drawable.ic_popular, R.drawable.ic_my_school };
 
 
     @Override
@@ -46,22 +44,26 @@ public class BuildingActivity extends AppCompatActivity {
             }
         });
 
-
         viewPager = (ViewPager)findViewById(R.id.view_pager);
-        setupViewPager(viewPager);
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(BuildingActivity.this, getSupportFragmentManager());
+        adapter.addFragment(BuildingFragment.newInstance(1), " Others");
+        adapter.addFragment(BuildingFragment.newInstance(2), " Popular");
+        adapter.addFragment(BuildingFragment.newInstance(3), " My UET");
+        viewPager.setAdapter(adapter);
+
         viewPager.setCurrentItem(1);
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++){
+//            TabLayout.Tab tab = tabLayout.getTabAt(i);
+//            tab.setCustomView(adapter.getTabView(i));
+            tabLayout.getTabAt(i).setIcon(tabs[i]);
+        }
     }
 
-    private void setupViewPager(ViewPager v){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(BuildingActivity.this, getSupportFragmentManager());
-        adapter.addFragment(BuildingFragment.newInstance(1), "One");
-        adapter.addFragment(BuildingFragment.newInstance(2), "Two");
-        adapter.addFragment(BuildingFragment.newInstance(3), "Three");
-        v.setAdapter(adapter);
-    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter{
         Context context;
@@ -94,10 +96,14 @@ public class BuildingActivity extends AppCompatActivity {
         }
 
 
-        public View getTabView(int position){
-            View tab = LayoutInflater.from(context).inflate(R.layout.custom_tab,null);
-            return tab;
-        }
+//        public View getTabView(int position){
+//            View tab = LayoutInflater.from(context).inflate(R.layout.custom_tab,null);
+//
+//            TextView tabName = (TextView) tab.findViewById(R.id.tab_name);
+//            tabName.setText(getPageTitle(position));
+//            tabName.setCompoundDrawablesWithIntrinsicBounds(0, tabs[position], 0, 0);
+//            return tab;
+//        }
     }
 
 
