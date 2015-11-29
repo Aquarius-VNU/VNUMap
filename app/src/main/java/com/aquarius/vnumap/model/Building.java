@@ -1,9 +1,12 @@
 package com.aquarius.vnumap.model;
 
 import android.content.res.Resources;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.aquarius.vnumap.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,10 +15,10 @@ import java.util.List;
 
 
 
-public class Building {
+public class Building{
     private int id;
     private String name;
-    private List<Room> rooms;
+    private List<Room> rooms = new ArrayList<Room>();
     private Point location;
     private int image;
     private int priority;
@@ -120,4 +123,5 @@ public class Building {
     public void setUniversity(int university) {
         this.university = university;
     }
+
 }

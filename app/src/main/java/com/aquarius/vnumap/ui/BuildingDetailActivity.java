@@ -28,7 +28,8 @@ public class BuildingDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerFloorAdapter adapter;
     private ArrayList<Floors> listFloors;
-
+    private List<Room> rooms;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +43,12 @@ public class BuildingDetailActivity extends AppCompatActivity {
         toolBarLayout.setTitle(getTitle());
 
         ImageView thumbImage = (ImageView) findViewById(R.id.header);
-        InputStream inputStreamMap =  getResources().openRawResource(R.raw.map);
-        InputStream inputStreamDirection =  getResources().openRawResource(R.raw.direction);
-        List<Building> buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
+        InputStream inputStreamMap =  this.getResources().openRawResource(R.raw.map);
+        InputStream inputStreamDirection =  this.getResources().openRawResource(R.raw.direction);
+        List<Building> buildings = new ArrayList<Building>();
+        buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
 
-        Bundle extras = this.getIntent().getExtras();
-        int i = extras.getInt("image");
+        int i = this.getIntent().getIntExtra("building", 0);
         Building building = buildings.get(i);
         thumbImage.setImageResource(building.getImage());
 
@@ -62,12 +63,28 @@ public class BuildingDetailActivity extends AppCompatActivity {
 
         listFloors = new ArrayList<>();
 
+        List<Room> rooms = new ArrayList<Room>();
+        rooms =  building.getRooms();
+
+        int maxFloor = 0;
+        for(int k = 0; k < rooms.size()-1; k++){
+            maxFloor = Math.max(rooms.get(k).getFloor(), rooms.get(k+1).getFloor());
+        }
+        for (int j = 0; j < maxFloor; j++){
+            listFloors.add(new Floors("Tầng " + (j + 1)));
+            for(int k = 0; k < rooms.size(); k++){
+                Room room = rooms.get(k);
+                if(room.getFloor() == j+1){
+                    listFloors.get(j).getRoomList().add(room);
+                }
+            }
+        }
+
         adapter = new RecyclerFloorAdapter(this, listFloors);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id. recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
 
 }

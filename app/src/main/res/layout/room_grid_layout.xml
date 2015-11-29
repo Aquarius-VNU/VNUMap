@@ -17,7 +17,7 @@
         android:textColor="@color/blue"/>
     <GridView
         android:id="@+id/gridExpandArea"
-        android:numColumns="auto_fit"
+        android:numColumns="4"
         android:columnWidth="80dp"
         android:stretchMode="columnWidth"
         android:layout_width="fill_parent"

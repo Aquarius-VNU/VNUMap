@@ -49,6 +49,11 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
     @Override
     public void onBindViewHolder(final FloorViewHolder holder, int position) {
         Floors floor = listFloors.get(position);
+        List<Room> roomList = new ArrayList<Room>();
+        roomList = floor.getRoomList();
+        holder.roomList = roomList;
+        GridRoomAdapter adapter = new GridRoomAdapter(holder.itemView.getContext(), roomList);
+        holder.gridView.setAdapter(adapter);
         holder.tvFloor.setText(floor.getName());
         holder.titleFloor.setText(floor.getName());
 
@@ -89,7 +94,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
         private LinearLayout linearLayout;
         public ImageView image_expand_toggle;
         private GridView gridView;
-        private List<Room> roomList;
+        private List<Room> roomList = new ArrayList<Room>();
         private OnItemClickListener clickListener;
         FloorViewHolder(View itemView){
             super(itemView);
@@ -97,18 +102,8 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.expanded_linear_layout);
 
-            InputStream inputStreamDirection =  itemView.getContext()
-                    .getResources().openRawResource(R.raw.direction);
-            List<Room.Rooms> rooms = MainController.getRooms(inputStreamDirection);
-
-            roomList = new ArrayList<Room>();
-            roomList = rooms.get(0).getRooms();
-
-            GridRoomAdapter adapter = new GridRoomAdapter(itemView.getContext(), roomList);
             gridView = (GridView) itemView.findViewById(R.id.gridExpandArea);
             titleFloor = (TextView) itemView.findViewById(R.id.titleFloor);
-            gridView.setAdapter(adapter);
-
             image_expand_toggle = (ImageView) itemView.findViewById(R.id.img_expand_toggle);
             itemView.setOnClickListener(this);
         }

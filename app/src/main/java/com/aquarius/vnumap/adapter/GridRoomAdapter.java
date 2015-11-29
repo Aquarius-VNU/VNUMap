@@ -8,11 +8,13 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.model.Room;
 
 import java.util.List;
+
 
 /**
  * Created by Nguyen Thi Cam Van on 11/24/2015.
@@ -52,6 +54,7 @@ public class GridRoomAdapter extends BaseAdapter implements AdapterView.OnItemCl
             viewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.ivIcon);
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.header = (ImageView) convertView.findViewById(R.id.header);
+            viewHolder.direction = (TextView) convertView.findViewById(R.id.detail_direction);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -60,6 +63,8 @@ public class GridRoomAdapter extends BaseAdapter implements AdapterView.OnItemCl
         Room room = roomList.get(position);
        // viewHolder.ivIcon.setImageDrawable(room.icon);
         viewHolder.tvTitle.setText(room.getName());
+        //viewHolder.direction.setText(room.getInfo());
+        //viewHolder.direction.setVisibility(View.VISIBLE);
 
         return convertView;
     }
@@ -68,10 +73,10 @@ public class GridRoomAdapter extends BaseAdapter implements AdapterView.OnItemCl
         public ImageView ivIcon;
         public TextView tvTitle;
         public ImageView header;
+        public TextView direction;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
     }
 }
