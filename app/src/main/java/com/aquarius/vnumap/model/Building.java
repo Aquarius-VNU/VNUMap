@@ -22,6 +22,7 @@ public class Building {
     private String description;
     private int type;
     private int university;
+    private String keyword;
 
     private static final Integer[] imageId = {
             0, R.drawable.image01, 0, 0, R.drawable.image04,
@@ -38,7 +39,7 @@ public class Building {
 
     }
 
-    public Building(int id, String name, List<Room> rooms, Point location, int priority, int type, int university) {
+    public Building(int id, String name, List<Room> rooms, Point location, int priority, int type, int university, String keyword) {
         this.id = id;
         this.name = name;
         this.rooms = rooms;
@@ -47,6 +48,7 @@ public class Building {
         this.priority = priority;
         this.type = type;
         this.university = university;
+        this.keyword = keyword;
     }
 
     public int getId() {
@@ -85,6 +87,10 @@ public class Building {
         return university;
     }
 
+    public String getKeyword() {
+        return keyword;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -119,5 +125,9 @@ public class Building {
 
     public void setUniversity(int university) {
         this.university = university;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

@@ -90,6 +90,16 @@ public class XmlParse {
         return Integer.valueOf(university);
     }
 
+    public String readKeyword(XmlPullParser parser) throws XmlPullParserException, IOException{
+        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "keyword");
+        String keyword = readText(parser);
+        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "keyword");
+        if(keyword.equals("")){
+            return null;
+        }
+        return keyword;
+    }
+
     public Building readBuilding(XmlPullParser parser) throws  XmlPullParserException, IOException{
         parser.require(XmlPullParser.START_TAG,NAME_SPACE, "building");
         int id = 0;
@@ -99,6 +109,7 @@ public class XmlParse {
         int priority = 0;
         int type = 0;
         int university = 0;
+        String keyword = null;
 
         while(parser.next() != XmlPullParser.END_TAG){
             if(parser.getEventType() != XmlPullParser.START_TAG){
@@ -119,13 +130,15 @@ public class XmlParse {
                 type = readType(parser);
             }else if(nameParse.equals("university")){
                 university = readUniversity(parser);
+            }else if(nameParse.equals("keyword")){
+                keyword = readKeyword(parser);
             }
             else{
                 skip(parser);
             }
         }
         parser.require(XmlPullParser.END_TAG, NAME_SPACE, "building");
-        return new Building(id, name, null, new Point(x, y), priority, type, university);
+        return new Building(id, name, null, new Point(x, y), priority, type, university, keyword);
     }
 
     public List<Building> readMap(XmlPullParser xmlPullParser) throws  XmlPullParserException, IOException{
