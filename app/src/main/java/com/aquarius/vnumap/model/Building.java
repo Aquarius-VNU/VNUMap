@@ -23,14 +23,13 @@ public class Building {
     private String keyword;
 
     private static final Integer[] imageId = {
-            0, R.drawable.image01, 0, 0, R.drawable.image04,
-            R.drawable.image05, 0, R.drawable.image07, 0, 0,
-            0, R.drawable.image11, 0, 0, R.drawable.image14,
-            R.drawable.image15, 0, 0, 0, R.drawable.image19,
-            R.drawable.image20, 0, R.drawable.image22, R.drawable.image23, R.drawable.image24,
-            R.drawable.image25, R.drawable.image26, R.drawable.image27, R.drawable.image28, R.drawable.image29,
-            0, 0, R.drawable.image32, 0, 0,
-            R.drawable.image35
+            R.drawable.image01, 0, 0, R.drawable.image04, R.drawable.image05,
+            0, R.drawable.image07, 0, 0, 0,
+            R.drawable.image11, 0, 0, R.drawable.image14, R.drawable.image15,
+            0, 0, 0, R.drawable.image19, R.drawable.image20,
+            0, R.drawable.image22, R.drawable.image23, R.drawable.image24, R.drawable.image25,
+            R.drawable.image26, R.drawable.image27, R.drawable.image28, R.drawable.image29, 0,
+            0, R.drawable.image32, 0, 0, R.drawable.image35
     };
 
     public Building(){
@@ -42,7 +41,7 @@ public class Building {
         this.name = name;
         this.rooms = rooms;
         this.location = location;
-        this.image = imageId[id];
+        this.image = imageId[id - 1];
         this.priority = priority;
         this.type = type;
         this.university = university;

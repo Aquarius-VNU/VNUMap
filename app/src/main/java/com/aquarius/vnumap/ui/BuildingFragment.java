@@ -81,9 +81,16 @@ public class BuildingFragment extends Fragment{
         Bundle args = this.getArguments();
         int tab = args.getInt("tab", 2);
 
-        if(tab != 2){
+        for(int i = 0; i < buildings.size(); i++){
+            if(buildings.get(i).getImage() == 0){
+                buildings.remove(i);
+                i--;
+            }
+        }
+
+        if(tab == 3){
             for(int i = 0; i < buildings.size(); i++)
-                if(buildings.get(i).getType() != tab) {
+                if(buildings.get(i).getType() != 2) {
                     buildings.remove(i);
                     i--;
                 }
