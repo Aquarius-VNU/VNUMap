@@ -118,8 +118,6 @@ public class BuildingFragment extends Fragment{
             viewHolder.tvBuilding.setText(building.getName());
 //            viewHolder.tvDesBuilding.setText(floor.getDescription());
 //            viewHolder.imgThumbnail.setImageResource(floor.getImage());
-            bundle = new Bundle();
-            bundle.putInt("building", building.getId());
             loadBitmap(building.getImage(), viewHolder.imgThumbnail);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

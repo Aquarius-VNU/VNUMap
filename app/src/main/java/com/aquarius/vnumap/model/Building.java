@@ -1,12 +1,7 @@
 package com.aquarius.vnumap.model;
 
-import android.content.res.Resources;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.aquarius.vnumap.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,16 +10,17 @@ import java.util.List;
 
 
 
-public class Building{
+public class Building {
     private int id;
     private String name;
-    private List<Room> rooms = new ArrayList<Room>();
+    private List<Room> rooms;
     private Point location;
     private int image;
     private int priority;
     private String description;
     private int type;
     private int university;
+    private String keyword;
 
     private static final Integer[] imageId = {
             0, R.drawable.image01, 0, 0, R.drawable.image04,
@@ -41,7 +37,7 @@ public class Building{
 
     }
 
-    public Building(int id, String name, List<Room> rooms, Point location, int priority, int type, int university) {
+    public Building(int id, String name, List<Room> rooms, Point location, int priority, int type, int university, String keyword) {
         this.id = id;
         this.name = name;
         this.rooms = rooms;
@@ -50,6 +46,7 @@ public class Building{
         this.priority = priority;
         this.type = type;
         this.university = university;
+        this.keyword = keyword;
     }
 
     public int getId() {
@@ -88,6 +85,10 @@ public class Building{
         return university;
     }
 
+    public String getKeyword() {
+        return keyword;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -124,4 +125,7 @@ public class Building{
         this.university = university;
     }
 
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 }
