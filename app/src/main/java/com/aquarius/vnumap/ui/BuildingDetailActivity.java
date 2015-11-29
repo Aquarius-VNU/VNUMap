@@ -36,12 +36,6 @@ public class BuildingDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_detail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout)
-                findViewById(R.id.toolbar_layout);
-        toolBarLayout.setTitle(getTitle());
-
         ImageView thumbImage = (ImageView) findViewById(R.id.header);
         InputStream inputStreamMap =  this.getResources().openRawResource(R.raw.map);
         InputStream inputStreamDirection =  this.getResources().openRawResource(R.raw.direction);
@@ -51,6 +45,12 @@ public class BuildingDetailActivity extends AppCompatActivity {
         int i = this.getIntent().getIntExtra("building", 0);
         Building building = buildings.get(i);
         thumbImage.setImageResource(building.getImage());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout)
+                findViewById(R.id.toolbar_layout);
+        toolBarLayout.setTitle(building.getName());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_direction);
         fab.setOnClickListener(new View.OnClickListener() {
