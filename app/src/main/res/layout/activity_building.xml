@@ -39,6 +39,7 @@
         app:tabIndicatorColor="#fa62b8"
         android:background="?attr/colorPrimary"
         android:elevation="6dp"
+        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
         app:tabTextColor="#d3d3d3"
         app:tabSelectedTextColor="#ffffff"
         android:layout_alignParentBottom="true">
