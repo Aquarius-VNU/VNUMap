@@ -13,31 +13,70 @@
         <room name="105" floor="1" type="1">
             Từ cửa chính bạn nhìn sang bên phải, phòng 105 ngay trong tầm mắt bạn
         </room>
+        <room name = "107" floor = "1" type = "1">
+        </room>
+        <room name = "WC Nam" floor = "1" type = "1">
+        </room>
+        <room name = "WC Nữ" floor = "1" type = "1">
+        </room>
         <!--data to test-->
         <room name="201" floor="2" type="1">
         </room>
-        <room name="302" floor="3" type="3"></room>
+        <room name="202" floor="2" type="1">
+        </room>
+        <room name="207" floor="2" type="1">
+        </room>
+        <room name="208" floor="2" type="1">
+        </room>
+        <room name="301" floor="3" type="3">
+        </room>
+        <room name="302" floor="3" type="3">
+        </room>
+        <room name="304" floor="3" type="3">
+        </room>
+        <room name="308" floor="3" type="3">
+        </room>
     </rooms>
     <rooms id="2">
-        <room name="03" floor="1" type="1">
+        <room name="101" floor="1" type="1">
         </room>
-        <room name="05" floor="1" type="1">
+        <room name="102" floor="1" type="1">
         </room>
         <room name="201" floor="2" type="1">
         </room>
-        <room name="302" floor="3" type="3"></room>
+        <room name="301" floor="3" type="3">
+        </room>
     </rooms>
 
     <rooms id="3">
-        <room name="2303" floor="1" type="1">
+        <room name="103" floor="1" type="1">
         </room>
-        <room name="1205" floor="4" type="1">
+        <room name="401" floor="4" type="1">
         </room>
-        <room name="201" floor="5" type="1">
+        <room name="502" floor="5" type="1">
+        </room>
+        <room name="302" floor="3" type="3">
+        </room>
+    </rooms>
+
+    <rooms id = "4">
+        <room name="103" floor="1" type="1">
+        </room>
+        <room name="401" floor="4" type="1">
+        </room>
+        <room name="502" floor="5" type="1">
         </room>
         <room name="302" floor="3" type="3"></room>
     </rooms>
-
+    <rooms id = "5">
+        <room name="103" floor="1" type="1">
+        </room>
+        <room name="201" floor="2" type="1">
+        </room>
+        <room name="301" floor="3" type="1">
+        </room>
+        <room name="302" floor="3" type="3"></room>
+    </rooms>
 </direction>
 
 

@@ -23,6 +23,8 @@
         android:layout_weight="1"/>
 
     <include layout="@layout/room_grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/expanded_linear_layout"
         android:visibility="gone"/>
 
