@@ -54,6 +54,7 @@ public class OtherBuildingFragment extends Fragment {
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
                 Intent i = new Intent(getContext(), MapsActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtra("buildingId", adapter.getChild(groupPosition, childPosition).getId());
                 startActivity(i);
                 return false;
             }
