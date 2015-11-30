@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="?android:listPreferredItemHeightSmall"
-    android:showDividers="middle"
-    android:divider="?android:dividerVertical"
-    android:dividerPadding="8dp"
-    android:gravity="center">
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="30dp"
-    android:text="Hello"/>
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/round"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/list_search_selector"
+        >
+
+        <TextView
+            android:id="@+id/list_search_txtViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sliding_panel_font_name_size"
+            />
+
+        <TextView
+            android:id="@+id/list_search_txtViewUniversity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/sliding_panel_font_university_size"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
 </LinearLayout>

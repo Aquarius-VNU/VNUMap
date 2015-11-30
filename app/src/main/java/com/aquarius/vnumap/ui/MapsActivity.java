@@ -23,6 +23,8 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,15 +32,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.adapter.ArrayBuildings;
+import com.aquarius.vnumap.adapter.ListSearchAdapter;
 import com.aquarius.vnumap.adapter.LocationServices;
 import com.aquarius.vnumap.adapter.MapMarker;
+import com.aquarius.vnumap.adapter.SearchFilter;
 import com.aquarius.vnumap.controller.JSONMap;
 import com.aquarius.vnumap.controller.MainController;
 import com.aquarius.vnumap.model.Building;
@@ -73,9 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final LatLng LEFT_BOTTOM_CONNER = new LatLng(21.036921, 105.781066);
     private static final LatLng RIGHT_TOP_CONNER = new LatLng(21.040987, 105.785605);
     private static final LatLng LOCATION_VNU = new LatLng(21.036787, 105.782040);
-    private static final String[] UNIVERSITY_STRINGS={"Đại học Quốc Gia Hà Nội", "Đại học Công Nghệ - ĐHQG Hà Nội",
-            "Đại học Ngoại Ngữ - ĐHQG Hà Nội", "Khoa Luật - ĐHQG Hà Nội", "Khoa Y Dược - ĐHQG Hà Nội",
-            "Khoa Quốc Tế - ĐHQG Hà Nội", "Đại học Giáo Dục - ĐHQG Hà Nội", "Đại học Kinh Tế - ĐHQG Hà Nội", "Đại học Sư Phạm Hà Nội"};
+
     private GoogleMap mMap;
 //  variable contain location from GPS or NETWORK
     private Location location = null;
@@ -86,7 +91,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //  use to manage thread
     private Handler handler = null;
 
-    private ViewGroup mContainer;
+    private boolean isSearch = false;
 
     SlidingUpPanelLayout slidingUpPanelLayout = null;
 
@@ -106,7 +111,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //      update location 1s/1 turn
         updateLocation();
 
-        FloatingActionButton fab_location = (FloatingActionButton)findViewById(R.id.fab_location);
+        final FloatingActionButton fab_location = (FloatingActionButton)findViewById(R.id.fab_location);
         fab_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,7 +176,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         fab_location.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_building);
+        final FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_building);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,15 +193,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         slidingUpPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View view, float v) {
-                TextView textView = (TextView)findViewById(R.id.sliding_panel_txtViewName);
-                RelativeLayout header = (RelativeLayout)findViewById(R.id.sliding_panel_header);
-                TextView name = (TextView)findViewById(R.id.sliding_panel_txtViewName);
-                TextView university = (TextView)findViewById(R.id.sliding_panel_txtViewUniversity);
-                if(v > 0) {
+                TextView textView = (TextView) findViewById(R.id.sliding_panel_txtViewName);
+                RelativeLayout header = (RelativeLayout) findViewById(R.id.sliding_panel_header);
+                TextView name = (TextView) findViewById(R.id.sliding_panel_txtViewName);
+                TextView university = (TextView) findViewById(R.id.sliding_panel_txtViewUniversity);
+                if (v > 0) {
                     header.setBackgroundColor(getResources().getColor(R.color.blue));
                     name.setTextColor(getResources().getColor(R.color.white));
                     university.setTextColor(getResources().getColor(R.color.white));
-                }else{
+                } else {
                     header.setBackgroundColor(Color.WHITE);
                     name.setTextColor(Color.BLACK);
                     university.setTextColor(getResources().getColor(R.color.button_material_dark));
@@ -224,17 +229,47 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        mContainer = (ViewGroup)findViewById(R.id.map_container);
-        LayoutTransition transition =new LayoutTransition();
-
-        transition.setAnimator(LayoutTransition.APPEARING,null);
-        mContainer.setLayoutTransition(transition);
         EditText edtSearch = (EditText)findViewById(R.id.edtSearch);
+        final ListView lstSeach = (ListView)findViewById(R.id.lstSearch);
+
         edtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(MapsActivity.this).inflate(R.layout.list_item_search, mContainer, false);
-                mContainer.addView(viewGroup);
+                getSupportFragmentManager().findFragmentById(R.id.map).getView().setVisibility(View.INVISIBLE);
+                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.list_search_layout);
+                linearLayout.setVisibility(View.VISIBLE);
+                fab_location.setVisibility(View.INVISIBLE);
+                floatingActionButton.setVisibility(View.INVISIBLE);
+                isSearch = true;
+            }
+        });
+//      update data for list search
+        final ArrayList<Building> buildings = new ArrayList<Building>();
+        final ListSearchAdapter arrayAdapter = new ListSearchAdapter(MapsActivity.this,
+                R.layout.list_item_search, buildings );
+        lstSeach.setAdapter(arrayAdapter);
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() > 1){
+                    List<Building>buildingList = SearchFilter.getInstance(MapsActivity.this).getResult(String.valueOf(charSequence));
+                    buildings.clear();
+                    for(int j = 0 ; j < buildingList.size() ; j++){
+                        buildings.add(buildingList.get(j));
+                    }
+                    arrayAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
@@ -295,13 +330,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             name.setText(String.valueOf(building.getName()));
                             TextView university = (TextView)findViewById(R.id.sliding_panel_txtViewUniversity);
                             if(building.getUniversity() > 0){
-                                if(building.getUniversity() <= UNIVERSITY_STRINGS.length){
-                                    university.setText(String.valueOf(UNIVERSITY_STRINGS[building.getUniversity() - 1]));
+                                if(building.getUniversity() <= SearchFilter.UNIVERSITY_STRINGS.length){
+                                    university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[building.getUniversity() - 1]));
                                 }else{
-                                    university.setText(String.valueOf(UNIVERSITY_STRINGS[0]));
+                                    university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[0]));
                                 }
                             }else{
-                                university.setText(String.valueOf(UNIVERSITY_STRINGS[0]));
+                                university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[0]));
                             }
                         }
                         slidingUpPanelLayout.setPanelHeight(140);
@@ -312,6 +347,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(isSearch){
+            getSupportFragmentManager().findFragmentById(R.id.map).getView().setVisibility(View.VISIBLE);
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.list_search_layout);
+            linearLayout.setVisibility(View.INVISIBLE);
+            FloatingActionButton fab1 = (FloatingActionButton)findViewById(R.id.fab_location);
+            fab1.setVisibility(View.VISIBLE);
+            FloatingActionButton fab2 = (FloatingActionButton)findViewById(R.id.fab_building);
+            fab2.setVisibility(View.VISIBLE);
+            isSearch = false;
+        }
     }
 
 //  add Marker and set method on click to show sliding panel

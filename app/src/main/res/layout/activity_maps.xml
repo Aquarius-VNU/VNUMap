@@ -28,6 +28,7 @@
                 tools:layout="@layout/activity_maps" />
 
             <LinearLayout
+                android:id="@+id/search_box"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/search_box_height"
                 android:layout_marginLeft="10dp"
@@ -38,7 +39,7 @@
                 android:orientation="horizontal">
                 <ImageButton
                     android:layout_width="@dimen/search_box_height"
-                    android:layout_height="@dimen/search_box_height"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="@dimen/search_box_margin_left"
                     android:src="@drawable/ic_menu"
                     android:background="@android:color/white"/>
@@ -52,7 +53,6 @@
                     android:padding="8dp"
                     android:singleLine="true"
                     android:textSize="15dp"
-
                     />
 
                 <ImageButton
@@ -64,7 +64,20 @@
                     android:padding="5dp"
                     android:src="@android:drawable/ic_menu_search" />
             </LinearLayout>
-
+            <LinearLayout
+                android:id="@+id/list_search_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_marginTop="80dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+                <ListView
+                    android:id="@+id/lstSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></ListView>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
