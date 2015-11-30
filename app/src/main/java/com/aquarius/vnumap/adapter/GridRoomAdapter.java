@@ -58,12 +58,14 @@ public class GridRoomAdapter extends BaseAdapter{
             viewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.ivIcon);
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.header = (ImageView) convertView.findViewById(R.id.header);
+            viewHolder.direction = (TextView) convertView.findViewById(R.id.detail_direction);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Room room = roomList.get(position);
+       // viewHolder.ivIcon.setImageDrawable(room.icon);
         viewHolder.tvTitle.setText(room.getName());
         viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +80,8 @@ public class GridRoomAdapter extends BaseAdapter{
             }
         });
 
+        //viewHolder.direction.setText(room.getInfo());
+        //viewHolder.direction.setVisibility(View.VISIBLE);
 
         return convertView;
     }
@@ -86,6 +90,7 @@ public class GridRoomAdapter extends BaseAdapter{
         public ImageView ivIcon;
         public TextView tvTitle;
         public ImageView header;
+        public TextView direction;
     }
 
     /*@Override
