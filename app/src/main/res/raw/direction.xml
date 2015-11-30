@@ -5,60 +5,72 @@
 * With data you define must declare constant
 -->
 <direction>
+    <!--G2-->
     <rooms id="1">
         <room name="103" floor="1" type="1">
-            Từ cửa chính bạn rẽ trái, đi qua dãy bàn tự học của sinh viên
-            Phòng 103 nằm ở góc trong cùng
+            - Từ cửa chính bạn rẽ trái,
+            - Đi qua dãy bàn tự học của sinh viên
+            - Phòng 103 nằm ở góc trong cùng
         </room>
         <room name="105" floor="1" type="1">
-            Từ cửa chính bạn nhìn sang bên phải, phòng 105 ngay trong tầm mắt bạn
+            - Từ cửa chính bạn nhìn sang bên phải,
+            - Phòng 105 ngay trong tầm mắt bạn
         </room>
         <room name = "107" floor = "1" type = "1">
+            - Nhìn sang bên tay phải đi nào!
         </room>
         <room name = "WC Nam" floor = "1" type = "1">
+            - Đi thẳng đến chân cầu thang trước mặt
+            - Nhìn sang bên trái
+            - Bạn đã thấy WC Nam chưa?
         </room>
         <room name = "WC Nữ" floor = "1" type = "1">
+            - Đi về phía bên tay phải
+            - Qua dãy bàn học dành cho sinh viên
+            - WC nữ ngay cạnh phòng 103 đó
         </room>
         <!--data to test-->
-        <room name="201" floor="2" type="1">
+        <room name="201" floor="2" type="1">- Đi thẳng lên đến chân cầu thang và lên tầng 2.
+            - Phòng 201 đối diện chân cầu thang lên tầng 3.
+            - Chỗ bạn đang đứng, nhìn sang bên phải sẽ thấy phòng 201
         </room>
         <room name="202" floor="2" type="1">
+
         </room>
         <room name="207" floor="2" type="1">
         </room>
         <room name="208" floor="2" type="1">
         </room>
-        <room name="301" floor="3" type="3">
+        <room name="301" floor="3" type="1">
         </room>
-        <room name="302" floor="3" type="3">
+        <room name="302" floor="3" type="1">
         </room>
-        <room name="304" floor="3" type="3">
+        <room name="304" floor="3" type="1">
         </room>
-        <room name="308" floor="3" type="3">
+        <room name="308" floor="3" type="1">
         </room>
     </rooms>
-    <rooms id="2">
+
+    <!--Trung tam giao duc quoc te-->
+    <rooms id="3">
+        <room name="103" floor="1" type="1">
+        </room>
         <room name="101" floor="1" type="1">
         </room>
         <room name="102" floor="1" type="1">
         </room>
+        <room name="203" floor="2" type="1">
+        </room>
         <room name="201" floor="2" type="1">
-        </room>
-        <room name="301" floor="3" type="3">
-        </room>
-    </rooms>
-
-    <rooms id="3">
-        <room name="103" floor="1" type="1">
         </room>
         <room name="401" floor="4" type="1">
         </room>
         <room name="502" floor="5" type="1">
         </room>
-        <room name="302" floor="3" type="3">
+        <room name="302" floor="3" type="1">
         </room>
     </rooms>
-
+<!--Giang duong B2-->
     <rooms id = "4">
         <room name="103" floor="1" type="1">
         </room>
@@ -66,8 +78,10 @@
         </room>
         <room name="502" floor="5" type="1">
         </room>
-        <room name="302" floor="3" type="3"></room>
+        <room name="302" floor="3" type="1">
+        </room>
     </rooms>
+<!--Trung tâm văn hóa Jonathan KS.Choi-->
     <rooms id = "5">
         <room name="103" floor="1" type="1">
         </room>
@@ -75,7 +89,78 @@
         </room>
         <room name="301" floor="3" type="1">
         </room>
-        <room name="302" floor="3" type="3"></room>
+        <room name="302" floor="3" type="1"></room>
+    </rooms>
+<!--VNU Store-->
+    <rooms id = "6">
+        <room name="101" floor="1" type="1">
+        </room>
+        <room name="201" floor="2" type="1">
+        </room>
+        <room name="301" floor="3" type="1">
+        </room>
+        <room name="302" floor="3" type="1"></room>
+    </rooms>
+<!--Hoi truong Nguyen Van Dao-->
+    <rooms id = "7">
+        <room name="Hội trường" floor="1" type="1">
+        </room>
+        <room name="Hội trường" floor="2" type="1">
+        </room>
+    </rooms>
+<!--Khoa Luat-->
+    <rooms id = "11">
+        <room name="103" floor="1" type="1">
+        </room>
+        <room name="201" floor="2" type="1">
+        </room>
+        <room name="301" floor="3" type="1">
+        </room>
+        <room name="302" floor="3" type="1">
+        </room>
+        <room name="401" floor="4" type="1">
+        </room>
+    </rooms>
+<!--E3-->
+    <rooms id = "14">
+        <room name="103" floor="1" type="1">
+        </room>
+        <room name="201" floor="2" type="1">
+        </room>
+        <room name="301" floor="3" type="1">
+        </room>
+        <room name="302" floor="3" type="3">
+        </room>
+    </rooms>
+<!--E4-->
+    <rooms id = "15">
+        <room name="103" floor="1" type="1">
+        </room>
+        <room name="201" floor="2" type="1">
+        </room>
+        <room name="301" floor="3" type="1">
+        </room>
+        <room name="402" floor="4" type="1">
+        </room>
+        <room name="502" floor="5" type="1">
+        </room>
+        <room name="602" floor="6" type="1">
+        </room>
+        <room name="702" floor="7" type="1">
+        </room>
+        <room name="Hội trường 801" floor="8" type="1">
+        </room>
+    </rooms>
+<!--GĐ2-->
+    <rooms id = "19">
+        <room name="103" floor="1" type="1">
+        </room>
+        <room name="201" floor="2" type="1">
+        </room>
+        <room name="301" floor="3" type="1">
+        </room>
+        <room name="302" floor="3" type="1">
+        </room>
     </rooms>
 </direction>
 

@@ -2,12 +2,14 @@ package com.aquarius.vnumap.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,27 +60,29 @@ public class GridRoomAdapter extends BaseAdapter{
             viewHolder = new ViewHolder();
             viewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.ivIcon);
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-            viewHolder.header = (ImageView) convertView.findViewById(R.id.header);
+            viewHolder.relativeLayout = (RelativeLayout) convertView.findViewById(R.id.grid_item);
+            //viewHolder.header = (ImageView) convertView.findViewById(R.id.header);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Room room = roomList.get(position);
+        final Room room = roomList.get(position);
         viewHolder.tvTitle.setText(room.getName());
-        viewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
+        viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "ABC", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "ABC", Toast.LENGTH_LONG).show();
 //                View contextView = View.inflate(activity, R.layout.activity_building_detail, null);
                 TextView direction = (TextView) activity.findViewById(R.id.detail_direction);
-                ImageView image = (ImageView) activity.findViewById(R.id.header);
-                image.setImageResource(R.drawable.image04);
+                // ImageView image = (ImageView) activity.findViewById(R.id.header);
+                // image.setImageResource(R.drawable.image04);
                 direction.setVisibility(View.VISIBLE);
-                direction.setText("ABC");
+                direction.setText(room.getInfo());
+                CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)activity.findViewById(R.id.toolbar_layout);
+                toolbarLayout.setTitle("");
             }
         });
-
 
         return convertView;
     }
@@ -86,7 +90,8 @@ public class GridRoomAdapter extends BaseAdapter{
     private static class ViewHolder {
         public ImageView ivIcon;
         public TextView tvTitle;
-        public ImageView header;
+        public RelativeLayout relativeLayout;
+        //public ImageView header;
     }
 
     /*@Override

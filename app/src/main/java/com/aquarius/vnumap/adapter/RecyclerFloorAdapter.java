@@ -58,17 +58,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
         holder.roomList = roomList;
         GridRoomAdapter adapter = new GridRoomAdapter(holder.itemView.getContext(), roomList, activity);
         holder.gridView.setAdapter(adapter);
-        holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int i = R.id.building_detail_activity;
-                View contextView = activity.getLayoutInflater().inflate(R.layout.activity_building_detail, null);
-                TextView direction = (TextView) contextView.findViewById(R.id.detail_direction);
-                Toast.makeText(context, "OK", Toast.LENGTH_SHORT).show();
-                //ImageView imageView = (ImageView) contextView.findViewById(R.id.header);
-                //imageView.setImageResource(R.drawable.image07);
-            }
-        });
+
         holder.tvFloor.setText(floor.getName());
         holder.titleFloor.setText(floor.getName());
 

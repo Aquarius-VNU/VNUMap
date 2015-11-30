@@ -102,7 +102,6 @@ public class BuildingFragment extends Fragment{
     public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapter.ViewHolder>{
 
         List<Building> mItems;
-        Bundle bundle = new Bundle();
         private Context context;
 
         public BuildingCardAdapter(Context context, List<Building> buildingList) {
@@ -121,7 +120,9 @@ public class BuildingFragment extends Fragment{
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int i) {
-            final Building building = mItems.get(i);
+            Building building = mItems.get(i);
+            final int id;
+            id = building.getId();
             viewHolder.tvBuilding.setText(building.getName());
 //            viewHolder.tvDesBuilding.setText(floor.getDescription());
 //            viewHolder.imgThumbnail.setImageResource(floor.getImage());
@@ -130,7 +131,7 @@ public class BuildingFragment extends Fragment{
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, BuildingDetailActivity.class);
-                    intent.putExtra("building", building.getId());
+                    intent.putExtra("building", id);
                     context.startActivity(intent);
                 }
             });
