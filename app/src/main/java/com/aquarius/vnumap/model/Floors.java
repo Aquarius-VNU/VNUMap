@@ -1,6 +1,7 @@
 package com.aquarius.vnumap.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nguyen Thi Cam Van on 11/14/2015.
@@ -8,8 +9,15 @@ import java.util.ArrayList;
 public class Floors {
     private String name;
     private int idImage;
+    private List<Room> roomList = new ArrayList<Room>();
+    public Floors(String name, List<Room> roomList) {
+        this.name = name;
+        this.roomList = roomList;
+    }
+
     public Floors(String name){
         this.name = name;
+        this.roomList = new ArrayList<Room>();
     }
 
     public Floors(String name, int idImage){
@@ -33,4 +41,7 @@ public class Floors {
         this.idImage = id;
     }
 
+    public List<Room> getRoomList(){
+        return roomList;
+    }
 }

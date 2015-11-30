@@ -4,6 +4,8 @@
                 6 - IS, 7 - Edu, 8 - UEB, 9 - HUE,
 
 * keyword : provide string that include some keyword related with it
+
+*type : 1 - chung, 2 - uet, 3 - quán ăn uống, 4 - atm, 5 - in ấn, 6 - nhà xe, 7 - tình yêu, 8 - khác
 -->
 <map>
     <building>
@@ -13,7 +15,7 @@
         <x>21.038777</x>
         <y>105.783318</y>
         <priority>1</priority>
-        <type>3</type>
+        <type>2</type>
         <university>2</university>
         <keyword>tin học thực hành thí nghiệm lab</keyword>
     </building>
@@ -24,8 +26,8 @@
         <x>21.03777</x>
         <y>105.78336</y>
         <priority>3</priority>
-        <type>1</type>
-        <university>9</university>
+        <type>7</type>
+        <university>6</university>
         <keyword>sư phạm họp đội tụ tập sinh hoạt</keyword>
     </building>
 
@@ -35,8 +37,8 @@
          <x>21.03785</x>
          <y>105.78297</y>
         <priority>4</priority>
-        <type>2</type>
-        <university>8</university>
+        <type>1</type>
+        <university>1</university>
         <keyword>vườn nhãn g2</keyword>
     </building>
 
@@ -46,7 +48,7 @@
         <x>21.03764</x>
         <y>105.78220</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>gửi xe wc nhà vệ sinh thi vượt cấp</keyword>
     </building>
@@ -57,8 +59,8 @@
         <x>21.03740</x>
         <y>105.78203</y>
         <priority>2</priority>
-        <type>2</type>
-        <university>3</university>
+        <type>1</type>
+        <university>5</university>
         <keyword>hàn quốc hội thảo</keyword>
     </building>
 
@@ -68,7 +70,7 @@
         <x>21.03709</x>
         <y>105.78211</y>
         <priority>4</priority>
-        <type>1</type>
+        <type>8</type>
         <university>1</university>
         <keyword>cửa hàng đồ lưu niệm quần áo</keyword>
     </building>
@@ -79,7 +81,7 @@
         <x>21.03735</x>
         <y>105.78155</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>1</university>
         <keyword>meeting kỉ niệm sinh hoạt công dân</keyword>
     </building>
@@ -90,7 +92,7 @@
         <x>21.03764</x>
         <y>105.78185</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>1</type>
         <university>1</university>
         <keyword>trao học bổng hội họp</keyword>
     </building>
@@ -101,7 +103,7 @@
         <x>21.03788</x>
         <y>105.78219</y>
         <priority>4</priority>
-        <type>1</type>
+        <type>3</type>
         <university>1</university>
         <keyword>giải khát ăn uống chém gió</keyword>
     </building>
@@ -112,8 +114,8 @@
         <x>21.03778</x>
         <y>105.78229</y>
         <priority>4</priority>
-        <type>1</type>
-        <university>1</university>
+        <type>6</type>
+        <university>3</university>
         <keyword>gửi xe máy đạp</keyword>
     </building>
 
@@ -123,7 +125,7 @@
         <x>21.03797</x>
         <y>105.78230</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>1</type>
         <university>4</university>
         <keyword>giảng đường</keyword>
     </building>
@@ -134,40 +136,40 @@
         <x>21.03823</x>
         <y>105.78232</y>
         <priority>1</priority>
-        <type>3</type>
+        <type>2</type>
         <university>4</university>
         <keyword>tổ chức sự kiện công nghệ</keyword>
     </building>
 
     <building>
         <id>13</id>
-        <name>Tòa nhà E2</name>
+        <name>Nhà E2</name>
         <x>21.03832</x>
         <y>105.78248</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>8</university>
         <keyword>giảng đường</keyword>
     </building>
 
     <building>
         <id>14</id>
-        <name>Tòa nhà E3</name>
+        <name>Nhà E3</name>
         <x>21.03810</x>
         <y>105.78282</y>
         <priority>1</priority>
-        <type>3</type>
+        <type>2</type>
         <university>2</university>
         <keyword>đào tạo công tác sinh viên thí nghiệm lab</keyword>
     </building>
 
     <building>
         <id>15</id>
-        <name>E4</name>
+        <name>E4 - Trường đại học kinh tế</name>
         <x>21.03813</x>
         <y>105.78268</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>1</type>
         <university>8</university>
         <keyword>công nghệ thực hành thí nghiệm</keyword>
     </building>
@@ -178,7 +180,7 @@
         <x>21.03836</x>
         <y>105.78335</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>1</university>
         <keyword>mược sách tự học</keyword>
     </building>
@@ -189,7 +191,7 @@
         <x>21.03859</x>
         <y>105.78313</y>
         <priority>3</priority>
-        <type>2</type>
+        <type>1</type>
         <university>9</university>
         <keyword>pháp sư phạm</keyword>
     </building>
@@ -200,7 +202,7 @@
         <x>21.03862</x>
         <y>105.78253</y>
         <priority>4</priority>
-        <type>1</type>
+        <type>4</type>
         <university>1</university>
     </building>
 
@@ -210,7 +212,7 @@
         <x>21.04073</x>
         <y>105.78279</y>
         <priority>1</priority>
-        <type>3</type>
+        <type>2</type>
         <university>2</university>
         <keyword>bài tập công nghệ nhà ăn</keyword>
     </building>
@@ -221,7 +223,7 @@
         <x>21.04052</x>
         <y>105.78267</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>1</type>
         <university>1</university>
         <keyword>nơi ở y dược phòng trọ</keyword>
     </building>
@@ -232,40 +234,40 @@
         <x>21.04030</x>
         <y>105.78273</y>
         <priority>3</priority>
-        <type>2</type>
+        <type>1</type>
         <university>4</university>
         <keyword>cấp 3 thpt</keyword>
     </building>
 
     <building>
         <id>22</id>
-        <name>Tòa nhà A4</name>
+        <name>Nhà A4</name>
         <x>21.03997</x>
         <y>105.78271</y>
         <priority>3</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>ngoại ngữ</keyword>
     </building>
 
     <building>
         <id>23</id>
-        <name>Tòa nhà A1</name>
+        <name>Nhà A1</name>
         <x>21.03951</x>
         <y>105.78293</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>thang máy ngoại ngữ</keyword>
     </building>
 
     <building>
         <id>24</id>
-        <name>Tòa nhà A2</name>
+        <name>Nhà A2</name>
         <x>21.03950</x>
         <y>105.78303</y>
         <priority>3</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>ngoại ngữ</keyword>
     </building>
@@ -276,7 +278,7 @@
         <x>21.03971</x>
         <y>105.78198</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>8</type>
         <university>1</university>
         <keyword>gym bóng đá bóng bàn rổ cầu lông</keyword>
     </building>
@@ -287,7 +289,7 @@
         <x>21.03921</x>
         <y>105.78197</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>khoa pháp ngoại ngữ</keyword>
     </building>
@@ -298,7 +300,7 @@
         <x>21.03912</x>
         <y>105.78228</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>khoa pháp ngoại ngữ</keyword>
     </building>
@@ -309,7 +311,7 @@
         <x>21.03901</x>
         <y>105.78220</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>khoa pháp ngoại ngữ</keyword>
     </building>
@@ -320,7 +322,7 @@
         <x>21.03866</x>
         <y>105.78235</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>khoa pháp ngoại ngữ</keyword>
     </building>
@@ -331,7 +333,7 @@
         <x>21.03868</x>
         <y>105.78179</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>khoa pháp ngoại ngữ</keyword>
     </building>
@@ -342,7 +344,7 @@
         <x>21.03910</x>
         <y>105.78258</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>7</type>
         <university>3</university>
         <keyword>ngoại ngữ lãng mạn hồ kiss giết người cướp răng</keyword>
     </building>
@@ -353,7 +355,7 @@
         <x>21.03832</x>
         <y>105.78157</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>3</university>
         <keyword>ngoại ngữ giảng đường</keyword>
     </building>
@@ -364,18 +366,18 @@
         <x>21.03855</x>
         <y>105.78154</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>1</type>
         <university>7</university>
         <keyword>b3 giáo dục</keyword>
     </building>
 
     <building>
         <id>34</id>
-        <name>Tòa nhà G8</name>
+        <name>Nhà G8</name>
         <x>21.03839</x>
         <y>105.78136</y>
         <priority>1</priority>
-        <type>2</type>
+        <type>1</type>
         <university>6</university>
         <keyword>b1 quốc tế</keyword>
     </building>
@@ -386,7 +388,7 @@
         <x>21.03808</x>
         <y>105.78159</y>
         <priority>2</priority>
-        <type>2</type>
+        <type>1</type>
         <university>6</university>
         <keyword>b1 văn miếu</keyword>
     </building>

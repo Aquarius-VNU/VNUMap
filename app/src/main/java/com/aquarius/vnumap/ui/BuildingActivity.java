@@ -40,6 +40,7 @@ public class BuildingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BuildingActivity.this, MapsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -47,7 +48,7 @@ public class BuildingActivity extends AppCompatActivity {
         viewPager = (ViewPager)findViewById(R.id.view_pager);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(BuildingActivity.this, getSupportFragmentManager());
-        adapter.addFragment(BuildingFragment.newInstance(1), " Others");
+        adapter.addFragment(new OtherBuildingFragment(), " Others");
         adapter.addFragment(BuildingFragment.newInstance(2), " Popular");
         adapter.addFragment(BuildingFragment.newInstance(3), " My UET");
         viewPager.setAdapter(adapter);

@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,13 +26,14 @@ import com.aquarius.vnumap.controller.MainController;
 import com.aquarius.vnumap.model.Building;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
  * Created by DangDo on 11/22/2015.
  */
-public class BuildingFragment extends Fragment {
+public class BuildingFragment extends Fragment{
     RecyclerView recyclerView;
     private Bitmap mPlaceHolderBitmap;
 
@@ -79,9 +81,16 @@ public class BuildingFragment extends Fragment {
         Bundle args = this.getArguments();
         int tab = args.getInt("tab", 2);
 
-        if(tab != 2){
+        for(int i = 0; i < buildings.size(); i++){
+            if(buildings.get(i).getImage() == 0){
+                buildings.remove(i);
+                i--;
+            }
+        }
+
+        if(tab == 3){
             for(int i = 0; i < buildings.size(); i++)
-                if(buildings.get(i).getType() != tab) {
+                if(buildings.get(i).getType() != 2) {
                     buildings.remove(i);
                     i--;
                 }
@@ -90,7 +99,7 @@ public class BuildingFragment extends Fragment {
         return buildings;
     }
 
-    public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapter.ViewHolder> {
+    public class BuildingCardAdapter extends RecyclerView.Adapter<BuildingCardAdapter.ViewHolder>{
 
         List<Building> mItems;
         Bundle bundle = new Bundle();
@@ -111,15 +120,20 @@ public class BuildingFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder viewHolder, int i) {
-            Building floor = mItems.get(i);
-            viewHolder.tvBuilding.setText(floor.getName());
+        public void onBindViewHolder(ViewHolder viewHolder, final int i) {
+            final Building building = mItems.get(i);
+            viewHolder.tvBuilding.setText(building.getName());
 //            viewHolder.tvDesBuilding.setText(floor.getDescription());
 //            viewHolder.imgThumbnail.setImageResource(floor.getImage());
-            loadBitmap(floor.getImage(), viewHolder.imgThumbnail);
-            int image = floor.getImage();
-            bundle = new Bundle();
-            bundle.putInt("image", image);
+            loadBitmap(building.getImage(), viewHolder.imgThumbnail);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, BuildingDetailActivity.class);
+                    intent.putExtra("building", building.getId());
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -138,14 +152,6 @@ public class BuildingFragment extends Fragment {
                 imgThumbnail = (ImageView)itemView.findViewById(R.id.img_thumbnail);
                 tvBuilding = (TextView)itemView.findViewById(R.id.tv_building);
 //                tvDesBuilding = (TextView)itemView.findViewById(R.id.tv_des_building);
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent (context, BuildingDetailActivity.class);
-                        i.putExtras(bundle);
-                        context.startActivity(i);
-                    }
-                });
             }
         }
     }
