@@ -28,6 +28,7 @@ public class GridRoomAdapter extends BaseAdapter{
     public GridRoomAdapter(Context context, List<Room> roomList, Activity activity){
         this.context = context;
         this.roomList = roomList;
+        this.activity = activity;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class GridRoomAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         ViewHolder viewHolder;
 
         mark = position;
@@ -69,10 +70,10 @@ public class GridRoomAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "ABC", Toast.LENGTH_LONG).show();
-                View contextView = LayoutInflater.from(activity).inflate(R.layout.activity_building_detail, null);
-                TextView direction = (TextView) contextView.findViewById(R.id.detail_direction);
-                //ImageView image = (ImageView) contextView.findViewById(R.id.header);
-                //image.setImageResource(R.drawable.image04);
+//                View contextView = View.inflate(activity, R.layout.activity_building_detail, null);
+                TextView direction = (TextView) activity.findViewById(R.id.detail_direction);
+                ImageView image = (ImageView) activity.findViewById(R.id.header);
+                image.setImageResource(R.drawable.image04);
                 direction.setVisibility(View.VISIBLE);
                 direction.setText("ABC");
             }
