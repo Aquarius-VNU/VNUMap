@@ -77,8 +77,22 @@ public class ArrayBuildings {
                 float[] result = new float[1];
                 Point element = buildingArray.get(i).getLocation();
                 Location.distanceBetween(location.getLatitude(), location.getLongitude(), element.getX(), element.getY(), result);
-                if(buildings.size() < size && result[0] <= 20){
+                if(buildings.size() < size && result[0] <= 40){
                     buildings.add((buildingArray.get(i)));
+                }
+            }
+        }
+        if(buildings.size() < size){
+            for(int i = 0 ; i < buildingArray.size() ; i++){
+                boolean checkLike = false;
+                for(int j = 0 ; j < buildings.size() ; j++){
+                    if(buildings.get(j).getId() == buildingArray.get(i).getId()){
+                        checkLike = true;
+                        break;
+                    }
+                }
+                if(!checkLike && buildings.size() < size){
+                    buildings.add(buildingArray.get(i));
                 }
             }
         }
