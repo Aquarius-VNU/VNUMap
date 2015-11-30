@@ -41,7 +41,13 @@ public class BuildingDetailActivity extends AppCompatActivity {
         List<Building> buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
 
         int i = this.getIntent().getIntExtra("building", 0);
-        Building building = buildings.get(i-1);
+        // building = buildings.get(i-1);
+        Building building = new Building();
+        for(int k = 0; k < buildings.size(); k++){
+            if(buildings.get(k).getId() == i){
+                building = buildings.get(k);
+            }
+        }
         thumbImage.setImageResource(building.getImage());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
