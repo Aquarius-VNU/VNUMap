@@ -121,7 +121,7 @@ public class BuildingFragment extends Fragment{
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int i) {
-            Building building = mItems.get(i);
+            final Building building = mItems.get(i);
             viewHolder.tvBuilding.setText(building.getName());
 //            viewHolder.tvDesBuilding.setText(floor.getDescription());
 //            viewHolder.imgThumbnail.setImageResource(floor.getImage());
@@ -130,7 +130,7 @@ public class BuildingFragment extends Fragment{
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, BuildingDetailActivity.class);
-                    intent.putExtra("building", i);
+                    intent.putExtra("building", building.getId());
                     context.startActivity(intent);
                 }
             });

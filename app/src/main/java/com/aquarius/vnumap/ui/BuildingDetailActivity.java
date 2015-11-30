@@ -41,7 +41,7 @@ public class BuildingDetailActivity extends AppCompatActivity {
         List<Building> buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
 
         int i = this.getIntent().getIntExtra("building", 0);
-        Building building = buildings.get(i);
+        Building building = buildings.get(i-1);
         thumbImage.setImageResource(building.getImage());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,8 +60,23 @@ public class BuildingDetailActivity extends AppCompatActivity {
         });
 
         listFloors = new ArrayList<>();
+        List<Room> roomList = new ArrayList<Room>();
+        roomList = building.getRooms();
+        int maxFloor = 0;
+        for (int k = 0; k < roomList.size()- 1; k++){
+            maxFloor = Math.max(roomList.get(k).getFloor(), roomList.get(k+1).getFloor());
+        }
+        for(int j = 0; j < maxFloor; j++){
+            listFloors.add(new Floors("Tầng " + (j + 1)));
+            for(int k = 0; k < roomList.size(); k++){
+                Room room = roomList.get(k);
+                if(room.getFloor() == j+1){
+                    listFloors.get(j).getRoomList().add(room);
+                }
+            }
+        }
 
-        adapter = new RecyclerFloorAdapter(this, listFloors);
+        adapter = new RecyclerFloorAdapter(this, listFloors, this);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

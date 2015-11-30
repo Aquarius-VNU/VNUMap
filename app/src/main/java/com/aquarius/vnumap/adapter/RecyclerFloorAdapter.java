@@ -1,5 +1,6 @@
 package com.aquarius.vnumap.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
@@ -32,10 +33,12 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
     public Context context;
     private ArrayList<Floors> listFloors;
     private int expandedPosition = -1;
+    private Activity activity;
 
-    public RecyclerFloorAdapter(Context context, ArrayList<Floors> listFloors){
+    public RecyclerFloorAdapter(Context context, ArrayList<Floors> listFloors, Activity activity){
         this.context = context;
         this.listFloors = listFloors;
+        this.activity = activity;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
         List<Room> roomList = new ArrayList<Room>();
         roomList = floor.getRoomList();
         holder.roomList = roomList;
-        GridRoomAdapter adapter = new GridRoomAdapter(holder.itemView.getContext(), roomList);
+        GridRoomAdapter adapter = new GridRoomAdapter(holder.itemView.getContext(), roomList, activity);
         holder.gridView.setAdapter(adapter);
         holder.tvFloor.setText(floor.getName());
         holder.titleFloor.setText(floor.getName());
