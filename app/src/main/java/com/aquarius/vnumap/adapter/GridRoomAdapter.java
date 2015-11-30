@@ -80,7 +80,7 @@ public class GridRoomAdapter extends BaseAdapter{
                 direction.setVisibility(View.VISIBLE);
                 direction.setText(room.getInfo());
                 CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)activity.findViewById(R.id.toolbar_layout);
-                toolbarLayout.setTitle("");
+                toolbarLayout.setTitleEnabled(false);
             }
         });
 

@@ -30,7 +30,8 @@
             - WC nữ ngay cạnh phòng 103 đó
         </room>
         <!--data to test-->
-        <room name="201" floor="2" type="1">- Đi thẳng lên đến chân cầu thang và lên tầng 2.
+        <room name="201" floor="2" type="1">
+            - Đi thẳng lên đến chân cầu thang và lên tầng 2.
             - Phòng 201 đối diện chân cầu thang lên tầng 3.
             - Chỗ bạn đang đứng, nhìn sang bên phải sẽ thấy phòng 201
         </room>
