@@ -65,6 +65,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
         if (position == expandedPosition) {
             holder.linearLayout.setVisibility(View.VISIBLE);
             holder.image_expand_toggle.setImageResource(R.drawable.circle_minus);
+            holder.tvFloor.setTextSize(20);
             //holder.titleFloor.setText("");
         } else {
             holder.linearLayout.setVisibility(View.GONE);

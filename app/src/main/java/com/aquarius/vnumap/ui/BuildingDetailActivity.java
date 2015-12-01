@@ -1,9 +1,6 @@
 package com.aquarius.vnumap.ui;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -43,23 +40,31 @@ public class BuildingDetailActivity extends AppCompatActivity {
         InputStream inputStreamDirection =  getResources().openRawResource(R.raw.direction);
         List<Building> buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
 
-        int id = this.getIntent().getIntExtra("building", 0);
+        int i = this.getIntent().getIntExtra("building", 0);
         // building = buildings.get(i-1);
         Building building = new Building();
         for(int k = 0; k < buildings.size(); k++){
-            if(buildings.get(k).getId() == id){
+            if(buildings.get(k).getId() == i){
                 building = buildings.get(k);
             }
         }
-//        thumbImage.setImageResource(building.getImage());
-
-        thumbImage.setImageBitmap(decodeSampledBitmapFromResource(getResources(), building.getImage(), 720, 405));
+        thumbImage.setImageResource(building.getImage());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout)
                 findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(building.getName());
+        toolbar.setTitle(building.getName());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BuildingDetailActivity.this, BuildingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_direction);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -94,43 +99,5 @@ public class BuildingDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
 
 }

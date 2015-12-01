@@ -26,6 +26,8 @@
     </LinearLayout>
 
     <include layout="@layout/room_grid_layout"
+        android:layout_height="200dp"
+        android:layout_width="match_parent"
         android:id="@+id/expanded_linear_layout" />
 
 </LinearLayout>

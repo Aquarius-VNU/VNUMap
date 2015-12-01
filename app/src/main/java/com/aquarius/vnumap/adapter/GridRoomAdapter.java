@@ -3,6 +3,7 @@ package com.aquarius.vnumap.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,13 +69,16 @@ public class GridRoomAdapter extends BaseAdapter{
         }
 
         final Room room = roomList.get(position);
+        final TextView direction = (TextView) activity.findViewById(R.id.detail_direction);
+        direction.setVisibility(View.GONE);
         viewHolder.tvTitle.setText(room.getName());
+        CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)activity.findViewById(R.id.toolbar_layout);
+        toolbarLayout.setTitleEnabled(true);
         viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context, "ABC", Toast.LENGTH_LONG).show();
 //                View contextView = View.inflate(activity, R.layout.activity_building_detail, null);
-                TextView direction = (TextView) activity.findViewById(R.id.detail_direction);
                 // ImageView image = (ImageView) activity.findViewById(R.id.header);
                 // image.setImageResource(R.drawable.image04);
                 direction.setVisibility(View.VISIBLE);
