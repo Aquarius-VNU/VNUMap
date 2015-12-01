@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -59,6 +60,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -73,32 +75,39 @@ import java.util.logging.LogRecord;
 import java.util.zip.Inflater;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
-//  camera when location = null
-    private  static final double LATITUDE_CAMERA = 21.03844442;
+    //  camera when location = null
+    private static final double LATITUDE_CAMERA = 21.03844442;
     private static final double LONGGITUDE_CAMERA = 105.78237534;
-    private  static final float ZOOM_CAMERA = 17.0f;
+    private static final float ZOOM_CAMERA = 17.0f;
     private static final LatLng LEFT_BOTTOM_CONNER = new LatLng(21.036921, 105.781066);
     private static final LatLng RIGHT_TOP_CONNER = new LatLng(21.040987, 105.785605);
     private static final LatLng LOCATION_VNU = new LatLng(21.036787, 105.782040);
 
     private GoogleMap mMap;
-//  variable contain location from GPS or NETWORK
+    //  variable contain location from GPS or NETWORK
     private Location location = null;
-//  marker of location
+    //  marker of location
     private Marker markerLocation = null;
-//  list all marker on the map
+    //  list all marker on the map
     private List<MapMarker> markerList = new ArrayList<>();
-//  use to manage thread
+    //  use to manage thread
     private Handler handler = null;
 
     private boolean isSearch = false;
 
     SlidingUpPanelLayout slidingUpPanelLayout = null;
 
+    //  handle ponyline to show path
+    private Polyline path = null;
+//  intent to get data
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        intent = getIntent();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -106,41 +115,45 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
 
-
         handler = new Handler();
 //      update location 1s/1 turn
         updateLocation();
 
-        final FloatingActionButton fab_location = (FloatingActionButton)findViewById(R.id.fab_location);
+        final FloatingActionButton fab_location = (FloatingActionButton) findViewById(R.id.fab_location);
         fab_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                21.040987, 105.785605
 //                21.036921, 105.781066
-
-//                  delete all marker
+//              clear all path of direction
+                if (path != null) {
+                    path.remove();
+                }
+//              delete all marker
+                deleteMarker();
                 if (location != null) {
 //                  if location in VNU
                     if (LEFT_BOTTOM_CONNER.latitude <= location.getLatitude() && location.getLatitude() <= RIGHT_TOP_CONNER.latitude
                             && LEFT_BOTTOM_CONNER.longitude <= location.getLongitude() && location.getLongitude() <= RIGHT_TOP_CONNER.longitude) {
-                        if (markerList.size() > 0) {
-                            for (int i = 0; i < markerList.size(); i++) {
-                                markerList.get(i).getMarker().setVisible(false);
-                            }
-                            markerList.clear();
-                        }
+
 //                      show buldings near location now
-                        List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(5, location);
+                        List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(10, location);
                         addMarker(buildings);
 
 //                      move camera to location
                         CameraPosition cameraPosition = new CameraPosition.Builder()
                                 .target(new LatLng(location.getLatitude(), location.getLongitude()))
                                 .zoom(ZOOM_CAMERA)
+                                .tilt(60)
                                 .build();
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
                     } else {
+//                      show marker with high priority
+
+                        List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildings(10);
+                        addMarker(buildings);
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
                         builder.setTitle("VNUMap");
                         builder.setMessage("Bạn đang ở ngoài khuôn viên ĐHQG Hà Nội. Tìm chỉ đường tới đây ?");
@@ -159,6 +172,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 CameraPosition cameraPosition = new CameraPosition.Builder()
                                         .target(new LatLng(location.getLatitude(), location.getLongitude()))
                                         .zoom(ZOOM_CAMERA)
+                                        .tilt(60)
                                         .build();
                                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                             }
@@ -168,7 +182,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
                     builder.setTitle("VNUMap");
-                    builder.setMessage("Vui lòng kết nối Internet hoặc GPS");
+                    builder.setMessage("Bạn vui lòng bật GPS");
                     builder.setPositiveButton("Đồng ý", null);
                     builder.show();
                 }
@@ -176,7 +190,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         fab_location.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
 
-        final FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_building);
+        final FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_building);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,8 +201,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-
-        slidingUpPanelLayout  = (SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
         slidingUpPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -229,25 +242,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        EditText edtSearch = (EditText)findViewById(R.id.edtSearch);
-        final ListView lstSeach = (ListView)findViewById(R.id.lstSearch);
+        EditText edtSearch = (EditText) findViewById(R.id.edtSearch);
+        final ListView lstSeach = (ListView) findViewById(R.id.lstSearch);
 
         edtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getSupportFragmentManager().findFragmentById(R.id.map).getView().setVisibility(View.INVISIBLE);
-                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.list_search_layout);
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.list_search_layout);
                 linearLayout.setVisibility(View.VISIBLE);
                 fab_location.setVisibility(View.INVISIBLE);
                 floatingActionButton.setVisibility(View.INVISIBLE);
+                ImageButton menu = (ImageButton) findViewById(R.id.butMenu);
+                menu.setImageDrawable(getResources().getDrawable(R.drawable.ic_back));
                 isSearch = true;
+                slidingUpPanelLayout.setPanelHeight(0);
             }
         });
 //      update data for list search
         final ArrayList<Building> buildings = new ArrayList<Building>();
         final ListSearchAdapter arrayAdapter = new ListSearchAdapter(MapsActivity.this,
-                R.layout.list_item_search, buildings );
+                R.layout.list_item_search, buildings);
         lstSeach.setAdapter(arrayAdapter);
+        lstSeach.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MapsActivity.this.onBackPressed();
+                focusAMarker(buildings.get(i));
+
+            }
+
+        });
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -257,10 +282,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() > 1){
-                    List<Building>buildingList = SearchFilter.getInstance(MapsActivity.this).getResult(String.valueOf(charSequence));
+                if (charSequence.length() > 1) {
+                    List<Building> buildingList = SearchFilter.getInstance(MapsActivity.this).getResult(String.valueOf(charSequence));
                     buildings.clear();
-                    for(int j = 0 ; j < buildingList.size() ; j++){
+                    for (int j = 0; j < buildingList.size(); j++) {
                         buildings.add(buildingList.get(j));
                     }
                     arrayAdapter.notifyDataSetChanged();
@@ -301,6 +326,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onMapClick(LatLng latLng) {
 
                 slidingUpPanelLayout.setPanelHeight(0);
+                if (markerList.size() > 0) {
+                    for (int i = 0; i < markerList.size(); i++) {
+                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    }
+                }
             }
         });
 
@@ -316,56 +346,80 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(posCamera)
                 .zoom(ZOOM_CAMERA)
+                .tilt(60)
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                for(int i = 0 ; i < markerList.size() ; i++){
-                    if(marker.equals(markerList.get(i).getMarker())){
+                for (int i = 0; i < markerList.size(); i++) {
+                    if (marker.equals(markerList.get(i).getMarker())) {
                         Building building = ArrayBuildings.getInstance(MapsActivity.this).getBuildingById(markerList.get(i).getId());
-                        if(building != null){
-                            TextView name = (TextView)findViewById(R.id.sliding_panel_txtViewName);
+                        if (building != null) {
+                            TextView name = (TextView) findViewById(R.id.sliding_panel_txtViewName);
                             name.setText(String.valueOf(building.getName()));
-                            TextView university = (TextView)findViewById(R.id.sliding_panel_txtViewUniversity);
-                            if(building.getUniversity() > 0){
-                                if(building.getUniversity() <= SearchFilter.UNIVERSITY_STRINGS.length){
+                            TextView university = (TextView) findViewById(R.id.sliding_panel_txtViewUniversity);
+                            if (building.getUniversity() > 0) {
+                                if (building.getUniversity() <= SearchFilter.UNIVERSITY_STRINGS.length) {
                                     university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[building.getUniversity() - 1]));
-                                }else{
+                                } else {
                                     university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[0]));
                                 }
-                            }else{
+                            } else {
                                 university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[0]));
                             }
                         }
+                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                        LatLng posCamera = new LatLng(markerList.get(i).getMarker().getPosition().latitude,
+                                markerList.get(i).getMarker().getPosition().longitude);
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(posCamera)
+                                .zoom(ZOOM_CAMERA)
+                                .tilt(60)
+                                .build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                         slidingUpPanelLayout.setPanelHeight(140);
-                        break;
+
+                    } else {
+                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                     }
                 }
                 return true;
 
             }
         });
-    }
 
-    @Override
-    public void onBackPressed(){
-        if(isSearch){
-            getSupportFragmentManager().findFragmentById(R.id.map).getView().setVisibility(View.VISIBLE);
-            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.list_search_layout);
-            linearLayout.setVisibility(View.INVISIBLE);
-            FloatingActionButton fab1 = (FloatingActionButton)findViewById(R.id.fab_location);
-            fab1.setVisibility(View.VISIBLE);
-            FloatingActionButton fab2 = (FloatingActionButton)findViewById(R.id.fab_building);
-            fab2.setVisibility(View.VISIBLE);
-            isSearch = false;
+        Bundle extras = intent.getExtras();
+        if(extras != null) {
+            int idBuildingFocus = extras.getInt("buildingId");
+            Building buildingFocus = ArrayBuildings.getInstance(MapsActivity.this).getBuildingById(idBuildingFocus);
+            if (buildingFocus != null) {
+                deleteMarker();
+                focusAMarker(buildingFocus);
+            }
         }
     }
 
-//  add Marker and set method on click to show sliding panel
-    public void addMarker(List<Building> buildings){
-        if(buildings != null) {
+    @Override
+    public void onBackPressed() {
+        if (isSearch) {
+            getSupportFragmentManager().findFragmentById(R.id.map).getView().setVisibility(View.VISIBLE);
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.list_search_layout);
+            linearLayout.setVisibility(View.INVISIBLE);
+            FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab_location);
+            fab1.setVisibility(View.VISIBLE);
+            FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab_building);
+            fab2.setVisibility(View.VISIBLE);
+            isSearch = false;
+            ImageButton menu = (ImageButton) findViewById(R.id.butMenu);
+            menu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
+        }
+    }
+
+    //  add Marker and set method on click to show sliding panel
+    public void addMarker(List<Building> buildings) {
+        if (buildings != null) {
             for (int i = 0; i < buildings.size(); i++) {
                 LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
                 Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
@@ -374,11 +428,63 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void updateLocation(){
+    public void deleteMarker() {
+        if (markerList.size() > 0) {
+            for (int i = 0; i < markerList.size(); i++) {
+                markerList.get(i).getMarker().setVisible(false);
+            }
+            markerList.clear();
+        }
+    }
+
+    public void focusAMarker(Building building) {
+        if (building != null) {
+            deleteMarker();
+            Location location = new Location("");
+            location.setLatitude(building.getLocation().getX());
+            location.setLongitude(building.getLocation().getY());
+            List<Building> buildingList = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(10, location);
+            addMarker(buildingList);
+            LatLng posCamera = new LatLng(location.getLatitude(), location.getLongitude());
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(posCamera)
+                    .zoom(ZOOM_CAMERA)
+                    .tilt(60)
+                    .build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+            TextView name = (TextView) findViewById(R.id.sliding_panel_txtViewName);
+            name.setText(String.valueOf(building.getName()));
+            TextView university = (TextView) findViewById(R.id.sliding_panel_txtViewUniversity);
+            if (building.getUniversity() > 0) {
+                if (building.getUniversity() <= SearchFilter.UNIVERSITY_STRINGS.length) {
+                    university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[building.getUniversity() - 1]));
+                } else {
+                    university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[0]));
+                }
+            } else {
+                university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[0]));
+            }
+        }
+        slidingUpPanelLayout.setPanelHeight(140);
+        if (markerList.size() > 0) {
+            for (int k = 0; k < markerList.size(); k++) {
+                if (markerList.get(k).getMarker().getPosition().latitude == building.getLocation().getX() &&
+                        markerList.get(k).getMarker().getPosition().longitude == building.getLocation().getY()) {
+                    markerList.get(k).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                } else {
+                    markerList.get(k).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                }
+            }
+        }
+
+    }
+
+    public void updateLocation() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true) {
+                while (true) {
                     SystemClock.sleep(1000);
                     handler.post(new Runnable() {
                         @Override
@@ -386,7 +492,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             location = LocationServices.getInstance(MapsActivity.this).getLocation();
                             if (location != null) {
                                 Log.d("HANDLE", String.valueOf(location.getLatitude()));
-                                if(markerLocation != null){
+                                if (markerLocation != null) {
                                     markerLocation.setVisible(false);
                                 }
                                 markerLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
@@ -401,8 +507,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         thread.start();
     }
-//  draw path on map
-    private void drawPath(String path){
+
+    //  draw path on map
+    private void drawPath(String path) {
         try {
             JSONObject jsonObject = new JSONObject(path);
             Log.d("MAPDRAW", jsonObject.toString());
@@ -411,31 +518,33 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             JSONObject overview_polyline = routes.getJSONObject("overview_polyline");
             String polyline = overview_polyline.getString("points");
             List<LatLng> latLngs = JSONMap.decodePoly(polyline);
-            mMap.addPolyline(new PolylineOptions().addAll(latLngs).width(13).color(Color.parseColor("#05b1fb")).geodesic(true));
-        }catch(JSONException e){
+            this.path = mMap.addPolyline(new PolylineOptions().addAll(latLngs).width(13).color(Color.parseColor("#05b1fb")).geodesic(true));
+        } catch (JSONException e) {
             e.printStackTrace();
 
         }
     }
 
-    private class DownloadAndDrawPath extends AsyncTask<Void, Void, String>{
+    private class DownloadAndDrawPath extends AsyncTask<Void, Void, String> {
         private String url = null;
-        DownloadAndDrawPath(String url){
+
+        DownloadAndDrawPath(String url) {
             this.url = url;
         }
-        protected String doInBackground(Void... paramas){
+
+        protected String doInBackground(Void... paramas) {
             JSONMap jsonMap = new JSONMap();
             String result = jsonMap.getJSONFromURL(url);
             Log.d("MAPDRAW", result);
             return result;
         }
-        protected  void onPostExecute(String result){
-            if(result != null) {
+
+        protected void onPostExecute(String result) {
+            if (result != null) {
                 drawPath(result);
             }
         }
     }
-
 
 
 }
