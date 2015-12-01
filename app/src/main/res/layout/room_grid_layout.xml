@@ -7,19 +7,14 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".GridRoomFragment">
-    <TextView
-        android:id="@+id/titleFloor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:textColor="@color/blue"/>
+
     <GridView
         android:id="@+id/gridExpandArea"
         android:numColumns="3"
         android:columnWidth="50dp"
         android:stretchMode="columnWidth"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="20dp"
         android:verticalSpacing="4dp"

@@ -60,11 +60,12 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
         holder.gridView.setAdapter(adapter);
 
         holder.tvFloor.setText(floor.getName());
-        holder.titleFloor.setText(floor.getName());
+        //holder.titleFloor.setText(floor.getName());
 
         if (position == expandedPosition) {
             holder.linearLayout.setVisibility(View.VISIBLE);
             holder.image_expand_toggle.setImageResource(R.drawable.circle_minus);
+            //holder.titleFloor.setText("");
         } else {
             holder.linearLayout.setVisibility(View.GONE);
             holder.image_expand_toggle.setImageResource(R.drawable.circle_plus);
@@ -108,7 +109,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
             linearLayout = (LinearLayout) itemView.findViewById(R.id.expanded_linear_layout);
 
             gridView = (GridView) itemView.findViewById(R.id.gridExpandArea);
-            titleFloor = (TextView) itemView.findViewById(R.id.titleFloor);
+            //titleFloor = (TextView) itemView.findViewById(R.id.titleFloor);
             image_expand_toggle = (ImageView) itemView.findViewById(R.id.img_expand_toggle);
             itemView.setOnClickListener(this);
         }
