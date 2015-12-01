@@ -3,28 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginTop="10dp"
-    android:padding="5dp">
+    android:layout_marginTop="10dp">
 
     <ImageView
         android:id="@+id/img_expand_toggle"
         android:src="@drawable/circle_plus"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_weight="0"/>
+        android:layout_weight="0"
+        android:paddingLeft="5dp"/>
 
     <TextView
         android:id="@+id/floor_name"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:gravity="center_vertical"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"/>
 
     <include layout="@layout/room_grid_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/expanded_linear_layout"
         android:visibility="gone"/>
 

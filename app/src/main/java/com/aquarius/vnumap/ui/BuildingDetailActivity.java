@@ -40,11 +40,11 @@ public class BuildingDetailActivity extends AppCompatActivity {
         InputStream inputStreamDirection =  getResources().openRawResource(R.raw.direction);
         List<Building> buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
 
-        int i = this.getIntent().getIntExtra("building", 0);
+        int id = this.getIntent().getIntExtra("building", 0);
         // building = buildings.get(i-1);
         Building building = new Building();
         for(int k = 0; k < buildings.size(); k++){
-            if(buildings.get(k).getId() == i){
+            if(buildings.get(k).getId() == id){
                 building = buildings.get(k);
             }
         }
