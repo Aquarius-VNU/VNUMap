@@ -103,7 +103,6 @@ public class BuildingFragment extends Fragment{
 
         List<Building> mItems;
         private Context context;
-
         public BuildingCardAdapter(Context context, List<Building> buildingList) {
             super();
             this.context = context;
@@ -121,8 +120,7 @@ public class BuildingFragment extends Fragment{
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int i) {
             Building building = mItems.get(i);
-            final int id;
-            id = building.getId();
+            final  int id = building.getId();
             viewHolder.tvBuilding.setText(building.getName());
 //            viewHolder.tvDesBuilding.setText(floor.getDescription());
 //            viewHolder.imgThumbnail.setImageResource(floor.getImage());

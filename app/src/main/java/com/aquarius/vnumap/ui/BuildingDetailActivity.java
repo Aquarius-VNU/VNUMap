@@ -55,6 +55,16 @@ public class BuildingDetailActivity extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout)
                 findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(building.getName());
+        toolbar.setTitle(building.getName());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BuildingDetailActivity.this, BuildingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_direction);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -11,7 +11,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="1dp"
-        android:src="@drawable/btn_door"
+        android:src="@drawable/login_door"
+        android:background="@color/blue"
         android:scaleType="center"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
