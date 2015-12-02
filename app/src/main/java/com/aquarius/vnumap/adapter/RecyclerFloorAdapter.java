@@ -56,6 +56,7 @@ public class RecyclerFloorAdapter extends RecyclerView.Adapter<RecyclerFloorAdap
         List<Room> roomList = new ArrayList<Room>();
         roomList = floor.getRoomList();
         holder.roomList = roomList;
+
         GridRoomAdapter adapter = new GridRoomAdapter(holder.itemView.getContext(), roomList, activity);
         holder.gridView.setAdapter(adapter);
 
