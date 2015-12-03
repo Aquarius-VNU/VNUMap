@@ -5,6 +5,8 @@ import android.animation.LayoutTransition;
 import android.animation.TimeInterpolator;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +24,8 @@ import android.os.Message;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,9 +33,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -57,6 +64,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -88,6 +97,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Location location = null;
     //  marker of location
     private Marker markerLocation = null;
+    // circle of location
+    private Circle circleLocation = null;
     //  list all marker on the map
     private List<MapMarker> markerList = new ArrayList<>();
     //  use to manage thread
@@ -129,9 +140,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (path != null) {
                     path.remove();
                 }
-//              delete all marker
-                deleteMarker();
+
                 if (location != null) {
+                    //delete all marker
+                    deleteMarker();
 //                  if location in VNU
                     if (LEFT_BOTTOM_CONNER.latitude <= location.getLatitude() && location.getLatitude() <= RIGHT_TOP_CONNER.latitude
                             && LEFT_BOTTOM_CONNER.longitude <= location.getLongitude() && location.getLongitude() <= RIGHT_TOP_CONNER.longitude) {
@@ -242,12 +254,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        EditText edtSearch = (EditText) findViewById(R.id.edtSearch);
+        final EditText edtSearch = (EditText) findViewById(R.id.edtSearch);
         final ListView lstSeach = (ListView) findViewById(R.id.lstSearch);
-
-        edtSearch.setOnClickListener(new View.OnClickListener() {
+        edtSearch.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
                 getSupportFragmentManager().findFragmentById(R.id.map).getView().setVisibility(View.INVISIBLE);
                 LinearLayout linearLayout = (LinearLayout) findViewById(R.id.list_search_layout);
                 linearLayout.setVisibility(View.VISIBLE);
@@ -257,8 +268,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 menu.setImageDrawable(getResources().getDrawable(R.drawable.ic_back));
                 isSearch = true;
                 slidingUpPanelLayout.setPanelHeight(0);
+                edtSearch.setFocusable(true);
+                edtSearch.setFocusableInTouchMode(true);
+                edtSearch.requestFocus();
+                return false;
             }
         });
+
+        edtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b){
+                    hideKeyboard(view);
+                }
+            }
+        });
+
 //      update data for list search
         final ArrayList<Building> buildings = new ArrayList<Building>();
         final ListSearchAdapter arrayAdapter = new ListSearchAdapter(MapsActivity.this,
@@ -267,8 +292,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         lstSeach.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                hideKeyboard();
+                MapsActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 MapsActivity.this.onBackPressed();
                 focusAMarker(buildings.get(i));
+                edtSearch.setFocusable(false);
+
 
             }
 
@@ -295,6 +324,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+//__________________________________________________________________________________________________
+//set shadow menu
+        final DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+//create list menu left
+        String[] list_menu_strings = getResources().getStringArray(R.array.list_menu);
+        final ListView listMenu = (ListView)findViewById(R.id.list_menu);
+        listMenu.setAdapter(new ArrayAdapter<String>(this, R.layout.list_menu_item, R.id.menu_list_text, list_menu_strings));
+        final FragmentManager fragmentManager = getFragmentManager();
+        final Fragment settingFragment = new ContentFragment();
+        listMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                fragmentManager.beginTransaction().replace(R.id.map_container, settingFragment).commit();
+//                drawerLayout.closeDrawer(listMenu);
             }
         });
     }
@@ -497,6 +544,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 }
                                 markerLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location)).title("FUCK"));
+                                circleLocation = mMap.addCircle(new CircleOptions().center(markerLocation.getPosition())
+                                .fillColor(Color.parseColor("#161aa4dd")).strokeColor(Color.parseColor("#1aa4dd")).strokeWidth(4).radius(40));
                             } else {
                                 Log.d("HANDLE", "null");
                             }
@@ -547,4 +596,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+    private void hideKeyboard(View view){
+        if(view != null){
+            view.clearFocus();
+            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        }
+    }
 }
