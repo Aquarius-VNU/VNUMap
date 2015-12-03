@@ -69,6 +69,23 @@ public class GridRoomAdapter extends BaseAdapter{
         }
 
         final Room room = roomList.get(position);
+
+        for(int i = 0; i < roomList.size(); i++){
+
+            switch (room.getType()){
+                case 2: //WC
+                    viewHolder.ivIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.toilet_ic));
+                    break;
+                case 3: //Lab
+                    viewHolder.ivIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.lab_ic));
+                    break;
+                case 4: //Tro giang
+                    viewHolder.ivIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_support));
+                    break;
+                default: //Study room
+                    break;
+            }
+        }
         final TextView direction = (TextView) activity.findViewById(R.id.detail_direction);
         direction.setVisibility(View.GONE);
         viewHolder.tvTitle.setText(room.getName());

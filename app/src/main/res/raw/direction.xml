@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 * id is id of buildings in map.xml
-* Each room element, type is type of room that you define such as 1:Study room, 2:WC, 3:Lab...
+* Each room element, type is type of room that you define such as 1:Study room, 2:WC, 3:Lab, 4:Tro giang...
 * With data you define must declare constant
 -->
 <direction>
@@ -19,12 +19,23 @@
         <room name = "107" floor = "1" type = "1"> Chỉ dẫn đường:
             1.Từ cửa vào sảnh G2, bạn nhìn sang bên tay phải đi nào!
         </room>
-        <room name = "WC Nam" floor = "1" type = "1"> Chỉ dẫn đường:
+
+        <room name="Trung tâm máy tính" floor="1" type="3"> Chỉ dẫn đường:
+            1.Từ cửa chính bạn rẽ trái,
+            2.Đi qua dãy bàn tự học của sinh viên
+            3.Trung tâm máy tính ngay phía bên tay trái
+        </room>
+        <room name="Trợ giảng" floor="1" type="4"> Chỉ dẫn đường:
             1.Đi thẳng đến chân cầu thang trước mặt
-            2.Nhìn sang bên trái
+            2.Nhìn sang bên phải
+            3.Phòng trợ giảng nằm giữa phòng 105 và WC Nam
+        </room>
+        <room name = "WC Nam" floor = "1" type = "2"> Chỉ dẫn đường:
+            1.Đi thẳng đến chân cầu thang trước mặt
+            2.Nhìn sang bên phải
             3.Bạn đã thấy WC Nam chưa?
         </room>
-        <room name = "WC Nữ" floor = "1" type = "1"> Chỉ dẫn đường:
+        <room name = "WC Nữ" floor = "1" type = "2"> Chỉ dẫn đường:
             1.Từ cửa vào bạn đi về phía bên tay trái
             2.Qua dãy bàn học dành cho sinh viên
             3.WC nữ ngay cạnh phòng 103 đó
@@ -46,6 +57,7 @@
             1.Đi lên tầng 2 nào!
             2.Phòng 208 nằm dọc hành lang tầng 2
         </room>
+
         <room name="301" floor="3" type="1"> Chỉ dẫn đường:
             1.Đi lên đến tầng 3 nào
             2.Phòng 301 ở ngay trước mặt bạn rồi đó
