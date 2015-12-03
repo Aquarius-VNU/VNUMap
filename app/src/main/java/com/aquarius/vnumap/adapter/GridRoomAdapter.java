@@ -74,10 +74,10 @@ public class GridRoomAdapter extends BaseAdapter{
 
             switch (room.getType()){
                 case 2: //WC
-                    viewHolder.ivIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.toilet_ic));
+                    viewHolder.ivIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_restroom));
                     break;
                 case 3: //Lab
-                    viewHolder.ivIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.lab_ic));
+                    viewHolder.ivIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_computer));
                     break;
                 case 4: //Tro giang
                     viewHolder.ivIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_support));

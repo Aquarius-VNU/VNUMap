@@ -34,17 +34,17 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         tools:context=".GridRoomFragment">
 
-        <GridView
+        <com.aquarius.vnumap.ui.MyGridView
             android:id="@+id/gridExpandArea"
-            android:numColumns="3"
-            android:columnWidth="50dp"
+            android:numColumns="5"
+            android:columnWidth="40dp"
             android:stretchMode="columnWidth"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:gravity="center">
-        </GridView>
+        </com.aquarius.vnumap.ui.MyGridView>
     </LinearLayout>
 
 </LinearLayout>
