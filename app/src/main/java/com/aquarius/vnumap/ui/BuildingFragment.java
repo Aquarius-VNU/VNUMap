@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.controller.MainController;
 import com.aquarius.vnumap.model.Building;
+import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -35,7 +36,7 @@ import java.util.List;
  */
 public class BuildingFragment extends Fragment{
     RecyclerView recyclerView;
-    private Bitmap mPlaceHolderBitmap;
+    private static Bitmap mPlaceHolderBitmap;
 
     public BuildingFragment(){
     }
@@ -124,13 +125,19 @@ public class BuildingFragment extends Fragment{
             viewHolder.tvBuilding.setText(building.getName());
 //            viewHolder.tvDesBuilding.setText(floor.getDescription());
 //            viewHolder.imgThumbnail.setImageResource(floor.getImage());
-            loadBitmap(building.getImage(), viewHolder.imgThumbnail);
+//            loadBitmap(building.getImage(), viewHolder.imgThumbnail);
+
+            Picasso.with(context).load(building.getImage()).into(viewHolder.imgThumbnail);
+
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, BuildingDetailActivity.class);
                     intent.putExtra("building", id);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(intent);
+                    getActivity().finish();
                 }
             });
         }
@@ -222,7 +229,7 @@ public class BuildingFragment extends Fragment{
         @Override
         protected Bitmap doInBackground(Integer... params) {
             data = params[0];
-            return decodeSampledBitmapFromResource(getResources(), data, 720, 405);
+            return decodeSampledBitmapFromResource(getResources(), data, 1280, 720);
         }
 
         public Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
