@@ -77,6 +77,7 @@ public class BuildingDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(BuildingDetailActivity.this, MapsActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 

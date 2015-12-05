@@ -56,6 +56,7 @@ public class OtherBuildingFragment extends Fragment {
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtra("buildingId", adapter.getChild(groupPosition, childPosition).getId());
                 startActivity(i);
+                getActivity().finish();
                 return false;
             }
         });
