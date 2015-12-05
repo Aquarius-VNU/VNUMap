@@ -185,7 +185,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/sliding_panel_margin_right_direction"
                         android:layout_marginTop="8dp"
-                        android:src="@drawable/ic_phone" />
+                        android:src="@drawable/ic_phone"
+                        android:background="@android:color/transparent"/>
                 </RelativeLayout>
 
                 <TextView

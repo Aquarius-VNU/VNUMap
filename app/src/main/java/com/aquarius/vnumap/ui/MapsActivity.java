@@ -10,6 +10,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -112,7 +113,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Polyline path = null;
 //  intent to get data
     private Intent intent;
-
+//  get setting data
+    private SharedPreferences setting = null;
+    private int numberofMarker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +123,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         intent = getIntent();
 
+        setting = getSharedPreferences(SettingActivity.KEY_PREFERENCES, 0);
+        numberofMarker = setting.getInt(SettingActivity.KEY_NUMBER_MARKER, 10);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -149,7 +154,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             && LEFT_BOTTOM_CONNER.longitude <= location.getLongitude() && location.getLongitude() <= RIGHT_TOP_CONNER.longitude) {
 
 //                      show buldings near location now
-                        List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(10, location);
+                        List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(numberofMarker, location);
                         addMarker(buildings);
 
 //                      move camera to location
@@ -163,7 +168,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     } else {
 //                      show marker with high priority
 
-                        List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildings(10);
+                        List<Building> buildings = ArrayBuildings.getInstance(MapsActivity.this).getBuildings(numberofMarker);
                         addMarker(buildings);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
@@ -335,13 +340,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String[] list_menu_strings = getResources().getStringArray(R.array.list_menu);
         final ListView listMenu = (ListView)findViewById(R.id.list_menu);
         listMenu.setAdapter(new ArrayAdapter<String>(this, R.layout.list_menu_item, R.id.menu_list_text, list_menu_strings));
-        final FragmentManager fragmentManager = getFragmentManager();
-        final Fragment settingFragment = new ContentFragment();
+
         listMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                fragmentManager.beginTransaction().replace(R.id.map_container, settingFragment).commit();
-//                drawerLayout.closeDrawer(listMenu);
+                Intent intent = new Intent(MapsActivity.this, SettingActivity.class);
+                finish();
+                startActivity(intent);
             }
         });
     }
@@ -375,7 +380,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 slidingUpPanelLayout.setPanelHeight(0);
                 if (markerList.size() > 0) {
                     for (int i = 0; i < markerList.size(); i++) {
-                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
+                        setting.getInt(SettingActivity.KEY_COLOR, 0)]));
                     }
                 }
             }
@@ -385,7 +391,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //      add Marker
         ArrayBuildings arrayBuildings = ArrayBuildings.getInstance(this);
-        List<Building> buildings = arrayBuildings.getBuildings(10);
+        List<Building> buildings = arrayBuildings.getBuildings(numberofMarker);
         addMarker(buildings);
 
 //      setting camera
@@ -417,7 +423,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[0]));
                             }
                         }
-                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
+                                setting.getInt(SettingActivity.KEY_COLOR_CHOOSE, 3)]));
                         LatLng posCamera = new LatLng(markerList.get(i).getMarker().getPosition().latitude,
                                 markerList.get(i).getMarker().getPosition().longitude);
                         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -429,7 +436,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         slidingUpPanelLayout.setPanelHeight(140);
 
                     } else {
-                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                        markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
+                                setting.getInt(SettingActivity.KEY_COLOR, 0)]));
                     }
                 }
                 return true;
@@ -469,7 +477,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (buildings != null) {
             for (int i = 0; i < buildings.size(); i++) {
                 LatLng latLng = new LatLng(buildings.get(i).getLocation().getX(), buildings.get(i).getLocation().getY());
-                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(buildings.get(i).getName()));
+                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
+                        setting.getInt(SettingActivity.KEY_COLOR, 0)])).title(buildings.get(i).getName()));
                 markerList.add(new MapMarker(buildings.get(i).getId(), marker));
             }
         }
@@ -490,7 +499,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Location location = new Location("");
             location.setLatitude(building.getLocation().getX());
             location.setLongitude(building.getLocation().getY());
-            List<Building> buildingList = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(10, location);
+            List<Building> buildingList = ArrayBuildings.getInstance(MapsActivity.this).getBuildingsByLocation(numberofMarker, location);
             addMarker(buildingList);
             LatLng posCamera = new LatLng(location.getLatitude(), location.getLongitude());
             CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -518,9 +527,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             for (int k = 0; k < markerList.size(); k++) {
                 if (markerList.get(k).getMarker().getPosition().latitude == building.getLocation().getX() &&
                         markerList.get(k).getMarker().getPosition().longitude == building.getLocation().getY()) {
-                    markerList.get(k).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                    markerList.get(k).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
+                            setting.getInt(SettingActivity.KEY_COLOR_CHOOSE, 3)]));
                 } else {
-                    markerList.get(k).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    markerList.get(k).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
+                            setting.getInt(SettingActivity.KEY_COLOR, 0)]));
                 }
             }
         }
