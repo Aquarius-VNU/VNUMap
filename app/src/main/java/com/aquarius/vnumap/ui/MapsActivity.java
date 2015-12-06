@@ -31,6 +31,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,6 +52,7 @@ import android.widget.TextView;
 
 import com.aquarius.vnumap.R;
 import com.aquarius.vnumap.adapter.ArrayBuildings;
+import com.aquarius.vnumap.adapter.ListMenuAdapter;
 import com.aquarius.vnumap.adapter.ListSearchAdapter;
 import com.aquarius.vnumap.adapter.LocationServices;
 import com.aquarius.vnumap.adapter.MapMarker;
@@ -271,6 +273,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 floatingActionButton.setVisibility(View.INVISIBLE);
                 ImageButton menu = (ImageButton) findViewById(R.id.butMenu);
                 menu.setImageDrawable(getResources().getDrawable(R.drawable.ic_back));
+                menu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onBackPressed();
+                    }
+                });
                 isSearch = true;
                 slidingUpPanelLayout.setPanelHeight(0);
                 edtSearch.setFocusable(true);
@@ -338,15 +346,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //create list menu left
         String[] list_menu_strings = getResources().getStringArray(R.array.list_menu);
+        int[] list_menu_icon = {R.drawable.ic_settings, R.drawable.ic_info, R.drawable.ic_feedback};
+        ArrayList<ListMenuAdapter.ItemMenu> menus = new ArrayList<>();
+        for(int i = 0 ; i < 3 ; i++){
+            menus.add(new ListMenuAdapter.ItemMenu(list_menu_icon[i], list_menu_strings[i]));
+        }
         final ListView listMenu = (ListView)findViewById(R.id.list_menu);
-        listMenu.setAdapter(new ArrayAdapter<String>(this, R.layout.list_menu_item, R.id.menu_list_text, list_menu_strings));
+        listMenu.setAdapter(new ListMenuAdapter(this, R.layout.list_menu_item, menus));
 
         listMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MapsActivity.this, SettingActivity.class);
-                finish();
-                startActivity(intent);
+                switch(i) {
+                    case 0:
+                    Intent intent = new Intent(MapsActivity.this, SettingActivity.class);
+                    finish();
+                    startActivity(intent);
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        Intent intent2 = new Intent(Intent.ACTION_SEND);
+                        intent2.setType("message/rfc822");
+                        intent2.putExtra(Intent.EXTRA_EMAIL, new String[]{"thinhtq_58@vnu.edu.vn"});
+                        intent2.putExtra(Intent.EXTRA_SUBJECT, "[VNUMap]Đóng góp ý kiến");
+                        intent2.putExtra(Intent.EXTRA_TEXT, "");
+                        startActivity(intent2);
+                        break;
+                }
+            }
+        });
+
+        ImageButton menu = (ImageButton) findViewById(R.id.butMenu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
     }
@@ -469,6 +504,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             isSearch = false;
             ImageButton menu = (ImageButton) findViewById(R.id.butMenu);
             menu.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu));
+            menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            });
+            MapsActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            final EditText edtSearch = (EditText)findViewById(R.id.edtSearch);
+            edtSearch.setFocusable(false);
         }
     }
 
