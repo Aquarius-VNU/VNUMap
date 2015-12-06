@@ -42,8 +42,11 @@ public class BuildingActivity extends AppCompatActivity {
                 Intent intent = new Intent(BuildingActivity.this, MapsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
+
+        getSupportActionBar().setTitle("Địa điểm");
 
         viewPager = (ViewPager)findViewById(R.id.view_pager);
 
