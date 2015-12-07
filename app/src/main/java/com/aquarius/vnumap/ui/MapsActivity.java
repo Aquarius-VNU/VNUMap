@@ -113,16 +113,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //  handle ponyline to show path
     private Polyline path = null;
-//  intent to get data
+    //  intent to get data
     private Intent intent;
-//  get setting data
+    //  get setting data
     private SharedPreferences setting = null;
     private int numberofMarker;
+//  check when id sent from building detail to direction
+    private boolean isDrawBuildingDetail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        isDrawBuildingDetail = true;
         intent = getIntent();
 
         setting = getSharedPreferences(SettingActivity.KEY_PREFERENCES, 0);
@@ -136,7 +140,45 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         handler = new Handler();
 //      update location 1s/1 turn
         updateLocation();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                    List<Building> buildings = MainController.getListBuilding(getResources().openRawResource(R.raw.map)
+                            , getResources().openRawResource(R.raw.direction));
+                    Bundle extras = getIntent().getExtras();
 
+                    int id = 0;
+                    if(intent.getExtras() != null){
+                        id = extras.getInt("buildingIdDirection");
+                    }
+                    if (id > 0) {
+                        Building buildingChoose = null;
+                        for (int i = 0; i < buildings.size(); i++) {
+                            if (buildings.get(i).getId() == id) {
+                                buildingChoose = buildings.get(i);
+                                break;
+                            }
+                        }
+                        if (location == null) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                            builder.setTitle("VNUMap");
+                            builder.setMessage("Bạn vui lòng bật GPS");
+                            builder.setPositiveButton("Đồng ý", null);
+                            builder.show();
+                        } else {
+                            if (buildingChoose != null) {
+                                String url = JSONMap.makeURL(location.getLatitude(), location.getLongitude(), buildingChoose.getLocation().getX()
+                                        , buildingChoose.getLocation().getY());
+                                DownloadAndDrawPath downloadAndDrawPath = new DownloadAndDrawPath(url);
+                                downloadAndDrawPath.execute();
+                            }
+                        }
+                    }
+
+
+            }
+        };
+        handler.postDelayed(runnable, 2000);
         final FloatingActionButton fab_location = (FloatingActionButton) findViewById(R.id.fab_location);
         fab_location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,7 +257,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity.this, BuildingActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
 
@@ -268,9 +310,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 getSupportFragmentManager().findFragmentById(R.id.map).getView().setVisibility(View.INVISIBLE);
                 LinearLayout linearLayout = (LinearLayout) findViewById(R.id.list_search_layout);
-                linearLayout.setVisibility(View.VISIBLE);
+
                 fab_location.setVisibility(View.INVISIBLE);
                 floatingActionButton.setVisibility(View.INVISIBLE);
+                slidingUpPanelLayout.setPanelHeight(0);
+//  slidingUpPanelLayout.setVisibility(View.INVISIBLE);
+                linearLayout.setVisibility(View.VISIBLE);
+
                 ImageButton menu = (ImageButton) findViewById(R.id.butMenu);
                 menu.setImageDrawable(getResources().getDrawable(R.drawable.ic_back));
                 menu.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +326,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
                 isSearch = true;
-                slidingUpPanelLayout.setPanelHeight(0);
+
                 edtSearch.setFocusable(true);
                 edtSearch.setFocusableInTouchMode(true);
                 edtSearch.requestFocus();
@@ -291,7 +337,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         edtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(!b){
+                if (!b) {
                     hideKeyboard(view);
                 }
             }
@@ -341,27 +387,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 //__________________________________________________________________________________________________
 //set shadow menu
-        final DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
 //create list menu left
         String[] list_menu_strings = getResources().getStringArray(R.array.list_menu);
         int[] list_menu_icon = {R.drawable.ic_settings, R.drawable.ic_info, R.drawable.ic_feedback};
         ArrayList<ListMenuAdapter.ItemMenu> menus = new ArrayList<>();
-        for(int i = 0 ; i < 3 ; i++){
+        for (int i = 0; i < 3; i++) {
             menus.add(new ListMenuAdapter.ItemMenu(list_menu_icon[i], list_menu_strings[i]));
         }
-        final ListView listMenu = (ListView)findViewById(R.id.list_menu);
+        final ListView listMenu = (ListView) findViewById(R.id.list_menu);
         listMenu.setAdapter(new ListMenuAdapter(this, R.layout.list_menu_item, menus));
 
         listMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch(i) {
+                switch (i) {
                     case 0:
-                    Intent intent = new Intent(MapsActivity.this, SettingActivity.class);
-                    finish();
-                    startActivity(intent);
+                        Intent intent = new Intent(MapsActivity.this, SettingActivity.class);
+                        finish();
+                        startActivity(intent);
                         break;
                     case 1:
                         break;
@@ -416,7 +462,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (markerList.size() > 0) {
                     for (int i = 0; i < markerList.size(); i++) {
                         markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
-                        setting.getInt(SettingActivity.KEY_COLOR, 0)]));
+                                setting.getInt(SettingActivity.KEY_COLOR, 0)]));
                     }
                 }
             }
@@ -481,13 +527,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         Bundle extras = intent.getExtras();
-        if(extras != null) {
+        if (extras != null) {
             int idBuildingFocus = extras.getInt("buildingId");
             Building buildingFocus = ArrayBuildings.getInstance(MapsActivity.this).getBuildingById(idBuildingFocus);
             if (buildingFocus != null) {
                 deleteMarker();
                 focusAMarker(buildingFocus);
             }
+
         }
     }
 
@@ -507,12 +554,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             menu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+                    final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
             });
-            MapsActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            final EditText edtSearch = (EditText)findViewById(R.id.edtSearch);
+//            MapsActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            final EditText edtSearch = (EditText) findViewById(R.id.edtSearch);
             edtSearch.setFocusable(false);
         }
     }
@@ -598,10 +645,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 if (markerLocation != null) {
                                     markerLocation.setVisible(false);
                                 }
+                                if(circleLocation != null){
+                                    circleLocation.setVisible(false);
+                                }
                                 markerLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location)).title("FUCK"));
                                 circleLocation = mMap.addCircle(new CircleOptions().center(markerLocation.getPosition())
-                                .fillColor(Color.parseColor("#161aa4dd")).strokeColor(Color.parseColor("#1aa4dd")).strokeWidth(4).radius(40));
+                                        .fillColor(Color.parseColor("#161aa4dd")).strokeColor(Color.parseColor("#1aa4dd")).strokeWidth(4).radius(40));
+
+//                              check when draw from building detail
+
                             } else {
                                 Log.d("HANDLE", "null");
                             }
@@ -652,10 +705,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    private void hideKeyboard(View view){
-        if(view != null){
+    private void hideKeyboard(View view) {
+        if (view != null) {
             view.clearFocus();
-            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         }
     }

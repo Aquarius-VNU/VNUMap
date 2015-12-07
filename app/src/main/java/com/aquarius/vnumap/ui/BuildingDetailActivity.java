@@ -31,7 +31,7 @@ public class BuildingDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerFloorAdapter adapter;
     private ArrayList<Floors> listFloors;
-
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +43,13 @@ public class BuildingDetailActivity extends AppCompatActivity {
         InputStream inputStreamDirection =  getResources().openRawResource(R.raw.direction);
         List<Building> buildings = MainController.getListBuilding(inputStreamMap, inputStreamDirection);
 
-        int i = this.getIntent().getIntExtra("building", 0);
+        id = this.getIntent().getIntExtra("building", 0);
         // building = buildings.get(i-1);
         Building building = new Building();
         for(int k = 0; k < buildings.size(); k++){
-            if(buildings.get(k).getId() == i){
+            if(buildings.get(k).getId() == id){
                 building = buildings.get(k);
+                break;
             }
         }
         //thumbImage.setImageResource(building.getImage());
@@ -67,8 +68,9 @@ public class BuildingDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(BuildingDetailActivity.this, BuildingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
                 finish();
+                startActivity(intent);
+
             }
         });
 
@@ -77,8 +79,10 @@ public class BuildingDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(BuildingDetailActivity.this, MapsActivity.class);
-                startActivity(i);
+                i.putExtra("buildingIdDirection", id);
                 finish();
+                startActivity(i);
+
             }
         });
 
