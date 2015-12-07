@@ -100,6 +100,26 @@ public class XmlParse {
         return keyword;
     }
 
+    public String readPhone(XmlPullParser parser) throws XmlPullParserException, IOException{
+        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "phone");
+        String phone = readText(parser);
+        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "phone");
+        if(phone.equals("")){
+            return null;
+        }
+        return phone;
+    }
+
+    public String readInfo(XmlPullParser parser) throws XmlPullParserException, IOException{
+        parser.require(XmlPullParser.START_TAG, NAME_SPACE, "info");
+        String info = readText(parser);
+        parser.require(XmlPullParser.END_TAG, NAME_SPACE, "info");
+        if(info.equals("")){
+            return null;
+        }
+        return info;
+    }
+
     public Building readBuilding(XmlPullParser parser) throws  XmlPullParserException, IOException{
         parser.require(XmlPullParser.START_TAG,NAME_SPACE, "building");
         int id = 0;
@@ -110,6 +130,8 @@ public class XmlParse {
         int type = 0;
         int university = 0;
         String keyword = null;
+        String phone = null;
+        String info = null;
 
         while(parser.next() != XmlPullParser.END_TAG){
             if(parser.getEventType() != XmlPullParser.START_TAG){
@@ -132,13 +154,17 @@ public class XmlParse {
                 university = readUniversity(parser);
             }else if(nameParse.equals("keyword")){
                 keyword = readKeyword(parser);
+            }else if(nameParse.equals("phone")){
+                phone = readPhone(parser);
+            }else if(nameParse.equals("info")){
+                info = readInfo(parser);
             }
             else{
                 skip(parser);
             }
         }
         parser.require(XmlPullParser.END_TAG, NAME_SPACE, "building");
-        return new Building(id, name, null, new Point(x, y), priority, type, university, keyword);
+        return new Building(id, name, null, new Point(x, y), priority, type, university, keyword, phone, info);
     }
 
     public List<Building> readMap(XmlPullParser xmlPullParser) throws  XmlPullParserException, IOException{

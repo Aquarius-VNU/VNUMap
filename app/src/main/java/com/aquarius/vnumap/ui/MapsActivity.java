@@ -117,16 +117,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Intent intent;
     //  get setting data
     private SharedPreferences setting = null;
-    private int numberofMarker;
-//  check when id sent from building detail to direction
-    private boolean isDrawBuildingDetail;
 
+    private int numberofMarker;
+//  marker when touch
+    private Marker markerChoose=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        isDrawBuildingDetail = true;
+
         intent = getIntent();
 
         setting = getSharedPreferences(SettingActivity.KEY_PREFERENCES, 0);
@@ -143,37 +143,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                    List<Building> buildings = MainController.getListBuilding(getResources().openRawResource(R.raw.map)
-                            , getResources().openRawResource(R.raw.direction));
-                    Bundle extras = getIntent().getExtras();
+                List<Building> buildings = MainController.getListBuilding(getResources().openRawResource(R.raw.map)
+                        , getResources().openRawResource(R.raw.direction));
+                Bundle extras = getIntent().getExtras();
 
-                    int id = 0;
-                    if(intent.getExtras() != null){
-                        id = extras.getInt("buildingIdDirection");
-                    }
-                    if (id > 0) {
-                        Building buildingChoose = null;
-                        for (int i = 0; i < buildings.size(); i++) {
-                            if (buildings.get(i).getId() == id) {
-                                buildingChoose = buildings.get(i);
-                                break;
-                            }
-                        }
-                        if (location == null) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                            builder.setTitle("VNUMap");
-                            builder.setMessage("Bạn vui lòng bật GPS");
-                            builder.setPositiveButton("Đồng ý", null);
-                            builder.show();
-                        } else {
-                            if (buildingChoose != null) {
-                                String url = JSONMap.makeURL(location.getLatitude(), location.getLongitude(), buildingChoose.getLocation().getX()
-                                        , buildingChoose.getLocation().getY());
-                                DownloadAndDrawPath downloadAndDrawPath = new DownloadAndDrawPath(url);
-                                downloadAndDrawPath.execute();
-                            }
+                int id = 0;
+                if (intent.getExtras() != null) {
+                    id = extras.getInt("buildingIdDirection");
+                }
+                if (id > 0) {
+                    Building buildingChoose = null;
+                    for (int i = 0; i < buildings.size(); i++) {
+                        if (buildings.get(i).getId() == id) {
+                            buildingChoose = buildings.get(i);
+                            break;
                         }
                     }
+                    if (location == null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                        builder.setTitle("VNUMap");
+                        builder.setMessage("Bạn vui lòng bật GPS");
+                        builder.setPositiveButton("Đồng ý", null);
+                        builder.show();
+                    } else {
+                        if (buildingChoose != null) {
+                            String url = JSONMap.makeURL(location.getLatitude(), location.getLongitude(), buildingChoose.getLocation().getX()
+                                    , buildingChoose.getLocation().getY());
+                            DownloadAndDrawPath downloadAndDrawPath = new DownloadAndDrawPath(url);
+                            downloadAndDrawPath.execute();
+                        }
+                    }
+                }
 
 
             }
@@ -257,7 +257,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity.this, BuildingActivity.class);
                 startActivity(intent);
-//                finish();
+                finish();
             }
         });
 
@@ -302,7 +302,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
-
+        ImageButton butSlidingDirection = (ImageButton)findViewById(R.id.sliding_panel_butDirection);
+        butSlidingDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (location == null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                    builder.setTitle("VNUMap");
+                    builder.setMessage("Bạn vui lòng bật GPS");
+                    builder.setPositiveButton("Đồng ý", null);
+                    builder.show();
+                } else {
+                    if (markerChoose != null) {
+                        String url = JSONMap.makeURL(location.getLatitude(), location.getLongitude(), markerChoose.getPosition().latitude
+                                , markerChoose.getPosition().longitude);
+                        DownloadAndDrawPath downloadAndDrawPath = new DownloadAndDrawPath(url);
+                        downloadAndDrawPath.execute();
+                    }
+                }
+            }
+        });
+//__________________________________________________________________________________________________
         final EditText edtSearch = (EditText) findViewById(R.id.edtSearch);
         final ListView lstSeach = (ListView) findViewById(R.id.lstSearch);
         edtSearch.setOnTouchListener(new View.OnTouchListener() {
@@ -459,6 +479,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onMapClick(LatLng latLng) {
 
                 slidingUpPanelLayout.setPanelHeight(0);
+                markerChoose = null;
                 if (markerList.size() > 0) {
                     for (int i = 0; i < markerList.size(); i++) {
                         markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
@@ -487,6 +508,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+                markerChoose = marker;
                 for (int i = 0; i < markerList.size(); i++) {
                     if (marker.equals(markerList.get(i).getMarker())) {
                         Building building = ArrayBuildings.getInstance(MapsActivity.this).getBuildingById(markerList.get(i).getId());
@@ -502,6 +524,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 }
                             } else {
                                 university.setText(String.valueOf(SearchFilter.UNIVERSITY_STRINGS[0]));
+                            }
+                            TextView phone = (TextView)findViewById(R.id.sliding_panel_txtPhone);
+                            if(building.getPhone() != null){
+                                phone.setText(String.valueOf("Số điện thoại : " + building.getPhone()));
+                            }else{
+                                phone.setText(String.valueOf("Số điện thoại : Đang cập nhật"));
+                            }
+                            TextView info = (TextView)findViewById(R.id.sliding_panel_txtInfo);
+                            if(building.getInfo() != null){
+                                info.setText(String.valueOf(building.getInfo()));
+                            }else{
+                                info.setText(String.valueOf("Đang cập nhật"));
                             }
                         }
                         markerList.get(i).getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(SettingActivity.MENU_COLOR_FLOAT[
@@ -645,7 +679,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 if (markerLocation != null) {
                                     markerLocation.setVisible(false);
                                 }
-                                if(circleLocation != null){
+                                if (circleLocation != null) {
                                     circleLocation.setVisible(false);
                                 }
                                 markerLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))

@@ -156,6 +156,7 @@
                     </LinearLayout>
 
                     <ImageButton
+                        android:id="@+id/sliding_panel_butDirection"
                         android:layout_width="@dimen/sliding_panel_height"
                         android:layout_height="@dimen/sliding_panel_height"
                         android:layout_alignParentRight="true"
@@ -170,10 +171,11 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/sliding_panel_txtPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="@dimen/sliding_panel_margin_left"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="@dimen/sliding_panel_margin_top"
                         android:text="Số điện thoại :"
                         android:textColor="@android:color/secondary_text_light"
@@ -185,14 +187,17 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/sliding_panel_margin_right_direction"
                         android:layout_marginTop="8dp"
-                        android:src="@drawable/ic_phone"
                         android:background="@android:color/transparent"/>
+                    <!--android:src="@drawable/ic_phone"-->
+
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/sliding_panel_txtInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/sliding_panel_margin_left"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="@dimen/sliding_panel_margin_top"
                     android:text="info"
                     android:textColor="@android:color/secondary_text_light"
